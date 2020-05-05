@@ -11,7 +11,7 @@ Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 const Layout = (props) => (
-  <div className="layout-container">{props.children}</div>
+  <div className="layout-container h-screen">{props.children}</div>
 );
 
 Layout.propTypes = {
