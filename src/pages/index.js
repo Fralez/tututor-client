@@ -1,9 +1,9 @@
 import React from "react";
 import { NextSeo } from "next-seo";
 import Layout from "../layout/Layout";
-import IndexPage from "../components/site/IndexPage";
+import HomePage from "../components/site/HomePage";
 
-class Index extends React.Component {
+class Home extends React.Component {
   render() {
     return (
       <Layout>
@@ -11,10 +11,10 @@ class Index extends React.Component {
           title="Home"
           description="¡Bienvenido a TuTutor! Una plataforma donde podrás realizar intercambios educativos con personas de todas partes."
         />
-        <IndexPage />
+        <HomePage />
       </Layout>
     );
   }
 }
 
-export default Index;
+export default Home;

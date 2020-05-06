@@ -6,6 +6,6 @@ const LoginPage = () => {
       <span>I'm login page!!</span>
     </div>
   );
-}
+};
 
 export default LoginPage;

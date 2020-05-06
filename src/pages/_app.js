@@ -1,7 +1,7 @@
 import React from "react";
 import App from "next/app";
 import { DefaultSeo } from "next-seo";
-import "@/src/styles/index.css";
+import "@/src/styles/tailwind.css";
 
 class MyApp extends App {
   render() {

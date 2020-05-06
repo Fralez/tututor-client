@@ -6,6 +6,6 @@ const RegisterPage = () => {
       <span>I'm register page!!</span>
     </div>
   );
-}
+};
 
 export default RegisterPage;
