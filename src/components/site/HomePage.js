@@ -1,9 +1,10 @@
 import React from "react";
+import QuestionList from "../common/question/QuestionList"
 
 const HomePage = () => {
   return (
     <div>
-      <span>I'm home page!!</span>
+      <QuestionList/>
     </div>
   );
 };
