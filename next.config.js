@@ -4,15 +4,16 @@ module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       /* development only config options here */
+      // Access example: process.env.VAR_NAME
       env: {
-        backendURL: "http://localhost:3000",
+        BACKEND_URL: "http://localhost:3000",
       },
     };
   }
 
   return {
     env: {
-      backendURL: "",
+      BACKEND_URL: "",
     },
     /* config options for all phases except development here */
   };
