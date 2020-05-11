@@ -2,8 +2,10 @@ import React from "react";
 import App from "next/app";
 import { DefaultSeo } from "next-seo";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import "@/src/styles/tailwind.css";
 import THEME from "@/src/styles/Theme.js";
+import "@/src/styles/tailwind.css"; // Tailwind CSS
+import "react-datepicker/dist/react-datepicker.css"; // react-datepicker CSS
+import 'react-dropdown/style.css'; // react-dropdown CSS
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -16,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${props => props.theme.fonts.raleway};
     font-size: 16px;
     line-height: 1.2;
-    overflow-y: hidden;
     height: 100%;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
