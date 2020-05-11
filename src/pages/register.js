@@ -1,7 +1,7 @@
 import React from "react";
 import { NextSeo } from "next-seo";
-import Layout from "../../layout/Layout";
-import RegisterPage from "../../components/site/RegisterPage";
+import Layout from "../layout/Layout";
+import RegisterPage from "../components/pages/RegisterPage";
 
 class Register extends React.Component {
   render() {

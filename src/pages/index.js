@@ -1,7 +1,7 @@
 import React from "react";
 import { NextSeo } from "next-seo";
 import Layout from "../layout/Layout";
-import HomePage from "../components/site/HomePage";
+import HomePage from "../components/pages/HomePage";
 
 class Home extends React.Component {
   render() {

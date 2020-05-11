@@ -1,7 +1,7 @@
 import React from "react";
 import { NextSeo } from "next-seo";
-import Layout from "../../layout/Layout";
-import LoginPage from "../../components/site/LoginPage";
+import Layout from "../layout/Layout";
+import LoginPage from "../components/pages/LoginPage";
 
 class Login extends React.Component {
   render() {

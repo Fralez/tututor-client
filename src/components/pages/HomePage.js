@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "@/config/routes";
 
 const HomePage = () => {
   return (
     <div>
-      <span>I'm home page!!</span>
+      <Link route="register"><a>Goto Register</a></Link>
     </div>
   );
 };

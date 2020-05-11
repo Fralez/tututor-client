@@ -4,10 +4,10 @@ routes
   .add({
     name: "login",
     pattern: "/login",
-    page: "/site/login",
+    page: "/login",
   })
   .add({
     name: "register",
     pattern: "/register",
-    page: "/site/register",
+    page: "/register",
   });
