@@ -2,20 +2,22 @@ import React from "react";
 import App from "next/app";
 import { DefaultSeo } from "next-seo";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import withSiteLayout from "@/src/layout/SiteLayout";
 import THEME from "@/src/styles/Theme.js";
+
 import "@/src/styles/tailwind.css"; // Tailwind CSS
 import "react-datepicker/dist/react-datepicker.css"; // react-datepicker CSS
-import 'react-dropdown/style.css'; // react-dropdown CSS
+import "react-dropdown/style.css"; // react-dropdown CSS
 
 const GlobalStyle = createGlobalStyle`
   html {
     height: 100%;
     overflow-y: auto;
-    font-family: ${props => props.theme.fonts.raleway};
+    font-family: ${(props) => props.theme.fonts.raleway};
   }
 
   body {
-    font-family: ${props => props.theme.fonts.raleway};
+    font-family: ${(props) => props.theme.fonts.raleway};
     font-size: 16px;
     line-height: 1.2;
     height: 100%;
@@ -73,4 +75,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default withSiteLayout(MyApp);

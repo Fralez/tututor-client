@@ -9,11 +9,8 @@ export default () => ({
     });
   },
   show: (authToken = "", id) => {
-    return axios.get(`${BASE_URL}/users/`, {
+    return axios.get(`${BASE_URL}/users/${id}`, {
       headers: { Authorization: authToken },
-      params: {
-        id: id,
-      },
     });
   },
   create: (user = {}) => {
