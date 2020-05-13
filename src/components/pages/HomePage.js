@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "@/config/routes";
 import QuestionList from '../common/question/QuestionList'
+import withCurrentUser from "@/lib/withCurrentUser";
 
-const HomePage = () => {
-  const [jwt, setJwt] = useState("");
-  useEffect(() => {
-    setJwt(localStorage.getItem("user-jwt"));
-  });
-
+const HomePage = ({ currentUser, logout }) => {
   return (
     <div>
       <Link route="register">
@@ -16,11 +12,10 @@ const HomePage = () => {
       <Link route="login">
         <a>Goto Login</a>
       </Link>
-      <div>JWT: {jwt}</div>
-      <QuestionList/>
-
+      <button onClick={logout}>Logout</button>
+      <div>User: {currentUser.email}</div>
     </div>
   );
 };
 
-export default HomePage;
+export default withCurrentUser(HomePage);
