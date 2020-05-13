@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { BookmarkBorder } from "@material-ui/icons";
+import { BookmarkBorder, Bookmark } from "@material-ui/icons";
 
 const descript =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-const QuestionPreview = () => {
+const QuestionPreview = () => { 
+
+  const handleSaveButton = () => {
+    saveClciked ? setSaveClciked(false) : setSaveClciked(true)
+  }
+
+  const [saveClciked, setSaveClciked] = useState(false);
+
   return (
     <Preview>
       <User>
@@ -27,8 +34,8 @@ const QuestionPreview = () => {
         <Description>
           {descript.length > 80 ? descript.slice(0, 80) + "..." : descript}
         </Description>
-        <SaveButton>
-          <SaveIcon />
+        <SaveButton onClick={handleSaveButton}>
+          {saveClciked ? <SaveIconOn/> : <SaveIconOff/>}
         </SaveButton>
       </InfoCon>
     </Preview>
@@ -38,7 +45,7 @@ const QuestionPreview = () => {
 export default QuestionPreview;
 
 const Preview = styled.div`
-  ${tw`w-4/5 rounded-md p-6 mt-6 md:mt-8 mx-auto border-solid border border-gray-300 flex flex-col justify-center`}
+  ${tw`cursor-pointer w-4/5 rounded-md p-6 mt-6 md:mt-8 mx-auto border-solid border border-gray-300 flex flex-col justify-center`}
 `;
 
 const PorfileImgCon = styled.div`
@@ -81,7 +88,14 @@ const Description = styled.div`
 const SaveButton = styled.div`
   ${tw`ml-auto`}
 `;
-const SaveIcon = styled(BookmarkBorder)`
+
+const SaveIconOff = styled(BookmarkBorder)`
+  ${tw`text-2lg`}
+  transform: scale(1.5);
+  color: ${(props) => props.theme.colors.pinkCyclamen.light};
+`;
+
+const SaveIconOn = styled(Bookmark)`
   ${tw`text-2lg`}
   transform: scale(1.5);
   color: ${(props) => props.theme.colors.pinkCyclamen.light};
