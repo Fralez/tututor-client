@@ -10,4 +10,9 @@ routes
     name: "register",
     pattern: "/register",
     page: "/register",
-  });
+  })
+  .add({
+    name: "question",
+    pattern: "/question",
+    page: "/question",
+});

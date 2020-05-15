@@ -1,14 +1,14 @@
 import React from "react";
-import QuestionPreview from "./QuestionPreview";
+import AnswerPreview from "./AnswerPreview";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
 const QuestionList = () => {
   return (
     <Container>
-      <QuestionPreview />
-      <QuestionPreview />
-      <QuestionPreview />
+      <AnswerPreview />
+      <AnswerPreview />
+      <AnswerPreview />
     </Container>
   );
 };

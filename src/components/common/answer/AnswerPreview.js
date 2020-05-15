@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { BookmarkBorder, Bookmark, Star } from "@material-ui/icons";
+import {
+  Star,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+} from "@material-ui/icons";
 
 const descript =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-const QuestionPreview = () => {
-  const handleSaveButton = () => {
-    saveClciked ? setSaveClciked(false) : setSaveClciked(true);
-  };
-
-  const [saveClciked, setSaveClciked] = useState(false);
-  const [score, setScore] = useState(200);
+  
+  const AnswerPreview = () => {
+    const more = () => {
+      setScore(score + 1);
+    };
+    
+    const less = () => {
+      setScore(score - 1);
+    };
+    const [score, setScore] = useState(200);
 
   return (
     <Preview>
@@ -30,28 +37,22 @@ const QuestionPreview = () => {
         <Date>25th October, 2019</Date>
       </User>
       <InfoCon>
-        <Title>How do I create a HTML page?</Title>
-        <Description>
-          {descript.length > 80 ? descript.slice(0, 80) + "..." : descript}
-        </Description>
-        <SaveScoreCon>
-          <ScoreCon>
-            <StarIcon />
-            <Score>{score}</Score>
-          </ScoreCon>
-          <SaveButton onClick={handleSaveButton}>
-            {saveClciked ? <SaveIconOn /> : <SaveIconOff />}
-          </SaveButton>
-        </SaveScoreCon>
+        <Description>{descript}</Description>
+        <Punctuation>
+          <ArrowLeft onClick={less} />
+          <StarIcon />
+          <Score>{score}</Score>
+          <ArrowRight onClick={more} />
+        </Punctuation>
       </InfoCon>
     </Preview>
   );
 };
 
-export default QuestionPreview;
+export default AnswerPreview;
 
 const Preview = styled.div`
-  ${tw`cursor-pointer w-4/5 rounded-md p-6 mt-6 md:mt-8 mx-auto border-solid border border-gray-300 flex flex-col justify-center`}
+  ${tw`cursor-pointer w-4/5 rounded-md p-6 mt-6 md:mt-8 ml-16 md:ml-24 border-solid border border-gray-300 flex flex-col justify-center`}
 `;
 
 const PorfileImgCon = styled.div`
@@ -82,42 +83,29 @@ const InfoCon = styled.div`
   ${tw`flex flex-col`}
 `;
 
-const Title = styled.div`
-  ${tw`text-xl md:text-2xl mb-2 mt-2 md:mt-4 font-medium w-5/6`}
-  color: ${(props) => props.theme.colors.violetBlue.normal}
-`;
-
 const Description = styled.div`
-  ${tw`text-sm w-5/6 text-gray-800`}
+  ${tw`mt-2 w-5/6 text-gray-800`}
 `;
 
-const SaveScoreCon = styled.div`
+const Punctuation = styled.div`
   ${tw`ml-auto flex`}
-`;
-
-const SaveButton = styled.div`
-  ${tw`ml-4`}
-`;
-
-const SaveIconOff = styled(BookmarkBorder)`
-  ${tw`text-2lg cursor-pointer`}
-  transform: scale(1.5);
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
-`;
-
-const SaveIconOn = styled(Bookmark)`
-  ${tw`text-2lg cursor-pointer`}
-  transform: scale(1.5);
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
 `;
 
 const Score = styled.div`
   ${tw`text-xl text-gray-800 font-semibold`}
 `;
+
 const StarIcon = styled(Star)`
   color: ${(props) => props.theme.colors.yellowMustard.normal};
 `;
 
-const ScoreCon = styled.div`
-${tw`flex`}
-`
+const ArrowLeft = styled(KeyboardArrowLeft)`
+  ${tw`text-2lg cursor-pointer`}
+  transform: scale(1.3);
+  color: ${(props) => props.theme.colors.pinkCyclamen.light};
+`;
+
+const ArrowRight = styled(KeyboardArrowRight)`
+  ${tw`text-2lg cursor-pointer`}
+  transform: scale(1.3);
+  color: ${(props) => props.theme.colors.pinkCyclamen.light};`
