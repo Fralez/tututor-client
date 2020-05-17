@@ -26,7 +26,7 @@ const LoginPage = () => {
       if (res.status == 200) {
         // Store JWT on localStorage
         localStorage.setItem("user-jwt", res.data.token);
-        Router.pushRoute("/");
+        Router.push("/");
       }
     } catch (error) {
       setShowErrorMessage(true);

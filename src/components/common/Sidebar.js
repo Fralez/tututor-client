@@ -1,12 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "@/config/routes";
+import React from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
-import { Menu, Close } from "@material-ui/icons";
+import {
+  ExitToApp,
+  QuestionAnswer,
+  Textsms,
+  Domain,
+  EmojiObjects,
+} from "@material-ui/icons";
 import { slide as SidebarMenu } from "react-burger-menu";
 
-const Sidebar = ({ currentUser, showSidebar, toggleSidebar }) => {
+const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
   return (
     <CustomSidebar
       customBurgerIcon={false}
@@ -15,21 +20,48 @@ const Sidebar = ({ currentUser, showSidebar, toggleSidebar }) => {
       right
       width={"35%"}
     >
-      <User>
-        <ProfileImgContainer>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-            alt="Profile img"
-          ></img>
-        </ProfileImgContainer>
-        <UserInfo>
-          <UserName>{currentUser.name}</UserName>
-          <InstitutionName>My Institution Name</InstitutionName>
-        </UserInfo>
-      </User>
+      <div>
+        <SidebarTitle onClick={logout}>
+          <ExitToApp />
+          <LeadingText>Cerrar sesión</LeadingText>
+        </SidebarTitle>
+        <User>
+          <ProfileImgContainer>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+              alt="Profile img"
+            ></img>
+          </ProfileImgContainer>
+          <UserInfo>
+            <UserName>{currentUser.name}</UserName>
+            <InstitutionName>My Institution Name</InstitutionName>
+          </UserInfo>
+        </User>
+      </div>
       <SidebarItems>
-        <SidebarItem>Mis instituciones</SidebarItem>
-        <SidebarItem>Mis preguntas</SidebarItem>
+        <SidebarTitle>Personal</SidebarTitle>
+        <SidebarItem>
+          <QuestionAnswer />
+          <LeadingText>Preguntas</LeadingText>
+        </SidebarItem>
+        <SidebarItem>
+          <Textsms />
+          <LeadingText>Chats</LeadingText>
+        </SidebarItem>
+        <SidebarItem>
+          <Domain />
+          <LeadingText>Instituciones</LeadingText>
+        </SidebarItem>
+        {/* Reputation lights */}
+        <SidebarTitle>Reputation</SidebarTitle>
+        <ReputationZone>
+          <ReputationLight />
+          <ReputationText>
+            {`${currentUser.reputation} ${
+              currentUser.reputation > 1 ? "lights" : "light"
+            }`}
+          </ReputationText>
+        </ReputationZone>
       </SidebarItems>
     </CustomSidebar>
   );
@@ -47,18 +79,25 @@ const CustomSidebar = styled(SidebarMenu)`
 `;
 
 const SidebarItems = styled.div`
-  ${tw`flex-col-reverse`}
+  ${tw`flex-col`}
   display: flex !important;
+`;
+
+const SidebarTitle = styled.h1`
+  ${tw`cursor-pointer p-4 text-lg font-bold text-white flex items-center`}
 `;
 
 const SidebarItem = styled.span`
-  ${tw`p-4 text-md md:text-lg  font-medium text-gray-300 hover:text-white focus:text-white`}
+  ${tw`cursor-pointer ml-6 p-4 text-md md:text-lg font-medium text-gray-300 hover:text-white focus:text-white flex items-center`}
+`;
+
+const LeadingText = styled.span`
+  ${tw`pl-2`}
 `;
 
 const User = styled.div`
-  ${tw`m-4`}
+  ${tw`m-4 cursor-pointer`}
   display: flex !important;
-  cursor: pointer;
 `;
 
 const ProfileImgContainer = styled.div`
@@ -75,4 +114,16 @@ const UserName = styled.div`
 
 const InstitutionName = styled.div`
   ${tw`text-xs md:text-sm text-gray-300 mt-1`}
+`;
+
+const ReputationZone = styled.div`
+  ${tw`h-20 p-2 flex text-gray-300 items-center`}
+`;
+
+const ReputationText = styled.span`
+  ${tw`font-semibold text-xl`}
+`;
+
+const ReputationLight = styled(EmojiObjects)`
+  font-size: 4rem !important;
 `;

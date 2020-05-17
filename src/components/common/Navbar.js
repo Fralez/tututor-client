@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "@/config/routes";
-import styled from "styled-components";
+import withCurrentUser from "@/lib/withCurrentUser";
+import styled, { css } from "styled-components";
 import tw from "tailwind.macro";
 
 import { Menu, Close } from "@material-ui/icons";
 
 import Sidebar from "./Sidebar";
 
-const Navbar = ({ currentUser }) => {
+const Navbar = ({ currentUser, logout }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -35,11 +36,14 @@ const Navbar = ({ currentUser }) => {
 
   return (
     <>
-      <Sidebar
-        currentUser={currentUser}
-        showSidebar={showSidebar}
-        toggleSidebar={toggleSidebar}
-      />
+      {currentUser && (
+        <Sidebar
+          currentUser={currentUser}
+          logout={logout}
+          showSidebar={showSidebar}
+          toggleSidebar={toggleSidebar}
+        />
+      )}
       <CustomNav>
         <NavArea>
           <Container>
@@ -63,7 +67,7 @@ const Navbar = ({ currentUser }) => {
                 </LogoContainer>
               </Link>
               <NavItems>
-                <div class="flex">
+                <div className="flex">
                   <Link route="/">
                     <NavItem>Inicio</NavItem>
                   </Link>
@@ -77,12 +81,23 @@ const Navbar = ({ currentUser }) => {
               </NavItems>
             </NavContent>
             <UserZone>
-              <UserImageButton onClick={toggleSidebar}>
-                <UserImage
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-                  alt="User Image"
-                />
-              </UserImageButton>
+              {currentUser ? (
+                <UserImageButton onClick={toggleSidebar}>
+                  <UserImage
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                    alt="User Image"
+                  />
+                </UserImageButton>
+              ) : (
+                <UserButtonsContainer>
+                  <Link route="login">
+                    <LoginButton>Ingresar</LoginButton>
+                  </Link>
+                  <Link route="register">
+                    <RegisterButton>Registrarse</RegisterButton>
+                  </Link>
+                </UserButtonsContainer>
+              )}
             </UserZone>
           </Container>
         </NavArea>
@@ -93,8 +108,18 @@ const Navbar = ({ currentUser }) => {
         Menu open: "block", Menu closed: "hidden"
       */}
         {showMobileMenu && (
-          <NavMobileMenu class="block sm:hidden">
+          <NavMobileMenu className="block sm:hidden">
             <MobileMenuArea>
+              {!currentUser && (
+                <>
+                  <Link route="login">
+                    <LoginButton isMobile>Ingresar</LoginButton>
+                  </Link>
+                  <Link route="register">
+                    <RegisterButton isMobile>Registrarse</RegisterButton>
+                  </Link>
+                </>
+              )}
               <Link route="/">
                 <MobileNavItem>Inicio</MobileNavItem>
               </Link>
@@ -112,7 +137,7 @@ const Navbar = ({ currentUser }) => {
   );
 };
 
-export default Navbar;
+export default withCurrentUser(Navbar);
 
 const CustomNav = styled.nav`
 ${tw`w-full absolute z-10`}
@@ -122,6 +147,7 @@ ${tw`w-full absolute z-10`}
 const NavArea = styled.div`
   ${tw`max-w-7xl mx-auto px-2 sm:px-6 lg:px-8`}
 `;
+
 const Container = styled.div`
   ${tw`relative flex items-center justify-between h-16`}
 `;
@@ -147,8 +173,7 @@ const Logo = styled.img`
 `;
 
 const LogoText = styled.span`
-  ${tw`font-bold text-2xl pl-3 py-2 leading-5 text-gray-200 hover:text-white no-underline focus:text-white`}
-  cursor: pointer;
+  ${tw`cursor-pointer font-bold text-2xl pl-3 py-2 leading-5 text-gray-200 hover:text-white focus:text-white`}
 `;
 
 const NavItems = styled.div`
@@ -156,7 +181,31 @@ const NavItems = styled.div`
 `;
 
 const NavItem = styled.a`
-  ${tw`mr-4 px-3 py-2 text-sm font-medium leading-5 text-gray-300 hover:text-white no-underline focus:text-white`}
+  ${tw`mr-4 px-3 py-2 text-sm font-medium leading-5 text-gray-300 hover:text-white focus:text-white`}
+`;
+
+const UserButtonsContainer = styled.div`
+  ${tw`hidden sm:block`}
+`;
+
+const LoginButton = styled.button`
+  ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white`}
+  ${(props) =>
+    props.isMobile &&
+    `
+    ${tw`mt-2 mb-2`}
+    ${css`
+      display: block;
+      width: 100%;
+    `}
+  `}
+`;
+
+const RegisterButton = styled.button`
+  ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${(props) => (props.isMobile ? tw`block w-full mt-2 mb-2` : tw`ml-4`)}
+
+  background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 
 const UserZone = styled.div`
