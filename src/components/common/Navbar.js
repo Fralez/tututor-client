@@ -5,81 +5,117 @@ import tw from "tailwind.macro";
 
 import { Menu, Close } from "@material-ui/icons";
 
-const Navbar = () => {
+import Sidebar from "./Sidebar";
+
+const Navbar = ({ currentUser }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
 
-  const toggleSidebar = () => {
-
-  }
+  const toggleSidebar = (state) => {
+    /**
+     * Got the cases:
+     * 1 - Open sidebar from image
+     *  -> state.isOpen === undefined
+     *  -> showSidebar == false
+     *   Effect -> showSidebar = true
+     *
+     * 2 - Closing sidebar
+     *  -> state.isOpen === false
+     *  -> showSidebar == true
+     *   Effect -> showSidebar = false
+     */
+    if (state.isOpen === undefined && !showSidebar) {
+      // Opening sidebar from image
+      setShowSidebar(true);
+    } else if (state.isOpen === false && showSidebar) {
+      // Closing sidebar
+      setShowSidebar(false);
+    }
+  };
 
   return (
-    <CustomNav>
-      <NavArea>
-        <Container>
-          <HamburguerButtonContainer>
-            {/* Mobile menu button */}
-            <HamburguerButton
-              className="transition duration-150 ease-in-out"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-            >
-              {/* Icons when menu is closed (Close icon) or open (Menu icon) */}
-              {showMobileMenu ? <Close /> : <Menu />}
-            </HamburguerButton>
-          </HamburguerButtonContainer>
-          <NavContent>
-            <LogoContainer>
-              <Logo src="/img/logos/tututor.svg" alt="TuTutor logo" />
-              <LogoText className="transition duration-150 ease-in-out">
-                TuTutor
-              </LogoText>
-            </LogoContainer>
-            <NavItems>
-              <div class="flex">
-                <NavItem className="transition duration-150 ease-in-out">
-                  Inicio
-                </NavItem>
-                <NavItem className="transition duration-150 ease-in-out">
-                  Explorar
-                </NavItem>
-                <NavItem className="transition duration-150 ease-in-out">
-                  Ranking
-                </NavItem>
-              </div>
-            </NavItems>
-          </NavContent>
-          <UserZone>
-            {/* Profile dropdown */}
-            <UserImageButton onClick={toggleSidebar}>
-              <UserImage
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="User Image"
-              />
-            </UserImageButton>
-          </UserZone>
-        </Container>
-      </NavArea>
+    <>
+      <Sidebar
+        currentUser={currentUser}
+        showSidebar={showSidebar}
+        toggleSidebar={toggleSidebar}
+      />
+      <CustomNav>
+        <NavArea>
+          <Container>
+            <HamburguerButtonContainer>
+              {/* Mobile menu button */}
+              <HamburguerButton
+                className="transition duration-150 ease-in-out"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+              >
+                {/* Icons when menu is closed (Close icon) or open (Menu icon) */}
+                {showMobileMenu ? <Close /> : <Menu />}
+              </HamburguerButton>
+            </HamburguerButtonContainer>
+            <NavContent>
+              <Link route="/">
+                <LogoContainer>
+                  <Logo src="/img/logos/tututor.svg" alt="TuTutor logo" />
+                  <LogoText className="transition duration-150 ease-in-out">
+                    TuTutor
+                  </LogoText>
+                </LogoContainer>
+              </Link>
+              <NavItems>
+                <div class="flex">
+                  <Link route="/">
+                    <NavItem>Inicio</NavItem>
+                  </Link>
+                  <Link route="/">
+                    <NavItem>Explorar</NavItem>
+                  </Link>
+                  <Link route="/">
+                    <NavItem>Ranking</NavItem>
+                  </Link>
+                </div>
+              </NavItems>
+            </NavContent>
+            <UserZone>
+              <UserImageButton onClick={toggleSidebar}>
+                <UserImage
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                  alt="User Image"
+                />
+              </UserImageButton>
+            </UserZone>
+          </Container>
+        </NavArea>
 
-      {/*
+        {/*
         Mobile menu, toggle classes based on menu state.
     
         Menu open: "block", Menu closed: "hidden"
       */}
-      {showMobileMenu && (
-        <NavMobileMenu class="block sm:hidden">
-          <MobileMenuArea>
-            <MobileNavItem>Inicio</MobileNavItem>
-            <MobileNavItem>Explorar</MobileNavItem>
-            <MobileNavItem>Ranking</MobileNavItem>
-          </MobileMenuArea>
-        </NavMobileMenu>
-      )}
-    </CustomNav>
+        {showMobileMenu && (
+          <NavMobileMenu class="block sm:hidden">
+            <MobileMenuArea>
+              <Link route="/">
+                <MobileNavItem>Inicio</MobileNavItem>
+              </Link>
+              <Link route="/">
+                <MobileNavItem>Explorar</MobileNavItem>
+              </Link>
+              <Link route="/">
+                <MobileNavItem>Ranking</MobileNavItem>
+              </Link>
+            </MobileMenuArea>
+          </NavMobileMenu>
+        )}
+      </CustomNav>
+    </>
   );
 };
 
 export default Navbar;
 
 const CustomNav = styled.nav`
+${tw`w-full absolute z-10`}
   background-color: ${(props) => props.theme.colors.violetBlue.normal};
 `;
 
@@ -95,14 +131,14 @@ const HamburguerButtonContainer = styled.div`
 `;
 
 const HamburguerButton = styled.button`
-  ${tw`inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none focus:text-white`}
+  ${tw`inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:text-white`}
 `;
 
 const NavContent = styled.div`
   ${tw`flex-1 flex items-center justify-center sm:items-stretch sm:justify-start`}
 `;
 
-const LogoContainer = styled.div`
+const LogoContainer = styled.a`
   ${tw`flex-shrink-0 flex`}
 `;
 
@@ -120,7 +156,7 @@ const NavItems = styled.div`
 `;
 
 const NavItem = styled.a`
-  ${tw`mr-4 px-3 py-2 text-sm font-medium leading-5 text-gray-300 hover:text-white no-underline focus:outline-none focus:text-white`}
+  ${tw`mr-4 px-3 py-2 text-sm font-medium leading-5 text-gray-300 hover:text-white no-underline focus:text-white`}
 `;
 
 const UserZone = styled.div`
@@ -128,7 +164,7 @@ const UserZone = styled.div`
 `;
 
 const UserImageButton = styled.button`
-  ${tw`flex text-sm border-2 border-transparent rounded-full focus:outline-none`}
+  ${tw`flex text-sm border-2 border-transparent rounded-full`}
 `;
 
 const UserImage = styled.img`
@@ -144,5 +180,5 @@ const MobileMenuArea = styled.div`
 `;
 
 const MobileNavItem = styled.a`
-  ${tw`mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white focus:outline-none focus:text-white`}
+  ${tw`mt-1 block px-3 py-2 text-base font-medium text-gray-300 hover:text-white focus:text-white`}
 `;

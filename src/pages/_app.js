@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
       cursor: pointer;
       text-decoration: none;
       &:hover {
-          text-decoration: underline;
+          text-decoration: none;
       }
     }
     div {

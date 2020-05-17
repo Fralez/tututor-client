@@ -2,8 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import NextNprogress from "nextjs-progressbar";
 
-import Navbar from "../components/common/Navbar"
-
 const Layout = (props) => (
   <div className="layout-container">
     <NextNprogress
@@ -12,7 +10,6 @@ const Layout = (props) => (
       stopDelayMs="400"
       height="4"
     />
-    <Navbar/>
     {props.children}
   </div>
 );
