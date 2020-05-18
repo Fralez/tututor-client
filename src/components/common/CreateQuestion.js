@@ -100,7 +100,7 @@ const CreateQuestion = ({
 export default CreateQuestion;
 
 const CreateQuestionButton = styled.button`
-  ${tw`absolute p-3 rounded-full text-white`}
+  ${tw`fixed p-3 rounded-full text-white`}
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
   right: 2rem;
   bottom: 2rem;

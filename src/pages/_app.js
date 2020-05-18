@@ -10,6 +10,14 @@ import "react-datepicker/dist/react-datepicker.css"; // react-datepicker CSS
 import "react-dropdown/style.css"; // react-dropdown CSS
 
 const GlobalStyle = createGlobalStyle`
+  #__next {
+    display: grid;
+    grid-template-rows: 4rem auto auto;
+    grid-template-areas:
+        "navbar"
+        "content";
+  }
+
   html {
     height: 100%;
     overflow-y: auto;

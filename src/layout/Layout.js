@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NextNprogress from "nextjs-progressbar";
+import styled from "styled-components";
 import Navbar from "@/src/components/common/Navbar";
 
+
 const Layout = (props) => (
-  <div className="layout-container">
+  <>
     <NextNprogress
       color="#FF66A7" // Pink Cyclamen
       startPosition={0.3}
@@ -12,8 +14,8 @@ const Layout = (props) => (
       height="4"
     />
     <Navbar />
-    {props.children}
-  </div>
+    <PageContainer>{props.children}</PageContainer>
+  </>
 );
 
 Layout.propTypes = {
@@ -21,3 +23,7 @@ Layout.propTypes = {
 };
 
 export default Layout;
+
+const PageContainer = styled.div`
+  grid-area: content / content / content / content;
+`;

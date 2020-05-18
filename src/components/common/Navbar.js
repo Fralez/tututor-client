@@ -138,8 +138,9 @@ const Navbar = ({ currentUser, logout }) => {
 export default withCurrentUser(Navbar);
 
 const CustomNav = styled.nav`
-${tw`w-full absolute z-10`}
+${tw`w-full fixed z-10 inset-x-0.top-0`}
   background-color: ${(props) => props.theme.colors.violetBlue.normal};
+  grid-area: navbar / navbar / navbar / navbar;
 `;
 
 const NavArea = styled.div`
