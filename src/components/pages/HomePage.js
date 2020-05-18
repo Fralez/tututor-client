@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "@/config/routes";
+import React from "react";
 
-const HomePage = ({ currentUser, logout, ...props }) => {
-  return (
-    <>
-      
-    </>
-  );
+const HomePage = () => {
+  return <></>;
 };
 
 export default HomePage;

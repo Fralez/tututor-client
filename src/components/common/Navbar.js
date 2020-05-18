@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "@/config/routes";
 import withCurrentUser from "@/lib/withCurrentUser";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import tw from "tailwind.macro";
 
 import { Menu, Close } from "@material-ui/icons";
 
 import Sidebar from "./Sidebar";
+// import CreateQuestionModal from "./CreateQuestionModal";
 
 const Navbar = ({ currentUser, logout }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
+  // const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
 
   const toggleSidebar = (state) => {
     /**
@@ -82,12 +84,20 @@ const Navbar = ({ currentUser, logout }) => {
             </NavContent>
             <UserZone>
               {currentUser ? (
-                <UserImageButton onClick={toggleSidebar}>
-                  <UserImage
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-                    alt="User Image"
-                  />
-                </UserImageButton>
+                <>
+                  <CreateContentButton
+                    className="transition duration-150 ease-in-out"
+                    onClick={() => setShowCreateQuestionModal(true)}
+                  >
+                    Crear pregunta
+                  </CreateContentButton>
+                  <UserImageButton onClick={toggleSidebar}>
+                    <UserImage
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                      alt="User Image"
+                    />
+                  </UserImageButton>
+                </>
               ) : (
                 <UserButtonsContainer>
                   <Link route="login">
@@ -102,15 +112,18 @@ const Navbar = ({ currentUser, logout }) => {
           </Container>
         </NavArea>
 
-        {/*
-        Mobile menu, toggle classes based on menu state.
-    
-        Menu open: "block", Menu closed: "hidden"
-      */}
         {showMobileMenu && (
           <NavMobileMenu className="block sm:hidden">
             <MobileMenuArea>
-              {!currentUser && (
+              {currentUser ? (
+                <CreateContentButton
+                  className="transition duration-150 ease-in-out"
+                  isMobile
+                  onClick={() => setShowCreateQuestionModal(true)}
+                >
+                  Crear pregunta
+                </CreateContentButton>
+              ) : (
                 <>
                   <Link route="login">
                     <LoginButton isMobile>Ingresar</LoginButton>
@@ -120,6 +133,7 @@ const Navbar = ({ currentUser, logout }) => {
                   </Link>
                 </>
               )}
+
               <Link route="/">
                 <MobileNavItem>Inicio</MobileNavItem>
               </Link>
@@ -133,6 +147,12 @@ const Navbar = ({ currentUser, logout }) => {
           </NavMobileMenu>
         )}
       </CustomNav>
+      {/* {currentUser && (
+        <CreateQuestionModal
+          isOpen={showCreateQuestionModal}
+          onRequestClose={() => setShowCreateQuestionModal(false)}
+        />
+      )} */}
     </>
   );
 };
@@ -190,26 +210,27 @@ const UserButtonsContainer = styled.div`
 
 const LoginButton = styled.button`
   ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white`}
-  ${(props) =>
-    props.isMobile &&
-    `
-    ${tw`mt-2 mb-2`}
-    ${css`
-      display: block;
-      width: 100%;
-    `}
-  `}
 `;
 
 const RegisterButton = styled.button`
   ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
-  ${(props) => (props.isMobile ? tw`block w-full mt-2 mb-2` : tw`ml-4`)}
+  ${(props) => (props.isMobile ? tw`block w-full my-2` : tw`ml-4`)}
 
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 
 const UserZone = styled.div`
-  ${tw`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}
+  ${tw`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0`}
+`;
+
+const CreateContentButton = styled.button`
+  ${tw`hidden sm:block mr-3 px-4 py-2 font-semibold text-sm text-white hover:bg-white rounded-lg border-solid border border-gray-200 hover:border-white`}
+  :hover {
+    color: ${(props) => props.theme.colors.violetBlue.normal};
+  }
+
+  /* If is mobile resolution */
+  ${(props) => props.isMobile && tw`mb-2 w-full block`}
 `;
 
 const UserImageButton = styled.button`
