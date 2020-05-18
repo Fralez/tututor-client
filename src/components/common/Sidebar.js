@@ -18,7 +18,6 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
       isOpen={showSidebar}
       onStateChange={toggleSidebar}
       right
-      width={"35%"}
     >
       <div>
         <SidebarTitle onClick={logout}>

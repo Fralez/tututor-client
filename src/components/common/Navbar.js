@@ -7,12 +7,10 @@ import tw from "tailwind.macro";
 import { Menu, Close } from "@material-ui/icons";
 
 import Sidebar from "./Sidebar";
-// import CreateQuestionModal from "./CreateQuestionModal";
 
 const Navbar = ({ currentUser, logout }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-  // const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
 
   const toggleSidebar = (state) => {
     /**
@@ -85,12 +83,6 @@ const Navbar = ({ currentUser, logout }) => {
             <UserZone>
               {currentUser ? (
                 <>
-                  <CreateContentButton
-                    className="transition duration-150 ease-in-out"
-                    onClick={() => setShowCreateQuestionModal(true)}
-                  >
-                    Crear pregunta
-                  </CreateContentButton>
                   <UserImageButton onClick={toggleSidebar}>
                     <UserImage
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -113,17 +105,9 @@ const Navbar = ({ currentUser, logout }) => {
         </NavArea>
 
         {showMobileMenu && (
-          <NavMobileMenu className="block sm:hidden">
+          <NavMobileMenu>
             <MobileMenuArea>
-              {currentUser ? (
-                <CreateContentButton
-                  className="transition duration-150 ease-in-out"
-                  isMobile
-                  onClick={() => setShowCreateQuestionModal(true)}
-                >
-                  Crear pregunta
-                </CreateContentButton>
-              ) : (
+              {!currentUser && (
                 <>
                   <Link route="login">
                     <LoginButton isMobile>Ingresar</LoginButton>
@@ -147,12 +131,6 @@ const Navbar = ({ currentUser, logout }) => {
           </NavMobileMenu>
         )}
       </CustomNav>
-      {/* {currentUser && (
-        <CreateQuestionModal
-          isOpen={showCreateQuestionModal}
-          onRequestClose={() => setShowCreateQuestionModal(false)}
-        />
-      )} */}
     </>
   );
 };
@@ -210,6 +188,7 @@ const UserButtonsContainer = styled.div`
 
 const LoginButton = styled.button`
   ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white`}
+  ${(props) => props.isMobile && tw`block w-full my-2`}
 `;
 
 const RegisterButton = styled.button`
@@ -221,16 +200,6 @@ const RegisterButton = styled.button`
 
 const UserZone = styled.div`
   ${tw`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:pr-0`}
-`;
-
-const CreateContentButton = styled.button`
-  ${tw`hidden sm:block mr-3 px-4 py-2 font-semibold text-sm text-white hover:bg-white rounded-lg border-solid border border-gray-200 hover:border-white`}
-  :hover {
-    color: ${(props) => props.theme.colors.violetBlue.normal};
-  }
-
-  /* If is mobile resolution */
-  ${(props) => props.isMobile && tw`mb-2 w-full block`}
 `;
 
 const UserImageButton = styled.button`
