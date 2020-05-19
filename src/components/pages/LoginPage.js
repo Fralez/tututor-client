@@ -97,11 +97,11 @@ const LoginPage = () => {
 export default LoginPage;
 
 const WaveBackground = styled.img`
-  ${tw`h-screen w-full absolute opacity-75`}
+  ${tw`h-full w-full fixed opacity-75`}
 `;
 
 const Container = styled.div`
-  ${tw`min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8`}
+  ${tw`h-full w-full flex items-center justify-center px-4 sm:px-6 lg:px-8`}
 `;
 
 const FieldsContainer = styled.div`

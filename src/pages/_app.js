@@ -1,6 +1,8 @@
 import React from "react";
 import App from "next/app";
 import { DefaultSeo } from "next-seo";
+import moment from "moment";
+import "moment/locale/es";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import withSiteLayout from "@/src/layout/SiteLayout";
 import THEME from "@/src/styles/Theme.js";
@@ -11,11 +13,14 @@ import "react-dropdown/style.css"; // react-dropdown CSS
 
 const GlobalStyle = createGlobalStyle`
   #__next {
+    height:100%;
+    width: 100%;
     display: grid;
-    grid-template-rows: 4rem auto auto;
+    grid-template-rows: 4rem auto;
     grid-template-areas:
         "navbar"
         "content";
+    grid-auto-rows: minmax(min-content, max-content);
   }
 
   html {
@@ -63,6 +68,9 @@ const GlobalStyle = createGlobalStyle`
 
 class MyApp extends App {
   render() {
+    // Set moment locale to Spanish
+    moment.locale("es");
+
     const { Component, pageProps } = this.props;
     return (
       <>

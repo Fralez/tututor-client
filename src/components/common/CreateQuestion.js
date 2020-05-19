@@ -104,10 +104,11 @@ const CreateQuestionButton = styled.button`
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
   right: 2rem;
   bottom: 2rem;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 `;
 
 const ModalContainer = styled.div`
-  ${tw`z-20 fixed h-full w-full flex justify-center items-center`}
+  ${tw`z-20 fixed h-full w-full flex justify-center items-center inset-0`}
 `;
 
 const ModalOverlay = styled.div`

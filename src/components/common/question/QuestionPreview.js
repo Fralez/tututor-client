@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React /* , { useState, useEffect } */ from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import Moment from 'react-moment';
 
-import { BookmarkBorder, Bookmark, Star } from "@material-ui/icons";
+import { Star, /* BookmarkBorder, Bookmark, */  } from "@material-ui/icons";
+
 
 const descript =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
 const QuestionPreview = ({
-  question: { title, description, votes, creator },
+  question: {
+    title,
+    description,
+    votes,
+    created_at,
+    creator: { name },
+  },
 }) => {
+  // const [saveClciked, setSaveClciked] = useState(false);
 
-  const [saveClciked, setSaveClciked] = useState(false);
-  const [score, setScore] = useState(200);
-
-  const handleSaveButton = () => {
-    saveClciked ? setSaveClciked(false) : setSaveClciked(true);
-  };
+  // const handleSaveButton = () => {
+  //   saveClciked ? setSaveClciked(false) : setSaveClciked(true);
+  // };
 
   return (
     <Preview>
@@ -28,25 +34,25 @@ const QuestionPreview = ({
           ></img>
         </PorfileImgCon>
         <UserInfo>
-          <Name>Pepe Perez</Name>
-          <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle>
+          <Name>{name}</Name>
+          {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
         </UserInfo>
-        <Date>25th October, 2019</Date>
+        <DateView to={created_at}></DateView>
       </User>
       <InfoCon>
-        <Title>How do I create a HTML page?</Title>
+        <Title>{title}</Title>
         <Description>
-          {descript.length > 80 ? descript.slice(0, 80) + "..." : descript}
+          {description}
         </Description>
-        <SaveScoreCon>
-          <ScoreCon>
+        <SaveVotesCon>
+          <VotesCon>
             <StarIcon />
-            <Score>{score}</Score>
-          </ScoreCon>
-          <SaveButton onClick={handleSaveButton}>
+            <Votes>{votes}</Votes>
+          </VotesCon>
+          {/* <SaveButton onClick={handleSaveButton}>
             {saveClciked ? <SaveIconOn /> : <SaveIconOff />}
-          </SaveButton>
-        </SaveScoreCon>
+          </SaveButton> */}
+        </SaveVotesCon>
       </InfoCon>
     </Preview>
   );
@@ -55,7 +61,8 @@ const QuestionPreview = ({
 export default QuestionPreview;
 
 const Preview = styled.div`
-  ${tw`cursor-pointer w-4/5 rounded-md p-6 my-4 md:my-6 mx-auto border-solid border border-gray-300 flex flex-col justify-center`}
+  ${tw`cursor-pointer w-4/5 rounded-md p-6 my-4 md:my-6 border-solid border border-gray-300 flex flex-col justify-center`}
+  max-width: 80%;
 `;
 
 const PorfileImgCon = styled.div`
@@ -74,11 +81,11 @@ const Name = styled.div`
   ${tw`text-sm text-gray-700`}
 `;
 
-const Subtitle = styled.div`
-  ${tw`text-xs text-gray-500 mt-1`}
-`;
+// const Subtitle = styled.div`
+//   ${tw`text-xs text-gray-500 mt-1`}
+// `;
 
-const Date = styled.div`
+const DateView = styled(Moment)`
   ${tw`text-xs w-auto ml-auto text-right text-gray-700`}
 `;
 
@@ -92,14 +99,14 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  ${tw`text-sm w-5/6 text-gray-800`}
+  ${tw`text-sm w-11/12 text-gray-800 truncate max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl`}
 `;
 
-const SaveScoreCon = styled.div`
+const SaveVotesCon = styled.div`
   ${tw`ml-auto flex`}
 `;
 
-const SaveButton = styled.div`
+/* const SaveButton = styled.div`
   ${tw`ml-4`}
 `;
 
@@ -113,15 +120,15 @@ const SaveIconOn = styled(Bookmark)`
   ${tw`text-2lg cursor-pointer`}
   transform: scale(1.5);
   color: ${(props) => props.theme.colors.pinkCyclamen.light};
-`;
+`; */
 
-const Score = styled.div`
+const Votes = styled.div`
   ${tw`text-xl text-gray-800 font-semibold`}
 `;
 const StarIcon = styled(Star)`
   color: ${(props) => props.theme.colors.yellowMustard.normal};
 `;
 
-const ScoreCon = styled.div`
+const VotesCon = styled.div`
   ${tw`flex`}
 `;

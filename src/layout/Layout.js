@@ -4,7 +4,6 @@ import NextNprogress from "nextjs-progressbar";
 import styled from "styled-components";
 import Navbar from "@/src/components/common/Navbar";
 
-
 const Layout = (props) => (
   <>
     <NextNprogress
@@ -14,7 +13,14 @@ const Layout = (props) => (
       height="4"
     />
     <Navbar />
-    <PageContainer>{props.children}</PageContainer>
+    <div
+      style={{
+        gridArea: "content / content / content / content",
+        overflowX: "hidden",
+      }}
+    >
+      {props.children}
+    </div>
   </>
 );
 
@@ -23,7 +29,3 @@ Layout.propTypes = {
 };
 
 export default Layout;
-
-const PageContainer = styled.div`
-  grid-area: content / content / content / content;
-`;

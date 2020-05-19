@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import tw from "tailwind.macro";
 import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
@@ -18,7 +20,6 @@ const HomePage = ({ currentUser }) => {
 
   const getQuestionFeed = async () => {
     const res = await questions.index();
-    console.log(res);
     if (res.status == 200) {
       setQuestionFeed(res.data);
     }
@@ -26,9 +27,11 @@ const HomePage = ({ currentUser }) => {
 
   return (
     <>
-      {questionFeed.map((question) => (
-        <QuestionPreview key={question.id} question={question} />
-      ))}
+      <QuestionContainer>
+        {questionFeed.map((question) => (
+          <QuestionPreview key={question.id} question={question} />
+        ))}
+      </QuestionContainer>
       {currentUser && (
         <CreateQuestion
           currentUser={currentUser}
@@ -43,3 +46,7 @@ const HomePage = ({ currentUser }) => {
 };
 
 export default withCurrentUser(HomePage);
+
+const QuestionContainer = styled.div`
+  ${tw`flex flex-col items-center`}
+`;
