@@ -22,6 +22,10 @@ const THEME = {
     yellowMustard: {
       normal: "#FFDB4C",
       light: "#FFDE4F"
+    },
+    green: {
+      normal: "#48BB78",
+      light: "#68D391"
     }
   }
 };

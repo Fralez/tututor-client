@@ -9,6 +9,7 @@ import {
   KeyboardArrowDown,
   ModeCommentOutlined,
   Star,
+  AddCircleOutlined
 } from "@material-ui/icons";
 import AnswersList from "../common/answer/AnswersList";
 
@@ -43,9 +44,9 @@ const QuestionPage = () => {
             <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle>
           </UserInfo>
           <Date>25th October, 2019</Date>
-          <DropdownButton>
+          {/* <DropdownButton>
             <DropdownIcon />
-          </DropdownButton>
+          </DropdownButton> */}
         </User>
         <Title>How do I create an HTML page?</Title>
         <Description>
@@ -64,16 +65,20 @@ const QuestionPage = () => {
             <Score>{score}</Score>
             <ArrowRight onClick={more} />
           </Punctuation>
-          <CommentButton>
+          {/* <CommentButton>
             <CommentIcon />
           </CommentButton>
           <SaveButton onClick={handleSaveButton}>
             {saveClciked ? <SaveIconOn /> : <SaveIconOff />}
-          </SaveButton>
+          </SaveButton> */}
         </IconsCon>
       </Question>
       <AnswerTitle>Answers</AnswerTitle>
       <AnswersList />
+      {/* <AddAnswer>
+        <AddIcon/>
+        Add Answer
+      </AddAnswer> */}
     </Container>
   );
 };
@@ -81,7 +86,7 @@ const QuestionPage = () => {
 export default QuestionPage;
 
 const Container = styled.div`
-  ${tw`w-screen`}
+  ${tw`w-full`}
 `;
 
 const Question = styled.div`
@@ -89,7 +94,7 @@ const Question = styled.div`
 `;
 
 const PorfileImgCon = styled.div`
-  ${tw`h-10 w-10 md:w-12 md:h-12`}
+  ${tw`h-8 w-8 md:w-10 md:h-10`}
 `;
 
 const User = styled.div`
@@ -101,11 +106,11 @@ const UserInfo = styled.div`
 `;
 
 const Name = styled.div`
-  ${tw`text-gray-700`}
+  ${tw`text-gray-700 text-sm`}
 `;
 
 const Subtitle = styled.div`
-  ${tw`text-sm text-gray-500 mt-1`}
+  ${tw`text-xs text-gray-500 mt-1`}
 `;
 
 const Date = styled.div`
@@ -185,5 +190,16 @@ const StarIcon = styled(Star)`
 `;
 
 const AnswerTitle = styled.div`
-  ${tw`ml-4 text-bold text-gray-800 text-2xl mt-4`}
+  ${tw`ml-16 text-bold text-gray-800 text-2xl mt-4`}
 `;
+
+const AddAnswer = styled.button`
+  ${tw`w-3/4 h-12 flex justify-center items-center rounded-md mx-auto my-8 font-semibold`}
+  border: 2px solid ${(props) => props.theme.colors.pinkCyclamen.light};
+  color: ${(props) => props.theme.colors.pinkCyclamen.light};
+`
+
+const AddIcon = styled(AddCircleOutlined)`
+  ${tw`text-white mr-2`}
+  color: ${(props) => props.theme.colors.pinkCyclamen.light};
+`

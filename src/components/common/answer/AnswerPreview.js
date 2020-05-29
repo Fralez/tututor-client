@@ -52,11 +52,12 @@ const descript =
 export default AnswerPreview;
 
 const Preview = styled.div`
-  ${tw`cursor-pointer w-4/5 rounded-md p-6 mt-6 md:mt-8 ml-16 md:ml-24 border-solid border border-gray-300 flex flex-col justify-center`}
+  ${tw`w-4/5 rounded-md p-6 mt-6 md:mt-8 ml-16 md:ml-24 flex flex-col justify-center`}
+  border-left: 0.5rem solid #A0AEC0;
 `;
 
 const PorfileImgCon = styled.div`
-  ${tw`h-8 w-8 md:w-10 md:h-10`}
+  ${tw`h-6 w-6 md:w-8 md:h-8`}
 `;
 
 const User = styled.div`
