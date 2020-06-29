@@ -5,8 +5,9 @@ import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
 
-import CreateQuestion from "../common/CreateQuestion";
+import CreateQuestionModal from "../common/CreateQuestionModal";
 import QuestionPreview from "../common/question/QuestionPreview";
+import SearchBar from "../common/search/SearchBar";
 
 const HomePage = ({ currentUser }) => {
   const { questions } = api();
@@ -26,14 +27,15 @@ const HomePage = ({ currentUser }) => {
   };
 
   return (
-    <>
+    <HomeContainer>
+      <SearchBar />
       <QuestionContainer>
         {questionFeed.map((question) => (
           <QuestionPreview key={question.id} question={question} />
         ))}
       </QuestionContainer>
       {currentUser && (
-        <CreateQuestion
+        <CreateQuestionModal
           currentUser={currentUser}
           showCreateQuestionModal={showCreateQuestionModal}
           toggleModal={() =>
@@ -41,12 +43,16 @@ const HomePage = ({ currentUser }) => {
           }
         />
       )}
-    </>
+    </HomeContainer>
   );
 };
 
 export default withCurrentUser(HomePage);
 
+const HomeContainer = styled.div`
+${tw`flex flex-col items-center`}
+`;
+
 const QuestionContainer = styled.div`
-  ${tw`flex flex-col items-center`}
+  ${tw`flex flex-col items-center max-w-full`}
 `;

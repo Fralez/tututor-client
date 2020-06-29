@@ -6,7 +6,7 @@ import api from "@/src/api";
 import SimpleReactValidator from "simple-react-validator";
 import { Close, Add } from "@material-ui/icons";
 
-const CreateQuestion = ({
+const CreateQuestionModal = ({
   currentUser,
   showCreateQuestionModal,
   toggleModal,
@@ -97,7 +97,7 @@ const CreateQuestion = ({
   );
 };
 
-export default CreateQuestion;
+export default CreateQuestionModal;
 
 const CreateQuestionButton = styled.button`
   ${tw`fixed p-3 rounded-full text-white`}
