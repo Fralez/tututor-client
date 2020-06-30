@@ -11,6 +11,7 @@ const descript =
 
 const QuestionPreview = ({
   question: {
+    id,
     title,
     description,
     votes,

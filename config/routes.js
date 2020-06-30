@@ -13,6 +13,6 @@ routes
   })
   .add({
     name: "question",
-    pattern: "/question",
+    pattern: "/question/:id",
     page: "/question",
 });

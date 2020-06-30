@@ -12,8 +12,38 @@ import {
   AddCircleOutlined
 } from "@material-ui/icons";
 import AnswersList from "../common/answer/AnswersList";
+import Moment from 'react-moment';
 
-const QuestionPage = () => {
+const QuestionPage = (id) => {
+
+  const [questioneses, setQuestioneses] = useState([
+    {
+      id: 1,
+      title: "tu",
+      description: "isjhiuerthu",
+      votes: 300,
+      created_at: new Date,
+      creator: { name: "Juan Perez" },
+    },
+    {
+      id: 2,
+      title: "Blabla",
+      description:
+        "sihiluthwouthuouhtisjhiuerthudftgerteiuhiwqhouqtwhoqiihuhuihtiertheoiurthi",
+      votes: 201,
+      created_at: new Date(),
+      creator: { name: "Francisco Pancho" },
+    },
+    {
+      id: 3,
+      title: "Xdxd",
+      description: "awoiwlojwwkisjhiuerthu",
+      votes: 305,
+      created_at: new Date(),
+      creator: { name: "Juana de Arco" },
+    },
+  ]);
+
   const handleSaveButton = () => {
     saveClciked ? setSaveClciked(false) : setSaveClciked(true);
   };
@@ -27,7 +57,6 @@ const QuestionPage = () => {
   };
 
   const [saveClciked, setSaveClciked] = useState(false);
-  const [score, setScore] = useState(0);
 
   return (
     <Container>
@@ -40,29 +69,23 @@ const QuestionPage = () => {
             ></img>
           </PorfileImgCon>
           <UserInfo>
-            <Name>Pepe Perez</Name>
-            <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle>
+            <Name>{questioneses[0].name}</Name>
+            {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
           </UserInfo>
-          <Date>25th October, 2019</Date>
+          <DateView to={questioneses[0].created_at}></DateView>
           {/* <DropdownButton>
             <DropdownIcon />
           </DropdownButton> */}
         </User>
-        <Title>How do I create an HTML page?</Title>
+        <Title>{questioneses[0].title}</Title>
         <Description>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          {questioneses[0].description}
         </Description>
         <IconsCon>
           <Punctuation>
             <ArrowLeft onClick={less} />
             <StarIcon />
-            <Score>{score}</Score>
+            <Score>{questioneses[0].votes}</Score>
             <ArrowRight onClick={more} />
           </Punctuation>
           {/* <CommentButton>
@@ -82,6 +105,11 @@ const QuestionPage = () => {
     </Container>
   );
 };
+
+QuestionPage.getInitialProps = async ({query: {id}}) => {
+  console.log(`hola ${ctx.query}`)
+  return { id: id }
+}
 
 export default QuestionPage;
 
@@ -113,7 +141,7 @@ const Subtitle = styled.div`
   ${tw`text-xs text-gray-500 mt-1`}
 `;
 
-const Date = styled.div`
+const DateView = styled(Moment)`
   ${tw`text-sm w-auto ml-auto text-right text-gray-700`}
 `;
 

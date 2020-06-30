@@ -4,11 +4,11 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 
 const QuestionList = () => {
+  
+
   return (
     <Container>
-      <QuestionPreview />
-      <QuestionPreview />
-      <QuestionPreview />
+      
     </Container>
   );
 };
