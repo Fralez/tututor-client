@@ -27,4 +27,7 @@ export default () => ({
       { headers: { Authorization: authToken } }
     );
   },
+  search: (query) => {
+    return axios.get(`${BASE_URL}/search/questions?q=${query}`);
+  },
 });
