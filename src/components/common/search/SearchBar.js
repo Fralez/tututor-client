@@ -18,7 +18,6 @@ const SearchBar = () => {
     try {
       if (searchQuery !== "") {
         const res = await questions.search(searchQuery);
-        console.log(res);
         if (res.status == 200) {
           setResults(res.data.questions);
           // Display answers
