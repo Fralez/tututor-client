@@ -1,17 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Router } from "@/config/routes";
-import NProgress from "nprogress";
-
-// Progress bar
-Router.onRouteChangeStart = () => {
-  NProgress.start();
-};
-Router.onRouteChangeComplete = () => NProgress.done();
-Router.onRouteChangeError = () => NProgress.done();
+import NextNprogress from "nextjs-progressbar";
+import styled from "styled-components";
+import Navbar from "@/src/components/common/Navbar";
 
 const Layout = (props) => (
-  <div className="layout-container">{props.children}</div>
+  <>
+    <NextNprogress
+      color="#FF66A7" // Pink Cyclamen
+      startPosition={0.3}
+      stopDelayMs={400}
+      height="4"
+    />
+    <Navbar />
+    <div
+      style={{
+        gridArea: "content / content / content / content",
+        overflowX: "hidden",
+      }}
+    >
+      {props.children}
+    </div>
+  </>
 );
 
 Layout.propTypes = {
