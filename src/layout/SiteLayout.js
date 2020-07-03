@@ -1,29 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import api from "@/src/api";
 import { CurrentUserProvider } from "@/lib/CurrentUserContext";
-import { Router } from "@/config/routes";
+import { withRouter } from "next/router";
 
 export default function withSiteLayout(ChildComponent) {
-  return class SiteLayout extends React.Component {
-    state = {
-      currentUser: null,
-    };
+  return withRouter(({ router, ...rest }) => {
+    const [currentUser, setCurrentUser] = useState(null);
 
-    logout = () => {
+    const logout = () => {
       localStorage.removeItem("user-jwt");
-      this.setState({ currentUser: null });
-      Router.reload();
+      setCurrentUser(null);
+      router.reload();
     };
 
-    fetchUser = () => {
+    const fetchUser = () => {
       const token = localStorage.getItem("user-jwt");
-      if (!this.currentUser && token) {
+      if (!currentUser && token) {
         const { users } = api();
         const payload = jwtDecode(token);
         users.show(token, payload.user_id).then((res) => {
           if (res.status == 200) {
-            this.setState({ currentUser: res.data.user });
+            setCurrentUser(res.data.user);
           } else {
             logout();
           }
@@ -31,25 +29,20 @@ export default function withSiteLayout(ChildComponent) {
       }
     };
 
-    componentDidMount() {
-      this.fetchUser();
-    }
+    useEffect(() => {
 
-    componentDidUpdate() {
-      this.fetchUser();
-    }
+      fetchUser();
+    });
 
-    render() {
-      return (
-        <CurrentUserProvider
-          value={{
-            currentUser: this.state.currentUser,
-            logout: this.logout,
-          }}
-        >
-          <ChildComponent {...this.props} />
-        </CurrentUserProvider>
-      );
-    }
-  };
+    return (
+      <CurrentUserProvider
+        value={{
+          currentUser: currentUser,
+          logout: logout,
+        }}
+      >
+        <ChildComponent {...rest} />
+      </CurrentUserProvider>
+    );
+  });
 }

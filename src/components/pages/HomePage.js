@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import withCurrentUser from "@/lib/withCurrentUser";
+import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
@@ -10,6 +11,8 @@ import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
 
 const HomePage = ({ currentUser }) => {
+  const Router = useRouter();
+
   const { questions } = api();
 
   const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
@@ -31,7 +34,12 @@ const HomePage = ({ currentUser }) => {
       <SearchBar />
       <QuestionContainer>
         {questionFeed.map((question) => (
-          <QuestionPreview key={question.id} question={question} />
+          <QuestionPreview
+            // TODO: Make onClick work
+            onClick={() => Router.push(`/question/${question.id}`)}
+            key={question.id}
+            question={question}
+          />
         ))}
       </QuestionContainer>
       {currentUser && (
@@ -50,7 +58,7 @@ const HomePage = ({ currentUser }) => {
 export default withCurrentUser(HomePage);
 
 const HomeContainer = styled.div`
-${tw`flex flex-col items-center`}
+  ${tw`flex flex-col items-center`}
 `;
 
 const QuestionContainer = styled.div`

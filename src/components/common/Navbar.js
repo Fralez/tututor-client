@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "@/config/routes";
+import Link from "next/link";
 import withCurrentUser from "@/lib/withCurrentUser";
 import styled from "styled-components";
 import tw from "tailwind.macro";
@@ -58,7 +58,7 @@ const Navbar = ({ currentUser, logout }) => {
               </HamburguerButton>
             </HamburguerButtonContainer>
             <NavContent>
-              <Link route="/">
+              <Link href="/">
                 <LogoContainer>
                   <Logo src="/img/logos/tututor.svg" alt="TuTutor logo" />
                   <LogoText className="transition duration-150 ease-in-out">
@@ -68,13 +68,13 @@ const Navbar = ({ currentUser, logout }) => {
               </Link>
               <NavItems>
                 <div className="flex">
-                  <Link route="/">
+                  <Link href="/">
                     <NavItem>Inicio</NavItem>
                   </Link>
-                  <Link route="/">
+                  <Link href="/">
                     <NavItem>Explorar</NavItem>
                   </Link>
-                  <Link route="/">
+                  <Link href="/">
                     <NavItem>Ranking</NavItem>
                   </Link>
                 </div>
@@ -92,11 +92,15 @@ const Navbar = ({ currentUser, logout }) => {
                 </>
               ) : (
                 <UserButtonsContainer>
-                  <Link route="login">
-                    <LoginButton>Ingresar</LoginButton>
+                  <Link href="/login">
+                    <a>
+                      <LoginButton>Ingresar</LoginButton>
+                    </a>
                   </Link>
-                  <Link route="register">
-                    <RegisterButton>Registrarse</RegisterButton>
+                  <Link href="/register">
+                    <a>
+                      <RegisterButton>Registrarse</RegisterButton>
+                    </a>
                   </Link>
                 </UserButtonsContainer>
               )}
@@ -109,22 +113,26 @@ const Navbar = ({ currentUser, logout }) => {
             <MobileMenuArea>
               {!currentUser && (
                 <>
-                  <Link route="login">
-                    <LoginButton isMobile>Ingresar</LoginButton>
+                  <Link href="/login">
+                    <a>
+                      <LoginButton isMobile>Ingresar</LoginButton>
+                    </a>
                   </Link>
-                  <Link route="register">
-                    <RegisterButton isMobile>Registrarse</RegisterButton>
+                  <Link href="/register">
+                    <a>
+                      <RegisterButton isMobile>Registrarse</RegisterButton>
+                    </a>
                   </Link>
                 </>
               )}
 
-              <Link route="/">
+              <Link href="/">
                 <MobileNavItem>Inicio</MobileNavItem>
               </Link>
-              <Link route="/">
+              <Link href="/">
                 <MobileNavItem>Explorar</MobileNavItem>
               </Link>
-              <Link route="/">
+              <Link href="/">
                 <MobileNavItem>Ranking</MobileNavItem>
               </Link>
             </MobileMenuArea>

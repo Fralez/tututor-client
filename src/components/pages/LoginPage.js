@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import api from "@/src/api";
-import { Router, Link } from "@/config/routes";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import SimpleReactValidator from "simple-react-validator";
 import { AccountCircle } from "@material-ui/icons";
 
 const LoginPage = () => {
+  const Router = useRouter();
   const validator = new SimpleReactValidator();
 
   const { auth } = api();
@@ -42,8 +44,10 @@ const LoginPage = () => {
             <InfoHeader>Iniciar sesión</InfoHeader>
             <SuggestionText>
               ¿No estás registrado? &nbsp;
-              <Link route="register">
-                <SuggestionTextLink>Registrate</SuggestionTextLink>
+              <Link href="register">
+                <a>
+                  <SuggestionTextLink>Registrate</SuggestionTextLink>
+                </a>
               </Link>
             </SuggestionText>
           </Info>
