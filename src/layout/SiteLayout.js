@@ -6,27 +6,26 @@ import { withRouter } from "next/router";
 
 export default function withSiteLayout(ChildComponent) {
   return withRouter(({ router, ...rest }) => {
+    const { sessions } = api();
     const [currentUser, setCurrentUser] = useState(null);
 
-    const logout = () => {
-      localStorage.removeItem("user-jwt");
-      setCurrentUser(null);
+    const logout = async () => {
+      try {
+        sessions.logout();
+      } catch (error) {}
       router.reload();
     };
 
-    const fetchUser = () => {
-      const token = localStorage.getItem("user-jwt");
-      if (!currentUser && token) {
-        const { users } = api();
-        const payload = jwtDecode(token);
-        users.show(token, payload.user_id).then((res) => {
-          if (res.status == 200) {
-            setCurrentUser(res.data.user);
-          } else {
-            logout();
-          }
-        });
-      }
+    const fetchUser = async () => {
+      // TODO: Request logged-in
+      try {
+        const res = await sessions.loggedIn();
+        if ((res.status = 200)) {
+          setCurrentUser(res.data.user);
+        } else {
+          await logout();
+        }
+      } catch (error) {}
     };
 
     useEffect(() => {

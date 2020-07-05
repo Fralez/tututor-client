@@ -56,9 +56,7 @@ const RegisterPage = () => {
         birth_date: birthDate,
       });
       if (res.status == 201) {
-        // Store JWT on localStorage
-        localStorage.setItem("user-jwt", res.data.token);
-        Router.push("/");
+        Router.push("/login");
       }
     } catch (error) {
       if (error.response && error.response.status == 400) {

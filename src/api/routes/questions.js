@@ -6,10 +6,8 @@ export default () => ({
   index: () => {
     return axios.get(`${BASE_URL}/questions/`);
   },
-  show: (authToken = "", id) => {
-    return axios.get(`${BASE_URL}/questions/${id}`, {
-      headers: { Authorization: authToken },
-    });
+  show: (id) => {
+    return axios.get(`${BASE_URL}/questions/${id}`);
   },
   create: (authToken = "", question = {}) => {
     return axios.post(

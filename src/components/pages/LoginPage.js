@@ -12,7 +12,7 @@ const LoginPage = () => {
   const Router = useRouter();
   const validator = new SimpleReactValidator();
 
-  const { auth } = api();
+  const { sessions } = api();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,10 +24,8 @@ const LoginPage = () => {
       if (!validator.allValid())
         throw new Error("Validations not totally passed");
 
-      const res = await auth.login(email, password);
-      if (res.status == 200) {
-        // Store JWT on localStorage
-        localStorage.setItem("user-jwt", res.data.token);
+      const res = await sessions.create(email, password);
+      if (res.status == 201) {
         Router.push("/");
       }
     } catch (error) {
