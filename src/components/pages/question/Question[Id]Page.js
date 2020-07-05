@@ -25,11 +25,9 @@ const QuestionIdPage = ({
     description,
     votes,
     created_at,
-    user_vars,
     creator: { name },
   },
 }) => {
-  console.log(user_vars);
   const { questions } = api();
   const [votesCounter, setVotes] = useState(votes);
   // TODO: Change Upvote and Downvote icons to plus and less symbols
