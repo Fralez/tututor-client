@@ -12,26 +12,31 @@ export default function withSiteLayout(ChildComponent) {
 
     logout = () => {
       localStorage.removeItem("user-jwt");
-      localStorage.removeItem("user");
-      this.setState({ currentUser: {} });
+      this.setState({ currentUser: null });
       Router.reload();
     };
 
-    componentDidMount() {
-      const user = localStorage.getItem("user");
-      if (user) {
-        this.setState({ currentUser: JSON.parse(user) });
-      } else {
-        const token = localStorage.getItem("user-jwt");
-        if (token) {
-          const { users } = api();
-          const payload = jwtDecode(token);
-          users.show(token, payload.user_id).then((res) => {
+    fetchUser = () => {
+      const token = localStorage.getItem("user-jwt");
+      if (!this.currentUser && token) {
+        const { users } = api();
+        const payload = jwtDecode(token);
+        users.show(token, payload.user_id).then((res) => {
+          if (res.status == 200) {
             this.setState({ currentUser: res.data.user });
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-          });
-        }
+          } else {
+            logout();
+          }
+        });
       }
+    };
+
+    componentDidMount() {
+      this.fetchUser();
+    }
+
+    componentDidUpdate() {
+      this.fetchUser();
     }
 
     render() {
