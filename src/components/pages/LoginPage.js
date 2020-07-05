@@ -45,9 +45,7 @@ const LoginPage = () => {
             <SuggestionText>
               ¿No estás registrado? &nbsp;
               <Link href="register">
-                <a>
-                  <SuggestionTextLink>Registrate</SuggestionTextLink>
-                </a>
+                <SuggestionTextLink>Registrate</SuggestionTextLink>
               </Link>
             </SuggestionText>
           </Info>

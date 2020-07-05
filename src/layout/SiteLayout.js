@@ -30,7 +30,6 @@ export default function withSiteLayout(ChildComponent) {
     };
 
     useEffect(() => {
-
       fetchUser();
     });
 

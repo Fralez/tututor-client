@@ -6,8 +6,10 @@ export default () => ({
   index: () => {
     return axios.get(`${BASE_URL}/questions/`);
   },
-  show: (id) => {
-    return axios.get(`${BASE_URL}/questions/${id}`);
+  show: (authToken = "", id) => {
+    return axios.get(`${BASE_URL}/questions/${id}`, {
+      headers: { Authorization: authToken },
+    });
   },
   create: (authToken = "", question = {}) => {
     return axios.post(
@@ -18,11 +20,23 @@ export default () => ({
       { headers: { Authorization: authToken } }
     );
   },
-  voteQuestion: (authToken = "", id, vote = 0) => {
+  voteQuestion: (authToken = "", userId, questionId, isNegative = false) => {
     return axios.post(
-      `${BASE_URL}/questions/vote/${id}`,
+      `${BASE_URL}/questions/vote`,
       {
-        vote: vote,
+        user_id: userId,
+        question_id: questionId,
+        negative: isNegative,
+      },
+      { headers: { Authorization: authToken } }
+    );
+  },
+  saveQuestion: (authToken = "", userId, questionId) => {
+    return axios.post(
+      `${BASE_URL}/questions/save`,
+      {
+        user_id: userId,
+        question_id: questionId,
       },
       { headers: { Authorization: authToken } }
     );

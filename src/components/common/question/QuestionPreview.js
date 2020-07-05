@@ -2,11 +2,13 @@ import React /* , { useState, useEffect } */ from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import Moment from "react-moment";
+import { useRouter } from "next/router";
 
 import { Star /* BookmarkBorder, Bookmark, */ } from "@material-ui/icons";
 
 const QuestionPreview = ({
   question: {
+    id,
     title,
     description,
     votes,
@@ -14,6 +16,8 @@ const QuestionPreview = ({
     creator: { name },
   },
 }) => {
+  const Router = useRouter();
+
   // const [saveClciked, setSaveClciked] = useState(false);
 
   // const handleSaveButton = () => {
@@ -21,7 +25,7 @@ const QuestionPreview = ({
   // };
 
   return (
-    <Preview>
+    <Preview onClick={() => Router.push(`/question/${id}`)}>
       <User>
         <PorfileImgCon>
           <img
