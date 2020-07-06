@@ -3,6 +3,7 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 import api from "@/src/api";
 
+import Filter from "./Filter";
 import { Search, Close } from "@material-ui/icons";
 
 const SearchBar = () => {
@@ -33,6 +34,7 @@ const SearchBar = () => {
 
   return (
     <Container>
+      <SearchIcon onClick={handleSearch} />
       <QueryTextField
         aria-label="SearchQuery"
         name="SearchQuery"
@@ -41,7 +43,7 @@ const SearchBar = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <SearchIcon onClick={handleSearch} />
+      <Filter />
       {showResults && (
         <ResultsDropdown>
           <CloseIcon onClick={() => setShowResults(false)} />
@@ -57,16 +59,20 @@ const SearchBar = () => {
 export default SearchBar;
 
 const Container = styled.div`
-  ${tw`relative w-4/5 rounded-full p-6 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
+  ${tw`relative w-4/5 rounded-md h-12 p-6 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
   max-width: 80%;
 `;
 
+// const Filter = styled.div`
+//   ${tw`relative inline-block text-left m-4 text-pink-500`}
+// `;
+
 const QueryTextField = styled.input`
-  ${tw`w-full h-full`};
+  ${tw`w-full`};
 `;
 
 const SearchIcon = styled(Search)`
-  ${tw`cursor-pointer`};
+  ${tw`cursor-pointer m-4`};
   color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 
