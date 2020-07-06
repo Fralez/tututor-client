@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
+
 import api from "@/src/api";
 
 import { Search, Close } from "@material-ui/icons";
 
 const SearchBar = () => {
+  const Router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState(null);
@@ -27,9 +30,9 @@ const SearchBar = () => {
     } catch (error) {}
   };
 
-  const handleResultClick = () => {
-    // TODO: Redirect to selected result question
-  }
+  const handleResultClick = (result) => {
+    Router.push(`/question/${result.id}`);
+  };
 
   return (
     <Container>
@@ -46,7 +49,11 @@ const SearchBar = () => {
         <ResultsDropdown>
           <CloseIcon onClick={() => setShowResults(false)} />
           {results.map((result) => {
-            return <Result onClick={() => handleResultClick(result)}>{result.title}</Result>;
+            return (
+              <Result key={result.id} onClick={() => handleResultClick(result)}>
+                {result.title}
+              </Result>
+            );
           })}
         </ResultsDropdown>
       )}

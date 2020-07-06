@@ -20,10 +20,12 @@ const HomePage = ({ currentUser }) => {
   }, []);
 
   const getQuestionFeed = async () => {
-    const res = await questions.index();
-    if (res.status == 200) {
-      setQuestionFeed(res.data);
-    }
+    try {
+      const res = await questions.index();
+      if (res.status == 200) {
+        setQuestionFeed(res.data);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -50,9 +52,9 @@ const HomePage = ({ currentUser }) => {
 export default withCurrentUser(HomePage);
 
 const HomeContainer = styled.div`
-${tw`flex flex-col items-center`}
+  ${tw`flex flex-col items-center`}
 `;
 
 const QuestionContainer = styled.div`
-  ${tw`flex flex-col items-center max-w-full`}
+  ${tw`flex flex-col items-center max-w-full w-full`}
 `;

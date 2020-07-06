@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import api from "@/src/api";
-import { Router, Link } from "@/config/routes";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import withCurrentUser from "@/lib/withCurrentUser";
 
 import SimpleReactValidator from "simple-react-validator";
 import { AccountCircle } from "@material-ui/icons";
 
-const LoginPage = () => {
+const LoginPage = ({ setCurrentUser }) => {
+  const Router = useRouter();
   const validator = new SimpleReactValidator();
 
-  const { auth } = api();
+  const { sessions } = api();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,10 +25,10 @@ const LoginPage = () => {
       if (!validator.allValid())
         throw new Error("Validations not totally passed");
 
-      const res = await auth.login(email, password);
-      if (res.status == 200) {
-        // Store JWT on localStorage
-        localStorage.setItem("user-jwt", res.data.token);
+      const res = await sessions.create(email, password);
+      if (res.status == 201) {
+        // Set current user
+        setCurrentUser(res.data.user);
         Router.push("/");
       }
     } catch (error) {
@@ -42,7 +45,7 @@ const LoginPage = () => {
             <InfoHeader>Iniciar sesión</InfoHeader>
             <SuggestionText>
               ¿No estás registrado? &nbsp;
-              <Link route="register">
+              <Link href="register">
                 <SuggestionTextLink>Registrate</SuggestionTextLink>
               </Link>
             </SuggestionText>
@@ -94,7 +97,7 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default withCurrentUser(LoginPage);
 
 const WaveBackground = styled.img`
   ${tw`h-full w-full fixed opacity-75`}

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import api from "@/src/api";
-import { Router, Link } from "@/config/routes";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import DatePicker from "react-datepicker";
 import Dropdown from "react-dropdown";
@@ -10,6 +11,7 @@ import SimpleReactValidator from "simple-react-validator";
 import { Create } from "@material-ui/icons";
 
 const RegisterPage = () => {
+  const Router = useRouter();
   // WARNING: This label-value pairs are declared on BACKEND - be careful when changing
   const genderOptions = [
     { value: 1, label: "Hombre" },
@@ -54,9 +56,7 @@ const RegisterPage = () => {
         birth_date: birthDate,
       });
       if (res.status == 201) {
-        // Store JWT on localStorage
-        localStorage.setItem("user-jwt", res.data.token);
-        Router.pushRoute("/");
+        Router.push("/login");
       }
     } catch (error) {
       if (error.response && error.response.status == 400) {
@@ -79,7 +79,7 @@ const RegisterPage = () => {
             <InfoHeader>Registrate</InfoHeader>
             <SuggestionText>
               ¿Ya estás registrado? &nbsp;
-              <Link route="login">
+              <Link href="/login">
                 <SuggestionTextLink>Inicia sesión</SuggestionTextLink>
               </Link>
             </SuggestionText>

@@ -1,55 +1,45 @@
-import React from "react";
-import jwtDecode from "jwt-decode";
+import React, { useState, useEffect } from "react";
 import api from "@/src/api";
 import { CurrentUserProvider } from "@/lib/CurrentUserContext";
-import { Router } from "@/config/routes";
+import { withRouter } from "next/router";
 
 export default function withSiteLayout(ChildComponent) {
-  return class SiteLayout extends React.Component {
-    state = {
-      currentUser: null,
+  return withRouter(({ router, ...rest }) => {
+    const { sessions } = api();
+    const [currentUser, setCurrentUser] = useState(null);
+
+    const logout = async () => {
+      try {
+        sessions.logout();
+      } catch (error) {}
+      router.reload();
     };
 
-    logout = () => {
-      localStorage.removeItem("user-jwt");
-      this.setState({ currentUser: null });
-      Router.reload();
+    const fetchUser = async () => {
+      try {
+        const res = await sessions.loggedIn();
+        if ((res.status = 200)) {
+          setCurrentUser(res.data.user);
+        } else {
+          await logout();
+        }
+      } catch (error) {}
     };
 
-    fetchUser = () => {
-      const token = localStorage.getItem("user-jwt");
-      if (!this.currentUser && token) {
-        const { users } = api();
-        const payload = jwtDecode(token);
-        users.show(token, payload.user_id).then((res) => {
-          if (res.status == 200) {
-            this.setState({ currentUser: res.data.user });
-          } else {
-            logout();
-          }
-        });
-      }
-    };
+    useEffect(() => {
+      fetchUser();
+    }, []);
 
-    componentDidMount() {
-      this.fetchUser();
-    }
-
-    componentDidUpdate() {
-      this.fetchUser();
-    }
-
-    render() {
-      return (
-        <CurrentUserProvider
-          value={{
-            currentUser: this.state.currentUser,
-            logout: this.logout,
-          }}
-        >
-          <ChildComponent {...this.props} />
-        </CurrentUserProvider>
-      );
-    }
-  };
+    return (
+      <CurrentUserProvider
+        value={{
+          currentUser: currentUser,
+          setCurrentUser: setCurrentUser,
+          logout: logout,
+        }}
+      >
+        <ChildComponent {...rest} />
+      </CurrentUserProvider>
+    );
+  });
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
+
 import api from "@/src/api";
 
 import SimpleReactValidator from "simple-react-validator";
@@ -11,6 +13,7 @@ const CreateQuestionModal = ({
   showCreateQuestionModal,
   toggleModal,
 }) => {
+  const Router = useRouter();
   const validator = new SimpleReactValidator();
 
   const { questions } = api();
@@ -25,14 +28,15 @@ const CreateQuestionModal = ({
       if (!validator.allValid())
         throw new Error("Validations not totally passed");
 
-      const res = await questions.create(localStorage.getItem("user-jwt"), {
+      const res = await questions.create({
         title: title,
         description: description,
       });
       if (res.status == 201) {
+        // Redirect to the created question page
+        Router.push(`/question/${res.data.question.id}`);
         // Hide modal
         toggleModal();
-        // TODO: Redirect to the created question page
       }
     } catch (error) {
       setShowErrorMessage(true);
