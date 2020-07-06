@@ -9,6 +9,7 @@ import api from "@/src/api";
 import CreateQuestionModal from "../common/CreateQuestionModal";
 import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
+import Categories from "../common/categories/CategoriesBar"
 import QuestionList from "../common/question/QuestionList";
 
 const HomePage = ({ currentUser }) => {
@@ -59,6 +60,7 @@ const HomePage = ({ currentUser }) => {
   return (
     <HomeContainer>
       <SearchBar />
+      <Categories />
       <QuestionContainer>
         {/* {questionFeed.map((question) => (
           <QuestionPreview key={question.id} question={question} />
