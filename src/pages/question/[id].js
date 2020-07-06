@@ -30,7 +30,7 @@ export async function getServerSideProps(context) {
   let errorCode = false;
   try {
     const id = context.params.id;
-    const res = await questions.show(id);
+    const res = await questions.show(id, context.req.headers.cookie);
 
     question = res.data.question;
   } catch (error) {

@@ -28,7 +28,7 @@ const CreateQuestionModal = ({
       if (!validator.allValid())
         throw new Error("Validations not totally passed");
 
-      const res = await questions.create(localStorage.getItem("user-jwt"), {
+      const res = await questions.create({
         title: title,
         description: description,
       });

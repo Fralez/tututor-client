@@ -14,7 +14,7 @@ export default () => ({
     );
   },
   loggedIn: () => {
-    return axios.get(`${BASE_URL}/sessions/logged-in`, {
+    return axios.get(`${BASE_URL}/sessions/logged_in`, {
       withCredentials: true,
     });
   },

@@ -3,19 +3,20 @@ import axios from "axios";
 const BASE_URL = process.env.BACKEND_URL;
 
 export default () => ({
-  index: (authToken = "") => {
+  index: () => {
     return axios.get(`${BASE_URL}/users/`, {
-      headers: { Authorization: authToken },
+      withCredentials: true,
     });
   },
-  show: (authToken = "", id) => {
+  show: (id) => {
     return axios.get(`${BASE_URL}/users/${id}`, {
-      headers: { Authorization: authToken },
+      withCredentials: true,
     });
   },
   create: (user = {}) => {
     return axios.post(`${BASE_URL}/users`, {
       user: user,
+      withCredentials: true,
     });
   },
 });

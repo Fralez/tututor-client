@@ -26,46 +26,40 @@ const QuestionIdPage = ({
     votes,
     created_at,
     creator: { name },
+    user_vars: { vote, is_saved },
   },
 }) => {
   const { questions } = api();
+
   const [votesCounter, setVotes] = useState(votes);
-  // TODO: Change Upvote and Downvote icons to plus and less symbols
+  const [currentVoteStatus, setCurrentVoteStatus] = useState(
+    vote ? (vote.negative ? -1 : 1) : 0
+  );
+
+  const [isSaved, setIsSaved] = useState(is_saved);
+
   const handleSaveButton = () => {
     try {
-      questions.saveQuestion(
-        localStorage.getItem("user-jwt"),
-        currentUser.id,
-        id
-      );
-      setSaveClicked(!saveClicked);
+      questions.saveQuestion(id);
+      setIsSaved(!isSaved);
+    } catch (error) {}
+  };
+
+  const handleDownvote = async () => {
+    const res = await questions.voteQuestion(id, true);
+    setVotes(res.data.votes);
+    setCurrentVoteStatus(currentVoteStatus - 1);
+    try {
     } catch (error) {}
   };
 
   const handleUpvote = async () => {
     try {
-      const res = await questions.voteQuestion(
-        localStorage.getItem("user-jwt"),
-        currentUser.id,
-        id
-      );
+      const res = await questions.voteQuestion(id);
       setVotes(res.data.votes);
+      setCurrentVoteStatus(currentVoteStatus + 1);
     } catch (error) {}
   };
-
-  const handleDownvote = async () => {
-    const res = await questions.voteQuestion(
-      localStorage.getItem("user-jwt"),
-      currentUser.id,
-      id,
-      true
-    );
-    setVotes(res.data.votes);
-    try {
-    } catch (error) {}
-  };
-
-  const [saveClicked, setSaveClicked] = useState(false);
 
   return (
     <Container>
@@ -90,12 +84,12 @@ const QuestionIdPage = ({
         <Description>{description}</Description>
         <IconsCon>
           <Punctuation>
-            {currentUser && votesCounter >= votes && (
+            {currentUser && currentVoteStatus >= 0 && (
               <ArrowLeft onClick={handleDownvote} />
             )}
             <StarIcon />
             <Score>{votesCounter}</Score>
-            {currentUser && votesCounter <= votes && (
+            {currentUser && currentVoteStatus <= 0 && (
               <ArrowRight onClick={handleUpvote} />
             )}
           </Punctuation>
@@ -104,7 +98,7 @@ const QuestionIdPage = ({
           </CommentButton> */}
           {currentUser && (
             <SaveButton onClick={handleSaveButton}>
-              {saveClicked ? <SaveIconOn /> : <SaveIconOff />}
+              {isSaved ? <SaveIconOn /> : <SaveIconOff />}
             </SaveButton>
           )}
         </IconsCon>

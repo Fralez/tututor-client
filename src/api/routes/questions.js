@@ -4,42 +4,45 @@ const BASE_URL = process.env.BACKEND_URL;
 
 export default () => ({
   index: () => {
-    return axios.get(`${BASE_URL}/questions/`);
+    return axios.get(`${BASE_URL}/questions/`, { withCredentials: true });
   },
-  show: (id) => {
-    return axios.get(`${BASE_URL}/questions/${id}`);
+  show: (id, cookie = false) => {
+    return axios.get(`${BASE_URL}/questions/${id}`, {
+      withCredentials: true,
+      headers: cookie ? { cookie: cookie } : undefined,
+    });
   },
-  create: (authToken = "", question = {}) => {
+  create: (question = {}) => {
     return axios.post(
       `${BASE_URL}/questions`,
       {
         question: question,
       },
-      { headers: { Authorization: authToken } }
+      { withCredentials: true }
     );
   },
-  voteQuestion: (authToken = "", userId, questionId, isNegative = false) => {
+  voteQuestion: (questionId, isNegative = false) => {
     return axios.post(
       `${BASE_URL}/questions/vote`,
       {
-        user_id: userId,
         question_id: questionId,
         negative: isNegative,
       },
-      { headers: { Authorization: authToken } }
+      { withCredentials: true }
     );
   },
-  saveQuestion: (authToken = "", userId, questionId) => {
+  saveQuestion: (questionId) => {
     return axios.post(
       `${BASE_URL}/questions/save`,
       {
-        user_id: userId,
         question_id: questionId,
       },
-      { headers: { Authorization: authToken } }
+      { withCredentials: true }
     );
   },
   search: (query) => {
-    return axios.get(`${BASE_URL}/search/questions?q=${query}`);
+    return axios.get(`${BASE_URL}/search/questions?q=${query}`, {
+      withCredentials: true,
+    });
   },
 });
