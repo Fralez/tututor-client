@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import Dropdown from "react-dropdown";
 import api from "@/src/api";
 
 import SimpleReactValidator from "simple-react-validator";
@@ -18,6 +19,19 @@ const CreateQuestionModal = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [category, setCategory] = useState(null);
+
+  const categoriesList = [
+    { value: 0, label: "Matemáticas" },
+    { value: 1, label: "Ciencia Sociales" },
+    { value: 2, label: "Historia" },
+    { value: 3, label: "Geografía" },
+    { value: 4, label: "Administración" },
+    { value: 5, label: "TIC" },
+    { value: 6, label: "Biología" },
+    { value: 7, label: "Derecho" },
+    { value: 8, label: "Lengua" },
+  ];
 
   const handleCreate = async () => {
     try {
@@ -41,7 +55,8 @@ const CreateQuestionModal = ({
 
   return (
     <>
-      {currentUser && showCreateQuestionModal && (
+      {/* TODO: change true for currentUser */}
+      {true && showCreateQuestionModal && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />
           <Modal
@@ -64,9 +79,18 @@ const CreateQuestionModal = ({
               onChange={(e) => setDescription(e.target.value)}
             />
             {validator.message("description", description, "required")}
+            <DropdownField>
+              <CustomDropdown
+                value={category}
+                placeholder="Categorías"
+                options={categoriesList}
+                onChange={(option) => setCategory(option)}
+              />
+            </DropdownField>
+            {validator.message("category", category, "required")}
             {showErrorMessage && (
               <ErrorText>
-                ¡Oops! Revisa que hayas definido tu título y descripción
+                ¡Oops! Revisa que hayas definido tu título, descripción y categoría
                 correctamente 🧐
               </ErrorText>
             )}
@@ -88,7 +112,8 @@ const CreateQuestionModal = ({
           </Modal>
         </ModalContainer>
       )}
-      {currentUser && (
+      {/* TODO: change true for currentUser */}
+      {true && (
         <CreateQuestionButton onClick={toggleModal}>
           <Add />
         </CreateQuestionButton>
@@ -139,7 +164,7 @@ const DescriptionField = styled.textarea`
 `;
 
 const ErrorText = styled.span`
-  ${tw`pb-2 text-red-600 text-sm font-medium`}
+  ${tw`mt-2 pb-2 text-red-600 text-sm font-medium`}
 `;
 
 const Actions = styled.div`
@@ -165,3 +190,18 @@ const CloseModal = styled(Close)`
   top: 1rem;
   color: ${(props) => props.theme.colors.violetBlue.normal};
 `;
+
+const DropdownField = styled.div`
+  ${tw``}
+`
+
+const CustomDropdown = styled(Dropdown)`
+  ${tw``}
+  .Dropdown-control {
+    ${tw`appearance-none rounded-none relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5`}
+  }
+
+  .Dropdown-menu {
+    ${tw`appearance-none rounded-none w-48 rounded-b-md border border-gray-300 sm:text-sm`}
+  }
+`

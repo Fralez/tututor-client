@@ -28,9 +28,10 @@ const Categories = () => {
   ];
   return (
     <CategoriesContainer>
-      {categoriesList.map((category, iconIndex) => {
+      {categoriesList.map((category, i) => {
         return (
           <Category
+            key={i}
             onClick={() => setSelected(category.name)}
             isSelected={selected == category.name}
           >
@@ -48,7 +49,7 @@ const Categories = () => {
 export default Categories;
 
 const Category = styled.div`
-  ${tw`w-32 h-full flex justify-center items-center rounded`}
+  ${tw`w-32 h-full md:mx-2 flex justify-center items-center rounded`}
   min-width: 7rem;
   transition: 0.5s;
   /* min-width: 8rem; */
@@ -68,10 +69,7 @@ const Category = styled.div`
 `;
 
 const CategoriesContainer = styled.div`
-  ${tw`w-11/12 md:h-16 h-12 flex md:justify-around mb-2 md:overflow-hidden overflow-x-auto overflow-y-hidden`}
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  ${tw`ml-8 md:ml-0 relative w-full md:w-11/12 md:h-16 h-12 flex mb-2 overflow-x-auto overflow-y-hidden`}
 `;
 
 const NameCategory = styled.p`

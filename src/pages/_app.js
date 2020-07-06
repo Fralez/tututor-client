@@ -4,6 +4,7 @@ import { DefaultSeo } from "next-seo";
 import moment from "moment";
 import "moment/locale/es";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import tw from "tailwind.macro"
 import withSiteLayout from "@/src/layout/SiteLayout";
 import THEME from "@/src/styles/Theme.js";
 
@@ -63,6 +64,19 @@ const GlobalStyle = createGlobalStyle`
     *:focus {
       outline: none;
     } 
+  }
+  
+  /* ScrollBars */
+  ::-webkit-scrollbar {
+    ${tw`w-1 md:w-2 h-1`}
+  }
+
+  ::-webkit-scrollbar-track {
+    ${tw`bg-white`}
+  }
+
+  ::-webkit-scrollbar-thumb {
+    ${tw`bg-gray-400 rounded-full`}
   }
 `;
 
