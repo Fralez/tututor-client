@@ -56,5 +56,5 @@ const HomeContainer = styled.div`
 `;
 
 const QuestionContainer = styled.div`
-  ${tw`flex flex-col items-center max-w-full`}
+  ${tw`flex flex-col items-center max-w-full w-full`}
 `;

@@ -20,9 +20,9 @@ export default function withSiteLayout(ChildComponent) {
         const res = await sessions.loggedIn();
         if ((res.status = 200)) {
           setCurrentUser(res.data.user);
-        } // else {
-        //   await logout();
-        // }
+        } else {
+          await logout();
+        }
       } catch (error) {}
     };
 
@@ -34,6 +34,7 @@ export default function withSiteLayout(ChildComponent) {
       <CurrentUserProvider
         value={{
           currentUser: currentUser,
+          setCurrentUser: setCurrentUser,
           logout: logout,
         }}
       >

@@ -47,9 +47,6 @@ const QuestionPreview = ({
             <StarIcon />
             <Votes>{votes}</Votes>
           </VotesCon>
-          {/* <SaveButton onClick={handleSaveButton}>
-            {saveClciked ? <SaveIconOn /> : <SaveIconOff />}
-          </SaveButton> */}
         </SaveVotesCon>
       </InfoCon>
     </Preview>
@@ -103,22 +100,6 @@ const Description = styled.div`
 const SaveVotesCon = styled.div`
   ${tw`ml-auto flex`}
 `;
-
-/* const SaveButton = styled.div`
-  ${tw`ml-4`}
-`;
-
-const SaveIconOff = styled(BookmarkBorder)`
-  ${tw`text-2lg cursor-pointer`}
-  transform: scale(1.5);
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
-`;
-
-const SaveIconOn = styled(Bookmark)`
-  ${tw`text-2lg cursor-pointer`}
-  transform: scale(1.5);
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
-`; */
 
 const Votes = styled.div`
   ${tw`text-xl text-gray-800 font-semibold`}
