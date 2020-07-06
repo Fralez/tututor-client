@@ -48,16 +48,17 @@ const Categories = () => {
 export default Categories;
 
 const Category = styled.div`
-  ${tw`w-32 h-16 flex justify-center items-center rounded`}
+  ${tw`w-32 h-full flex justify-center items-center rounded`}
+  min-width: 7rem;
   transition: 0.5s;
-  min-width: 8rem;
+  /* min-width: 8rem; */
   &:hover {
     ${tw`bg-gray-100`}
   }
   ${(props) =>
     props.isSelected &&
     css`
-      background: #EDF2F7
+      background: #edf2f7;
     `}
   ${({ active }) =>
     active &&
@@ -67,7 +68,10 @@ const Category = styled.div`
 `;
 
 const CategoriesContainer = styled.div`
-  ${tw`w-11/12 md:h-8 h-6 flex justify-around mb-8`}
+  ${tw`w-11/12 md:h-16 h-12 flex md:justify-around mb-2 md:overflow-hidden overflow-x-auto overflow-y-hidden`}
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NameCategory = styled.p`
