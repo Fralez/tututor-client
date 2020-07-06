@@ -55,8 +55,7 @@ const CreateQuestionModal = ({
 
   return (
     <>
-      {/* TODO: change true for currentUser */}
-      {true && showCreateQuestionModal && (
+      {currentUser && showCreateQuestionModal && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />
           <Modal
@@ -112,8 +111,7 @@ const CreateQuestionModal = ({
           </Modal>
         </ModalContainer>
       )}
-      {/* TODO: change true for currentUser */}
-      {true && (
+      {currentUser && (
         <CreateQuestionButton onClick={toggleModal}>
           <Add />
         </CreateQuestionButton>
@@ -192,11 +190,9 @@ const CloseModal = styled(Close)`
 `;
 
 const DropdownField = styled.div`
-  ${tw``}
 `
 
 const CustomDropdown = styled(Dropdown)`
-  ${tw``}
   .Dropdown-control {
     ${tw`appearance-none rounded-none relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5`}
   }
