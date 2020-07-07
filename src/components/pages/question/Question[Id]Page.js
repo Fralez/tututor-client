@@ -31,6 +31,7 @@ const QuestionIdPage = ({
     created_at,
     creator: { name },
     user_vars: { vote, is_saved },
+    category
   },
   questionAnswers,
 }) => {

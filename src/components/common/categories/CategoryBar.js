@@ -16,15 +16,15 @@ import {
 const CategoryBar = () => {
   const [selected, setSelected] = useState("");
   const categoriesList = [
-    { name: "Matemáticas", icon: <Functions /> },
-    { name: "Ciencia Sociales", icon: <People /> },
-    { name: "Historia", icon: <AccountBalance /> },
-    { name: "Geografía", icon: <Public /> },
-    { name: "Administración", icon: <AccountBalanceWallet /> },
-    { name: "TIC", icon: <Devices /> },
-    { name: "Biología", icon: <Eco /> },
-    { name: "Derecho", icon: <Gavel /> },
-    { name: "Lengua", icon: <Message /> },
+    { title: "Matemáticas", icon: <Functions /> },
+    { title: "Ciencias Sociales", icon: <People /> },
+    { title: "Historia", icon: <AccountBalance /> },
+    { title: "Geografía", icon: <Public /> },
+    { title: "Administración", icon: <AccountBalanceWallet /> },
+    { title: "TIC", icon: <Devices /> },
+    { title: "Biología", icon: <Eco /> },
+    { title: "Derecho", icon: <Gavel /> },
+    { title: "Lengua", icon: <Message /> },
   ];
   return (
     <CategoriesContainer>
@@ -32,12 +32,12 @@ const CategoryBar = () => {
         return (
           <Category
             key={i}
-            onClick={() => setSelected(category.name)}
-            isSelected={selected == category.name}
+            onClick={() => setSelected(category.title)}
+            isSelected={selected == category.title}
           >
             <Clickable>
               {category.icon}
-              <NameCategory>{category.name}</NameCategory>
+              <NameCategory>{category.title}</NameCategory>
             </Clickable>
           </Category>
         );

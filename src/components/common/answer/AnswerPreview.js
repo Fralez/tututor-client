@@ -30,7 +30,6 @@ const AnswerPreview = ({
   );
 
   const handleDownvote = async () => {
-    console.log("downvote");
     const res = await answers.voteAnswer(id, true);
     setVotes(res.data.votes);
     setCurrentVoteStatus(currentVoteStatus - 1);
@@ -39,7 +38,6 @@ const AnswerPreview = ({
   };
 
   const handleUpvote = async () => {
-    console.log("upvote");
     try {
       const res = await answers.voteAnswer(id);
       setVotes(res.data.votes);

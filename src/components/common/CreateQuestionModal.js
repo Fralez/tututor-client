@@ -26,7 +26,7 @@ const CreateQuestionModal = ({
 
   const categoriesList = [
     { value: 0, label: "Matemáticas" },
-    { value: 1, label: "Ciencia Sociales" },
+    { value: 1, label: "Ciencias Sociales" },
     { value: 2, label: "Historia" },
     { value: 3, label: "Geografía" },
     { value: 4, label: "Administración" },
@@ -45,6 +45,7 @@ const CreateQuestionModal = ({
       const res = await questions.create({
         title: title,
         description: description,
+        category: category.label,
       });
       if (res.status == 201) {
         // Redirect to the created question page

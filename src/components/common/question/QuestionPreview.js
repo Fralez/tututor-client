@@ -14,6 +14,7 @@ const QuestionPreview = ({
     votes,
     created_at,
     creator: { name },
+    category,
   },
 }) => {
   const Router = useRouter();
