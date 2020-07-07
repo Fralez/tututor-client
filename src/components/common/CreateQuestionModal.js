@@ -79,13 +79,13 @@ const CreateQuestionModal = ({
                 onClick={toggleModal}
                 className="transition duration-150 ease-in-out"
               >
-                Cancel
+                Cancelar
               </CancelButton>
               <CreateButton
                 onClick={handleCreate}
                 className="transition duration-150 ease-in-out"
               >
-                Create
+                Crear pregunta
               </CreateButton>
             </Actions>
             <CloseModal onClick={toggleModal} />
