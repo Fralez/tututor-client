@@ -4,7 +4,7 @@ import tw from "tailwind.macro";
 import Moment from "react-moment";
 import { useRouter } from "next/router";
 
-import { Star /* BookmarkBorder, Bookmark, */ } from "@material-ui/icons";
+import { Star } from "@material-ui/icons";
 
 const QuestionPreview = ({
   question: {
@@ -37,7 +37,7 @@ const QuestionPreview = ({
           <Name>{name}</Name>
           {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
         </UserInfo>
-        <DateView to={created_at}></DateView>
+        <DateView to={created_at} />
       </User>
       <InfoCon>
         <Title>{title}</Title>

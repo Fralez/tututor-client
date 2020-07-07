@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
 import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
+
+import SimpleReactValidator from "simple-react-validator";
+
+import AnswerPreview from "../../common/answer/AnswerPreview";
 
 import {
   BookmarkBorder,
@@ -13,7 +18,6 @@ import {
   KeyboardArrowDown,
   ModeCommentOutlined,
   Star,
-  AddCircleOutlined,
 } from "@material-ui/icons";
 import Moment from "react-moment";
 
@@ -28,15 +32,21 @@ const QuestionIdPage = ({
     creator: { name },
     user_vars: { vote, is_saved },
   },
+  questionAnswers,
 }) => {
-  const { questions } = api();
+  const Router = useRouter();
+  const validator = new SimpleReactValidator();
+
+  const { questions, answers } = api();
 
   const [votesCounter, setVotes] = useState(votes);
   const [currentVoteStatus, setCurrentVoteStatus] = useState(
     vote ? (vote.negative ? -1 : 1) : 0
   );
-
   const [isSaved, setIsSaved] = useState(is_saved);
+
+  const [answerTextfield, setAnswerTextfield] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const handleSaveButton = () => {
     try {
@@ -59,6 +69,24 @@ const QuestionIdPage = ({
       setVotes(res.data.votes);
       setCurrentVoteStatus(currentVoteStatus + 1);
     } catch (error) {}
+  };
+
+  const handleAnswerQuestion = async () => {
+    try {
+      if (!validator.allValid())
+        throw new Error("Validations not totally passed");
+      setShowErrorMessage(false);
+
+      const res = await answers.create({
+        description: answerTextfield,
+        question_id: id,
+      });
+      if (res.status == 201) {
+        Router.reload();
+      }
+    } catch (error) {
+      setShowErrorMessage(true);
+    }
   };
 
   return (
@@ -103,11 +131,41 @@ const QuestionIdPage = ({
           )}
         </IconsCon>
       </Question>
-      <AnswerTitle>Answers</AnswerTitle>
-      <AddAnswer>
-        <AddIcon />
-        Add Answer
-      </AddAnswer>
+
+      <AnswersContainer>
+        <AnswerTitle>Respuestas</AnswerTitle>
+        {currentUser && (
+          <>
+            <DescriptionField
+              rows="5"
+              placeholder="Escriba tu respuesta..."
+              value={answerTextfield}
+              onChange={(e) => setAnswerTextfield(e.target.value)}
+            />
+            {validator.message("answerTextfield", answerTextfield, "required")}
+            <Actions>
+              <CreateButton
+                onClick={handleAnswerQuestion}
+                className="transition duration-150 ease-in-out"
+              >
+                Crear respuesta
+              </CreateButton>
+            </Actions>
+            {showErrorMessage && (
+              <ErrorText>
+                ¡Oops! Revisa que hayas escrito una descripción 🧐
+              </ErrorText>
+            )}
+          </>
+        )}
+        {questionAnswers.map((answer) => (
+          <AnswerPreview
+            key={answer.id}
+            currentUser={currentUser}
+            answer={answer}
+          />
+        ))}
+      </AnswersContainer>
     </Container>
   );
 };
@@ -120,6 +178,10 @@ const Container = styled.div`
 
 const Question = styled.div`
   ${tw`w-11/12 rounded-md p-6 mt-6 md:mt-8 mx-auto border-solid border border-gray-300 flex flex-col justify-center`}
+`;
+
+const AnswersContainer = styled.div`
+  ${tw`flex flex-col justify-center items-center`};
 `;
 
 const PorfileImgCon = styled.div`
@@ -189,6 +251,25 @@ const Punctuation = styled.div`
   ${tw`flex font-semibold items-center`}
 `;
 
+const DescriptionField = styled.textarea`
+  ${tw`m-4 px-3 py-2 text-sm leading-5 text-gray-900 border border-solid border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300`}
+  width: 90%;
+`;
+
+const Actions = styled.div`
+  ${tw`flex justify-end mb-8`}
+  width: 90%;
+`;
+
+const ErrorText = styled.span`
+  ${tw`text-red-600 text-sm font-medium`}
+`;
+
+const CreateButton = styled.button`
+  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
+`;
+
 const ArrowLeft = styled(KeyboardArrowLeft)`
   ${tw`text-2lxl cursor-pointer`}
   transform: scale(1.3);
@@ -219,16 +300,7 @@ const StarIcon = styled(Star)`
 `;
 
 const AnswerTitle = styled.div`
-  ${tw`ml-16 text-bold text-gray-800 text-2xl mt-4`}
-`;
-
-const AddAnswer = styled.button`
-  ${tw`w-3/4 h-12 flex justify-center items-center rounded-md mx-auto my-8 font-semibold`}
-  border: 2px solid ${(props) => props.theme.colors.pinkCyclamen.light};
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
-`;
-
-const AddIcon = styled(AddCircleOutlined)`
-  ${tw`text-white mr-2`}
-  color: ${(props) => props.theme.colors.pinkCyclamen.light};
+  ${tw`text-bold text-gray-800 text-2xl mt-4`}
+  margin-left: 4%;
+  align-self: flex-start;
 `;
