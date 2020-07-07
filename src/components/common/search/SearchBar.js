@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
+import Filter from "./Filter";
 import { Search, Close } from "@material-ui/icons";
 
 const SearchBar = () => {
@@ -15,10 +16,11 @@ const SearchBar = () => {
 
   const { questions } = api();
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
     // Make query search
-    questions.search(searchQuery);
     try {
+      if (event.key && event.key != "Enter") throw new Error();
+
       if (searchQuery !== "") {
         const res = await questions.search(searchQuery);
         if (res.status == 200) {
@@ -36,7 +38,9 @@ const SearchBar = () => {
 
   return (
     <Container>
+      <SearchIcon onClick={(e) => handleSearch(e)} />
       <QueryTextField
+        onKeyPress={handleSearch}
         aria-label="SearchQuery"
         name="SearchQuery"
         type="SearchQuery"
@@ -44,7 +48,7 @@ const SearchBar = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <SearchIcon onClick={handleSearch} />
+      <Filter />
       {showResults && (
         <ResultsDropdown>
           <CloseIcon onClick={() => setShowResults(false)} />
@@ -64,16 +68,20 @@ const SearchBar = () => {
 export default SearchBar;
 
 const Container = styled.div`
-  ${tw`relative w-4/5 rounded-full p-6 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
+  ${tw`relative w-4/5 rounded-md h-12 p-6 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
   max-width: 80%;
 `;
 
+// const Filter = styled.div`
+//   ${tw`relative inline-block text-left m-4 text-pink-500`}
+// `;
+
 const QueryTextField = styled.input`
-  ${tw`w-full h-full`};
+  ${tw`w-full`};
 `;
 
 const SearchIcon = styled(Search)`
-  ${tw`cursor-pointer`};
+  ${tw`cursor-pointer m-4`};
   color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 
@@ -85,16 +93,17 @@ const CloseIcon = styled(Close)`
 `;
 
 const ResultsDropdown = styled.div`
-  ${tw`absolute w-full flex flex-col items-center rounded-lg border-solid border border-gray-300`};
-  top: 80px;
+  ${tw`absolute shadow-md w-full bg-white flex flex-col items-center rounded-b-md border-solid border border-gray-300`};
+  min-height: 5rem;
+  top: 47px;
   right: 0;
   left: 0;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); */
 `;
 
 const Result = styled.div`
-  ${tw`w-full p-6 bg-white `};
+  ${tw`w-full p-6 bg-white cursor-pointer`};
 
   :hover {
     filter: brightness(96%);
