@@ -68,7 +68,7 @@ const SearchBar = () => {
 export default SearchBar;
 
 const Container = styled.div`
-  ${tw`relative w-4/5 rounded-md h-12 p-6 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
+  ${tw`relative w-4/5 rounded-md h-12 my-4 md:my-6 border-solid border border-gray-300 flex justify-end items-center`}
   max-width: 80%;
 `;
 
@@ -77,11 +77,11 @@ const Container = styled.div`
 // `;
 
 const QueryTextField = styled.input`
-  ${tw`w-full`};
+  ${tw`w-full text-sm md:text-base`};
 `;
 
 const SearchIcon = styled(Search)`
-  ${tw`cursor-pointer m-4`};
+  ${tw`cursor-pointer ml-2 mr-2 md:ml-12`};
   color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 

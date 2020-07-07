@@ -195,9 +195,10 @@ const CloseModal = styled(Close)`
 
 const CustomDropdown = styled(Dropdown)`
   .Dropdown-control {
-    ${tw`appearance-none rounded-none relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 sm:text-sm sm:leading-5`}
+    ${tw`relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 text-sm leading-5`}
   }
   .Dropdown-menu {
-    ${tw`appearance-none rounded-none w-48 rounded-b-md border border-gray-300 sm:text-sm`}
+    max-height: 3rem;
+    ${tw`w-48 rounded-b-md border border-gray-300 text-sm`}
   }
 `;
