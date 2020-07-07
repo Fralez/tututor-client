@@ -16,10 +16,11 @@ const SearchBar = () => {
 
   const { questions } = api();
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
     // Make query search
-    questions.search(searchQuery);
     try {
+      if (event.key && event.key != "Enter") throw new Error();
+
       if (searchQuery !== "") {
         const res = await questions.search(searchQuery);
         if (res.status == 200) {
@@ -37,8 +38,9 @@ const SearchBar = () => {
 
   return (
     <Container>
-      <SearchIcon onClick={handleSearch} />
+      <SearchIcon onClick={(e) => handleSearch(e)} />
       <QueryTextField
+        onKeyPress={handleSearch}
         aria-label="SearchQuery"
         name="SearchQuery"
         type="SearchQuery"
@@ -91,16 +93,17 @@ const CloseIcon = styled(Close)`
 `;
 
 const ResultsDropdown = styled.div`
-  ${tw`absolute w-full flex flex-col items-center rounded-lg border-solid border border-gray-300`};
-  top: 80px;
+  ${tw`absolute shadow-md w-full bg-white flex flex-col items-center rounded-b-md border-solid border border-gray-300`};
+  min-height: 5rem;
+  top: 47px;
   right: 0;
   left: 0;
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  /* box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12); */
 `;
 
 const Result = styled.div`
-  ${tw`w-full p-6 bg-white `};
+  ${tw`w-full p-6 bg-white cursor-pointer`};
 
   :hover {
     filter: brightness(96%);
