@@ -31,6 +31,7 @@ const QuestionIdPage = ({
     created_at,
     creator: { name },
     user_vars: { vote, is_saved },
+    category,
   },
   questionAnswers,
 }) => {
@@ -131,7 +132,11 @@ const QuestionIdPage = ({
           )}
         </IconsCon>
       </Question>
-
+      {category && (
+        <ContainerCategory>
+          <Category>{category.title}</Category>
+        </ContainerCategory>
+      )}
       <AnswersContainer>
         <AnswerTitle>Respuestas</AnswerTitle>
         {currentUser && (
@@ -303,4 +308,13 @@ const AnswerTitle = styled.div`
   ${tw`text-bold text-gray-800 text-2xl mt-4`}
   margin-left: 4%;
   align-self: flex-start;
+`;
+
+const ContainerCategory = styled.div`
+  ${tw`inline-block mr-8 md:mr-12 absolute right-0`}
+`;
+const Category = styled.div`
+  ${tw`p-2 border-solid border-2 rounded-full w-auto h-6 text-xs md:text-sm flex justify-center items-center mt-2`}
+  border-color: ${(props) => props.theme.colors.violetBlue.normal};
+  color: ${(props) => props.theme.colors.violetBlue.normal};
 `;
