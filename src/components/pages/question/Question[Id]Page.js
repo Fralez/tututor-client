@@ -257,12 +257,12 @@ const DescriptionField = styled.textarea`
 `;
 
 const Actions = styled.div`
-  ${tw`flex justify-end mb-8`}
+  ${tw`flex justify-end mb-4`}
   width: 90%;
 `;
 
 const ErrorText = styled.span`
-  ${tw`text-red-600 text-sm font-medium`}
+  ${tw`text-red-600 text-sm font-medium mb-4`}
 `;
 
 const CreateButton = styled.button`
