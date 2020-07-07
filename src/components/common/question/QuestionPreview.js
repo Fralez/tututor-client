@@ -49,9 +49,11 @@ const QuestionPreview = ({
             <Votes>{votes}</Votes>
           </VotesCon>
         </SaveVotesCon>
-        <ContainerCategory>
-        <Category>Ciencias Sociales</Category>
-      </ContainerCategory>
+        {category && (
+          <ContainerCategory>
+            <Category>{category.title}</Category>
+          </ContainerCategory>
+        )}
       </InfoCon>
     </Preview>
   );
@@ -119,10 +121,10 @@ const VotesCon = styled.div`
 const ContainerCategory = styled.div`
   ${tw`inline-block mr-8 md:mr-12 ml-auto`}
   width: fit-content;
-`
+`;
 
 const Category = styled.div`
   ${tw`p-2 border-solid border-2 rounded-full h-6 text-xs md:text-sm flex justify-center items-center mt-2`}
   border-color: ${(props) => props.theme.colors.violetBlue.normal};
   color: ${(props) => props.theme.colors.violetBlue.normal};
-`
+`;
