@@ -1,26 +1,39 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { Container } from "@material-ui/core";
+import Dropdown from "react-dropdown";
 
-const Filter = () => {   
-  // Hide and show a options dropdown
-  const [showMe, setShowMe] = useState(false);
-  function toggle(){
-    setShowMe(!showMe);
-  };
+const Filter = () => {
   
-  return ( 
-    <div class="relative inline-block text-left m-4 text-pink-500">
-      <div>
-        <div class="py-1">
-          <select id="ddlViewBy">
-            <option value="2" selected="selected">Más reciente</option>
-          </select>
-        </div>
-      </div>
-    </div>
+  const ops = [{ value: 0, label: "Más Reciente" }];
+
+  const [showMe, setShowMe] = useState(false);
+  const [selected, setSelected] = useState(ops[0]);
+
+  return (
+    <ContainerDropdown>
+      <CustomDropdown
+        value={selected}
+        placeholder="Filtro"
+        options={ops}
+        onChange={(selected) => setSelected(selected)}
+      />
+    </ContainerDropdown>
   );
 };
 
 export default Filter;
+
+const ContainerDropdown = styled.div`
+  ${tw`relative text-right m-4`}
+`;
+
+const CustomDropdown = styled(Dropdown)`
+  .Dropdown-control {
+    ${tw`w-40 pr-8 border-none block relative rounded-md sm:text-sm sm:leading-5 shadow-none`}
+  }
+
+  .Dropdown-menu {
+    ${tw`rounded-b-md border border-gray-300 sm:text-sm`}
+  }
+`;
