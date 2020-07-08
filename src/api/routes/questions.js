@@ -40,6 +40,16 @@ export default () => ({
       { withCredentials: true }
     );
   },
+  markCorrectAnswer: (questionId, correctAnswerId) => {
+    return axios.post(
+      `${BASE_URL}/questions/correct_answer`,
+      {
+        question_id: questionId,
+        correct_answer_id: correctAnswerId,
+      },
+      { withCredentials: true }
+    );
+  },
   search: (query) => {
     return axios.get(`${BASE_URL}/search/questions?q=${query}`, {
       withCredentials: true,

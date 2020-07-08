@@ -29,9 +29,10 @@ const QuestionIdPage = ({
     description,
     votes,
     created_at,
-    creator: { name },
+    creator,
     user_vars: { vote, is_saved },
     category,
+    correct_answer,
   },
   questionAnswers,
 }) => {
@@ -90,6 +91,15 @@ const QuestionIdPage = ({
     }
   };
 
+  const handleMarkCorrectAnswerButton = async (answerId) => {
+    try {
+      const res = await questions.markCorrectAnswer(id, answerId);
+      if (res.status == 201) {
+        Router.reload();
+      }
+    } catch (error) {}
+  };
+
   return (
     <Container>
       <Question>
@@ -101,7 +111,7 @@ const QuestionIdPage = ({
             ></img>
           </PorfileImgCon>
           <UserInfo>
-            <Name>{name}</Name>
+            <Name>{creator.name}</Name>
             {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
           </UserInfo>
           <DateView to={created_at}></DateView>
@@ -168,6 +178,13 @@ const QuestionIdPage = ({
             key={answer.id}
             currentUser={currentUser}
             answer={answer}
+            handleMarkCorrectAnswerButton={() =>
+              handleMarkCorrectAnswerButton(answer.id)
+            }
+            isCorrectAnswer={correct_answer && correct_answer.id == answer.id}
+            showMarkCorrectAnswerButton={
+              currentUser && currentUser.id == creator.id
+            }
           />
         ))}
       </AnswersContainer>
@@ -305,16 +322,17 @@ const StarIcon = styled(Star)`
 `;
 
 const AnswerTitle = styled.div`
-  ${tw`text-bold text-gray-800 text-2xl mt-4`}
+  ${tw`text-bold text-gray-800 text-2xl my-4`}
   margin-left: 4%;
   align-self: flex-start;
 `;
 
 const ContainerCategory = styled.div`
-  ${tw`inline-block mr-8 md:mr-12 absolute right-0`}
+  ${tw`md:mr-12 flex justify-end right-0 w-full`}
 `;
 const Category = styled.div`
-  ${tw`p-2 border-solid border-2 rounded-full w-auto h-6 text-xs md:text-sm flex justify-center items-center mt-2`}
+  ${tw`p-2 mr-16 border-solid border-2 rounded-full w-auto h-6 text-xs md:text-sm flex justify-center items-center mt-2`}
   border-color: ${(props) => props.theme.colors.violetBlue.normal};
   color: ${(props) => props.theme.colors.violetBlue.normal};
+  width: fit-content;
 `;

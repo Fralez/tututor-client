@@ -9,6 +9,7 @@ import {
   Star,
   KeyboardArrowLeft,
   KeyboardArrowRight,
+  CheckCircle,
 } from "@material-ui/icons";
 
 const AnswerPreview = ({
@@ -21,6 +22,9 @@ const AnswerPreview = ({
     user_vote,
     creator: { name },
   },
+  handleMarkCorrectAnswerButton,
+  showMarkCorrectAnswerButton = false,
+  isCorrectAnswer = false,
 }) => {
   const { answers } = api();
 
@@ -46,7 +50,7 @@ const AnswerPreview = ({
   };
 
   return (
-    <Preview>
+    <Preview isCorrectAnswer={isCorrectAnswer}>
       <User>
         <PorfileImgCon>
           <img
@@ -61,6 +65,12 @@ const AnswerPreview = ({
         <DatePreview to={created_at} />
       </User>
       <InfoCon>
+        {showMarkCorrectAnswerButton &&
+          (isCorrectAnswer ? (
+            <CorrectAnswerOn onClick={handleMarkCorrectAnswerButton} />
+          ) : (
+            <CorrectAnswerOff onClick={handleMarkCorrectAnswerButton} />
+          ))}
         <Description>{description}</Description>
         <Punctuation>
           {currentUser && currentVoteStatus >= 0 && (
@@ -81,7 +91,8 @@ export default AnswerPreview;
 
 const Preview = styled.div`
   ${tw`w-4/5 rounded-md p-6 mb-6 flex flex-col justify-center`}
-  border-left: 0.5rem solid #A0AEC0;
+  border-left: 0.5rem solid ${(props) =>
+    props.isCorrectAnswer ? props.theme.colors.green.normal : "#A0AEC0"};
 `;
 
 const PorfileImgCon = styled.div`
@@ -118,6 +129,18 @@ const Description = styled.div`
 
 const Punctuation = styled.div`
   ${tw`ml-auto flex`}
+`;
+
+const CorrectAnswerOn = styled(CheckCircle)`
+  ${tw`text-2xl mb-2 mt-4 cursor-pointer`}
+  transform: scale(1.4);
+  color: ${(props) => props.theme.colors.green.normal};
+`;
+
+const CorrectAnswerOff = styled(CheckCircle)`
+  ${tw`text-2xl mb-2 mt-4 cursor-pointer`}
+  transform: scale(1.4);
+  color: #A0AEC0;
 `;
 
 const Score = styled.div`
