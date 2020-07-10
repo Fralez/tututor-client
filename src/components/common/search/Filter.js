@@ -5,7 +5,7 @@ import Dropdown from "react-dropdown";
 
 const Filter = () => {
 
-  const ops = [{ value: 0, label: "Más Reciente" }];
+  const ops = [{ value: 0, label: "Más Reciente" },{ value: 1, label: "menos Reciente" } ];
 
   const [showMe, setShowMe] = useState(false);
   const [selected, setSelected] = useState(ops[0]);
