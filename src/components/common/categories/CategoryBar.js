@@ -13,8 +13,7 @@ import {
   Message,
 } from "@material-ui/icons";
 
-const CategoryBar = () => {
-  const [selected, setSelected] = useState("");
+const CategoryBar = ({ selected, setSelected }) => {
   const categoriesList = [
     { title: "Matemáticas", icon: <Functions /> },
     { title: "Ciencias Sociales", icon: <People /> },

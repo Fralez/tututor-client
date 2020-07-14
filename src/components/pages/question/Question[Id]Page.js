@@ -32,7 +32,7 @@ const QuestionIdPage = ({
     creator,
     user_vars: { vote, is_saved },
     category,
-    correct_answer,
+    correct_answer = null,
   },
   questionAnswers,
 }) => {
@@ -173,20 +173,36 @@ const QuestionIdPage = ({
             )}
           </>
         )}
-        {questionAnswers.map((answer) => (
+        {/* Correct Answer display */}
+        {correct_answer && (
           <AnswerPreview
-            key={answer.id}
-            currentUser={currentUser}
-            answer={answer}
+            currentUser={currentUser && currentUser}
+            answer={correct_answer}
             handleMarkCorrectAnswerButton={() =>
-              handleMarkCorrectAnswerButton(answer.id)
+              handleMarkCorrectAnswerButton(correct_answer.id)
             }
-            isCorrectAnswer={correct_answer && correct_answer.id == answer.id}
+            isCorrectAnswer
             showMarkCorrectAnswerButton={
               currentUser && currentUser.id == creator.id
             }
           />
-        ))}
+        )}
+        {questionAnswers.map(
+          (answer) =>
+            !(correct_answer && correct_answer.id == answer.id) && (
+              <AnswerPreview
+                key={answer.id}
+                currentUser={currentUser}
+                answer={answer}
+                handleMarkCorrectAnswerButton={() =>
+                  handleMarkCorrectAnswerButton(answer.id)
+                }
+                showMarkCorrectAnswerButton={
+                  currentUser && currentUser.id == creator.id
+                }
+              />
+            )
+        )}
       </AnswersContainer>
     </Container>
   );
@@ -211,7 +227,7 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full`}
+  ${tw`flex w-full items-center`}
 `;
 
 const UserInfo = styled.div`
@@ -288,7 +304,7 @@ const ErrorText = styled.span`
 `;
 
 const CreateButton = styled.button`
-  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 text-white rounded-md`}
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 

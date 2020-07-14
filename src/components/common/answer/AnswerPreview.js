@@ -100,7 +100,7 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full`}
+  ${tw`flex w-full items-center`}
 `;
 
 const UserInfo = styled.div`
@@ -132,13 +132,13 @@ const Punctuation = styled.div`
 `;
 
 const CorrectAnswerOn = styled(CheckCircle)`
-  ${tw`text-2xl mb-2 mt-4 cursor-pointer`}
+  ${tw`text-2xl mb-2 mt-4 cursor-pointer ml-auto`}
   transform: scale(1.4);
   color: ${(props) => props.theme.colors.green.normal};
 `;
 
 const CorrectAnswerOff = styled(CheckCircle)`
-  ${tw`text-2xl mb-2 mt-4 cursor-pointer`}
+  ${tw`text-2xl mb-2 mt-4 cursor-pointer ml-auto`}
   transform: scale(1.4);
   color: #A0AEC0;
 `;
