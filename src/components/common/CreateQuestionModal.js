@@ -63,11 +63,7 @@ const CreateQuestionModal = ({
       {currentUser && showCreateQuestionModal && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />
-          <Modal
-            showCreateQuestionModal={showCreateQuestionModal}
-            shouldCloseOnEsc={true}
-            shouldCloseOnOverlayClick={true}
-          >
+          <Modal>
             <ModalTitle>Crea una pregunta</ModalTitle>
             <TitleField
               type="text"

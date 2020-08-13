@@ -6,6 +6,7 @@ import withCurrentUser from "@/lib/withCurrentUser";
 import api from "@/src/api";
 
 import CreateQuestionModal from "../common/CreateQuestionModal";
+import ChatModal from "../common/chat/ChatModal";
 import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
 import CategoryBar from "../common/categories/CategoryBar";
@@ -14,6 +15,7 @@ const HomePage = ({ currentUser }) => {
   const { questions } = api();
 
   const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
   const [questionFeed, setQuestionFeed] = useState([]);
   const [selectedFilterCategory, setSelectedFilterCategory] = useState("");
 
@@ -60,6 +62,13 @@ const HomePage = ({ currentUser }) => {
           toggleModal={() =>
             setShowCreateQuestionModal(!showCreateQuestionModal)
           }
+        />
+      )}
+      {currentUser && (
+        <ChatModal
+          currentUser={currentUser}
+          showChatModal={showChatModal}
+          toggleModal={() => setShowChatModal(!showChatModal)}
         />
       )}
     </HomeContainer>
