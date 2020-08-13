@@ -1,0 +1,22 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    "macros",
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "@": "./"
+        }
+      }
+    ],
+    [
+      "styled-components",
+      {
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}
