@@ -3,6 +3,8 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
 
+import ChatLog from "../chat/ChatLog";
+
 import { Close, Chat } from "@material-ui/icons";
 
 const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
@@ -15,6 +17,7 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
           <ModalOverlay onClick={toggleModal} />
           <Modal>
             <ModalTitle>Chat</ModalTitle>
+            <ChatLog/>
             <CloseModal onClick={toggleModal} />
           </Modal>
         </ModalContainer>
