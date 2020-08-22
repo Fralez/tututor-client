@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import tw from "tailwind.macro";
 
-const ChatUser = ({ name, lastMessage }) => {
+const ChatUser = ({ user: { id, name }, lastMessage, selectedUserId, handleSelect }) => {
   return (
     <UserContainer>
-      <Overlay />
+      <Overlay onClick={handleSelect} selected={selectedUserId == id} />
       <img
         className="h-8 md:h-12"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -24,14 +24,22 @@ export default ChatUser;
 const Overlay = styled.div`
   ${tw`absolute top-o bottom-0 left-0 right-0 w-full h-full bg-gray-100`}
 
-  opacity: 0;
-  filter: none;
-  
-  &:hover {
-    opacity: 0.1;
-    filter: brightness(10%);
-    cursor: pointer;
-  }
+  ${(props) =>
+    props.selected
+      ? css`
+          opacity: 0.1;
+          filter: brightness(10%);
+        `
+      : css`
+          opacity: 0;
+          filter: none;
+
+          &:hover {
+            opacity: 0.1;
+            filter: brightness(10%);
+            cursor: pointer;
+          }
+        `}
 `;
 
 const UserContainer = styled.div`

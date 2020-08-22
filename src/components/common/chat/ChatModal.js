@@ -18,7 +18,7 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
           <ModalOverlay onClick={toggleModal} />
           <Modal>
             <ContentContainer>
-              <UserList />
+              <UserList currentUser={currentUser} />
               <ChatLog />
             </ContentContainer>
             <CloseModal onClick={toggleModal} />
