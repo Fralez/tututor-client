@@ -5,9 +5,8 @@ import api from "@/src/api";
 
 import ChatUser from "./ChatUser";
 
-const UserList = ({ currentUser }) => {
+const UserList = ({ currentUser, selectedUserId, setSelectedUserId }) => {
   const [userList, setUserList] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const { users } = api();
 

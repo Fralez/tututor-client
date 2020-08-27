@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
@@ -9,7 +9,7 @@ import UserList from "./UserList";
 import ChatLog from "./ChatLog";
 
 const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
-  const Router = useRouter();
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   return (
     <>
@@ -18,7 +18,11 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
           <ModalOverlay onClick={toggleModal} />
           <Modal>
             <ContentContainer>
-              <UserList currentUser={currentUser} />
+              <UserList
+                currentUser={currentUser}
+                selectedUserId={selectedUserId}
+                setSelectedUserId={setSelectedUserId}
+              />
               <ChatLog />
             </ContentContainer>
             <CloseModal onClick={toggleModal} />
@@ -41,7 +45,8 @@ const OpenChatButton = styled.button`
   background-color: ${(props) => props.theme.colors.violetBlue.normal};
   right: 2rem;
   bottom: 6rem;
-  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;
 
 const ModalContainer = styled.div`

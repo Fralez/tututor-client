@@ -20,7 +20,7 @@ const ChatLog = () => {
   return (
     <Log id="chatLog">
       <MessageContainer>
-        <MessageBubble sender>
+        {/* <MessageBubble sender>
           1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
           aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
           aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
@@ -38,7 +38,7 @@ const ChatLog = () => {
         <MessageBubble>2Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
         <MessageBubble>3Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
         <MessageBubble sender>4Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
-        <MessageBubble sender>5Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
+        <MessageBubble sender>5Lorem ipsum aosfnsa;lwbnrgh</MessageBubble> */}
       </MessageContainer>
       <ChatMessage>
         <ChatTextField
