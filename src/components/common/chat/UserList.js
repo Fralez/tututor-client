@@ -34,7 +34,6 @@ const UserList = ({ currentUser, selectedUserId, setSelectedUserId }) => {
             <ChatUser
               key={user.id}
               user={user}
-              lastMessage={"Sample last message"}
               handleSelect={() => setSelectedUserId(user.id)}
               selectedUserId={selectedUserId}
             />

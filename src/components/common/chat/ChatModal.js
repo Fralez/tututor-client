@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { useRouter } from "next/router";
 
 import { Close, Chat } from "@material-ui/icons";
 
@@ -10,6 +9,32 @@ import ChatLog from "./ChatLog";
 
 const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const cableWs = new WebSocket(process.env.WS_URL);
+  
+  useEffect(() => {
+    cableWs.onopen = () => {
+      cableWs.send(
+        JSON.stringify({
+          command: "subscribe",
+          identifier: JSON.stringify({ channel: "ChannelsChannel" }),
+        })
+      );
+    };
+
+    cableWs.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (data.identifier) {
+        const { channel } = JSON.parse(data.identifier);
+
+        if (channel == "AppChannel" && data.message && !data.type) {
+          const { user, jwt_token } = data.message;
+
+          this.setState({ user, jwt_token });
+        }
+      }
+    };
+  }, []);
 
   return (
     <>

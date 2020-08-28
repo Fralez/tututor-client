@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import tw from "tailwind.macro";
 
-const ChatUser = ({ user: { id, name }, lastMessage, selectedUserId, handleSelect }) => {
+const ChatUser = ({ user: { id, name }, selectedUserId, handleSelect }) => {
   return (
     <UserContainer>
       <Overlay onClick={handleSelect} selected={selectedUserId == id} />
@@ -13,7 +13,6 @@ const ChatUser = ({ user: { id, name }, lastMessage, selectedUserId, handleSelec
       />
       <TextContainer>
         <Name>{name}</Name>
-        <LastMessage>{lastMessage}</LastMessage>
       </TextContainer>
     </UserContainer>
   );
@@ -53,8 +52,4 @@ const TextContainer = styled.div`
 const Name = styled.div`
   ${tw`text-sm md:text-lg font-bold`}
   color: ${(props) => props.theme.colors.violetBlue.normal};
-`;
-
-const LastMessage = styled.div`
-  ${tw`text-xs md:text-base`}
 `;

@@ -7,6 +7,7 @@ module.exports = (phase, { defaultConfig }) => {
       // Access example: process.env.VAR_NAME
       env: {
         BACKEND_URL: "http://localhost:3000",
+        WS_URL: "ws://localhost:3000/cable"
       },
     };
   }
