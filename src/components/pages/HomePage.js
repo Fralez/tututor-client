@@ -5,6 +5,7 @@ import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
 
+import Filter from "../common/search/Filter";
 import CreateQuestionModal from "../common/CreateQuestionModal";
 import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
@@ -33,6 +34,7 @@ const HomePage = ({ currentUser }) => {
     <HomeContainer>
       <SearchBar />
       <CategoryBar />
+      <Filter />
       <QuestionContainer>
         {questionFeed.map((question) => (
           <QuestionPreview key={question.id} question={question} />

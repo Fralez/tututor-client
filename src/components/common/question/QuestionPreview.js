@@ -13,7 +13,6 @@ const QuestionPreview = ({
     description,
     votes,
     created_at,
-    creator: { name },
     category,
   },
 }) => {
