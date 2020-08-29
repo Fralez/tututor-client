@@ -7,41 +7,41 @@ import { useRouter } from "next/router"
 
 import api from "@/src/api";
 
-const User = ({ currentUser, errorCode }) => {
+const User = ({ errorCode, user }) => {
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
 
-    let user = getUser()
-    if (errorCode) {
-        return <Error statusCode={errorCode} />;
-    }
-
-    const name = user.name;
-    return (
-        <Layout>
-            <NextSeo title={name} description="{description}" />
-            <UserIdPage />
-        </Layout>
-    );
+  const { name } = user;
+  return (
+    <Layout>
+      <NextSeo title={name} description={`Perfil de usuario de ${name}.`} />
+      <UserIdPage user={user}/>
+    </Layout>
+  );
 };
 
 export default User;
 
-async function getUser() {
-    const { users } = api();
-    const Router = useRouter()
-    const id = Router.query
-    console.log(id)
+export async function getServerSideProps(context) {
+  const { users } = api();
 
-    // Fetch user
-    let user = null;
-    let errorCode = false;
-    try {
-        const res = await users.show(id);
+  // Fetch question
+  let user = null;
+  let errorCode = false;
+  try {
+    const id = context.params.id;
+    const res = await users.show(id);
 
-        user = res.data.question;
-    } catch (error) {
-        errorCode = error.response.status;
-    }
+    user = res.data.user;
+  } catch (error) {
+    errorCode = error.response.status;
+  }
 
-    return user
-};
-
+  return {
+    props: {
+      errorCode,
+      user,
+    }, // Will be passed to the page component as props
+  };
+}

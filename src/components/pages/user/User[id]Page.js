@@ -1,14 +1,13 @@
 import React from "react"
 import { useRouter } from "next/router";
-import withCurrentUser from "@/lib/withCurrentUser";
 
-const UserIdPage = ({ currentUser }) => {
-    const Router = useRouter();
-    return (
-        <div>
-            Holaaa
-        </div>
-    )
+const UserIdPage = ({ user }) => {
+  const Router = useRouter();
+  return (
+    <div>
+      {user.name}
+    </div>
+  )
 }
 
-export default withCurrentUser(UserIdPage)
+export default UserIdPage
