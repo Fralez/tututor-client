@@ -14,13 +14,12 @@ export default () => ({
       withCredentials: true,
     });
   },
-  create: (content, userId, channelId) => {
+  create: (content, channelId) => {
     return axios.post(
       `${BASE_URL}/messages`,
       {
         message: {
           content,
-          user_id: userId,
           channel_id: channelId
         },
       },

@@ -14,12 +14,14 @@ export default () => ({
       withCredentials: true,
     });
   },
-  create: (name) => {
+  create: (name, userOneId, userTwoId) => {
     return axios.post(
       `${BASE_URL}/channels`,
       {
         channel: {
           name,
+          user_one_id: userOneId,
+          user_two_id: userTwoId
         },
       },
       { withCredentials: true }
