@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
+import api from "@/src/api";
+
 import { Close, Chat } from "@material-ui/icons";
 
 import UserList from "./UserList";
 import ChatLog from "./ChatLog";
 
 const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { channels } = api();
   const cableWs = new WebSocket(process.env.WS_URL);
-  
+
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [userChannels, setUserChannels] = useState([]);
+  const [selectedUserChannel, setSelectedUserChannel] = useState(null);
+
   useEffect(() => {
     cableWs.onopen = () => {
       cableWs.send(
@@ -23,18 +29,39 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
 
     cableWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
-
-      if (data.identifier) {
-        const { channel } = JSON.parse(data.identifier);
-
-        if (channel == "AppChannel" && data.message && !data.type) {
-          const { user, jwt_token } = data.message;
-
-          this.setState({ user, jwt_token });
-        }
+      if (data.identifier == '{"channel":"ChannelsChannel"}' && data.message) {
+        setUserChannels((oldState) => [...oldState, data.message]);
       }
     };
   }, []);
+
+  useEffect(() => {
+    channels.index().then((res) => {
+      setUserChannels(res.data);
+    });
+  }, []);
+
+  const handleSelectUser = async (selectedId) => {
+    setSelectedUserId(selectedId);
+    // Find channel
+    let selectedChannel = userChannels.find(
+      (uch) =>
+        (uch.user_one_id == currentUser.id && uch.user_two_id == selectedId) ||
+        (uch.user_two_id == currentUser.id && uch.user_one_id == selectedId)
+    );
+    // If it does not exist, create new one
+    if (!selectedChannel) {
+      const res = await channels.create(
+        `${currentUser.id}::${selectedId}`,
+        currentUser.id,
+        selectedId
+      );
+      selectedChannel = res.data;
+    }
+    // Set selected channel
+    setSelectedUserChannel(selectedChannel);
+    console.log(selectedChannel);
+  };
 
   return (
     <>
@@ -46,7 +73,7 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
               <UserList
                 currentUser={currentUser}
                 selectedUserId={selectedUserId}
-                setSelectedUserId={setSelectedUserId}
+                setSelectedUserId={handleSelectUser}
               />
               <ChatLog />
             </ContentContainer>

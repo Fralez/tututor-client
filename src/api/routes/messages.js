@@ -5,8 +5,7 @@ const BASE_URL = process.env.BACKEND_URL;
 export default () => ({
   index: () => {
     return axios.get(`${BASE_URL}/messages/`, {
-      withCredentials: true,
-      headers: cookie ? { cookie: cookie } : undefined,
+      withCredentials: true
     });
   },
   show: (id) => {

@@ -6,11 +6,10 @@ export default () => ({
   index: () => {
     return axios.get(`${BASE_URL}/channels/`, {
       withCredentials: true,
-      headers: cookie ? { cookie: cookie } : undefined,
     });
   },
-  show: (id) => {
-    return axios.get(`${BASE_URL}/channels/${id}`, {
+  show: (userOneId, userTwoId) => {
+    return axios.get(`${BASE_URL}/channels/${userOneId}/${userTwoId}`, {
       withCredentials: true,
     });
   },
@@ -21,7 +20,7 @@ export default () => ({
         channel: {
           name,
           user_one_id: userOneId,
-          user_two_id: userTwoId
+          user_two_id: userTwoId,
         },
       },
       { withCredentials: true }
