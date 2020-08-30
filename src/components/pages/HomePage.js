@@ -16,6 +16,7 @@ const HomePage = ({ currentUser }) => {
 
   const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
   const [questionFeed, setQuestionFeed] = useState([]);
+  const [selectedFilterCategory, setSelectedFilterCategory] = useState("");
 
   useEffect(() => {
     getQuestionFeed();
@@ -52,12 +53,26 @@ const HomePage = ({ currentUser }) => {
   return (
     <HomeContainer>
       <SearchBar />
-      <CategoryBar />
+      <CategoryBar
+        selected={selectedFilterCategory}
+        setSelected={(categoryTitle) =>
+          setSelectedFilterCategory(
+            categoryTitle == selectedFilterCategory ? "" : categoryTitle
+          )
+        }
+      />
       <Filter onFilterSelection={onFilterSelection}/>
       <QuestionContainer>
-        {questionFeed.map((question) => (
-          <QuestionPreview key={question.id} question={question} />
-        ))}
+        {questionFeed.map((question) =>
+          selectedFilterCategory ? (
+            question.category &&
+            selectedFilterCategory == question.category.title && (
+              <QuestionPreview key={question.id} question={question} />
+            )
+          ) : (
+            <QuestionPreview key={question.id} question={question} />
+          )
+        )}
       </QuestionContainer>
       {currentUser && (
         <CreateQuestionModal

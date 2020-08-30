@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NextNprogress from "nextjs-progressbar";
-import styled from "styled-components";
 import Navbar from "@/src/components/common/Navbar";
 
 const Layout = (props) => (
