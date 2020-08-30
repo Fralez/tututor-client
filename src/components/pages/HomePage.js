@@ -30,11 +30,30 @@ const HomePage = ({ currentUser }) => {
     } catch (error) {}
   };
 
+  const getQuestionLessRecentFeed = async () => {
+    try {
+      const res = await questions.indexLessRecent();
+      if (res.status == 200) {
+        setQuestionFeed(res.data);
+      }
+    } catch (error) {}
+  };
+
+  const onFilterSelection = (selectedOption) => {
+    if (selectedOption.value == 0) {
+      getQuestionFeed()
+    } else if (selectedOption.value == 1){
+      getQuestionLessRecentFeed()
+    } else {
+      getQuestionFeed()
+    }
+  }
+
   return (
     <HomeContainer>
       <SearchBar />
       <CategoryBar />
-      <Filter />
+      <Filter onFilterSelection={onFilterSelection}/>
       <QuestionContainer>
         {questionFeed.map((question) => (
           <QuestionPreview key={question.id} question={question} />
