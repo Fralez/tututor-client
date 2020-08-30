@@ -4,8 +4,6 @@ import tw from "tailwind.macro";
 import { useRouter } from "next/router";
 
 import api from "@/src/api";
-
-import Filter from "./Filter";
 import { Search, Close } from "@material-ui/icons";
 
 const SearchBar = () => {
@@ -48,7 +46,6 @@ const SearchBar = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Filter />
       {showResults && (
         <ResultsDropdown>
           <CloseIcon onClick={() => setShowResults(false)} />

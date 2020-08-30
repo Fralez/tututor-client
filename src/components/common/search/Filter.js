@@ -3,12 +3,17 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 import Dropdown from "react-dropdown";
 
-const Filter = () => {
+const Filter = ({onFilterSelection}) => {
 
-  const ops = [{ value: 0, label: "Más Reciente" }];
+  const ops = [{ value: 0, label: "Más Reciente" }, { value: 1, label: "Menos Reciente" } ];
 
   const [showMe, setShowMe] = useState(false);
   const [selected, setSelected] = useState(ops[0]);
+
+  const handleChange = (selectedOption) => {
+    setSelected(selected);
+    onFilterSelection(selectedOption);
+  }
 
   return (
     <ContainerDropdown>
@@ -16,7 +21,7 @@ const Filter = () => {
         value={selected}
         placeholder="Filtro"
         options={ops}
-        onChange={(selected) => setSelected(selected)}
+        onChange={handleChange}
       />
     </ContainerDropdown>
   );
@@ -25,7 +30,8 @@ const Filter = () => {
 export default Filter;
 
 const ContainerDropdown = styled.div`
-  ${tw`relative text-right md:mr-12`}
+  ${tw`relative text-right md:mr-12 flex justify-end m-0 w-full`}
+  padding-right: 100px;
 `;
 
 const CustomDropdown = styled(Dropdown)`
@@ -34,6 +40,6 @@ const CustomDropdown = styled(Dropdown)`
   }
 
   .Dropdown-menu {
-    ${tw`rounded-b-md border border-gray-300 text-sm md:text-base`}
+    ${tw`rounded-b-md border border-gray-300 text-sm md:text-base mr-3`}
   }
 `;

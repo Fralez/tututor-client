@@ -5,6 +5,7 @@ import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
 
+import Filter from "../common/search/Filter";
 import CreateQuestionModal from "../common/CreateQuestionModal";
 import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
@@ -30,6 +31,25 @@ const HomePage = ({ currentUser }) => {
     } catch (error) {}
   };
 
+  const getQuestionLessRecentFeed = async () => {
+    try {
+      const res = await questions.indexLessRecent();
+      if (res.status == 200) {
+        setQuestionFeed(res.data);
+      }
+    } catch (error) {}
+  };
+
+  const onFilterSelection = (selectedOption) => {
+    if (selectedOption.value == 0) {
+      getQuestionFeed()
+    } else if (selectedOption.value == 1){
+      getQuestionLessRecentFeed()
+    } else {
+      getQuestionFeed()
+    }
+  }
+
   return (
     <HomeContainer>
       <SearchBar />
@@ -41,6 +61,7 @@ const HomePage = ({ currentUser }) => {
           )
         }
       />
+      <Filter onFilterSelection={onFilterSelection}/>
       <QuestionContainer>
         {questionFeed.map((question) =>
           selectedFilterCategory ? (
