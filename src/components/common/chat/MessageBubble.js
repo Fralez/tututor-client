@@ -9,7 +9,7 @@ const MessageBubble = ({ children, sender }) => {
 export default MessageBubble;
 
 const Bubble = styled.div`
-  ${tw`p-2 text-sm`}
+  ${tw`p-2 text-sm shadow-lg`}
 
   display: flex;
   align-items: center;
@@ -17,10 +17,12 @@ const Bubble = styled.div`
   ${(props) =>
     props.sender
       ? css`
+          border-radius: 6px 0px 6px 6px;
           align-self: flex-end;
           background: #9f9ce7;
         `
       : css`
+          border-radius: 0px 6px 6px 6px;
           align-self: flex-start;
           background: #9dcffe;
         `}
@@ -31,8 +33,4 @@ const Bubble = styled.div`
   max-width: 420px;
 
   margin-bottom: 8px;
-  border-radius: 6px;
-
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 `;

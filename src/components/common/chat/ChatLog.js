@@ -118,7 +118,7 @@ export default ChatLog;
 
 const Log = styled.div`
   ${tw`rounded-md flex flex-col overflow-y-auto`}
-  flex: 3;
+  width: -webkit-fill-available;
 `;
 
 const MessageContainer = styled.div`

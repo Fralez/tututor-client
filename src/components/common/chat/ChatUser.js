@@ -21,13 +21,14 @@ const ChatUser = ({ user: { id, name }, selectedUserId, handleSelect }) => {
 export default ChatUser;
 
 const Overlay = styled.div`
-  ${tw`absolute top-o bottom-0 left-0 right-0 w-full h-full bg-gray-100`}
+  ${tw`absolute top-0 bottom-0 left-0 right-0 w-full h-full`}
+  background-color: ${(props) => props.theme.colors.whiteLavander.normal};
 
   ${(props) =>
     props.selected
       ? css`
           opacity: 0.1;
-          filter: brightness(10%);
+          filter: brightness(50%);
         `
       : css`
           opacity: 0;
@@ -35,7 +36,7 @@ const Overlay = styled.div`
 
           &:hover {
             opacity: 0.1;
-            filter: brightness(10%);
+            filter: brightness(70%);
             cursor: pointer;
           }
         `}

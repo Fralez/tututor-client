@@ -30,13 +30,13 @@ const Filter = ({onFilterSelection}) => {
 export default Filter;
 
 const ContainerDropdown = styled.div`
-  ${tw`relative text-right md:mr-12 flex justify-end m-0 w-full`}
-  padding-right: 100px;
+  ${tw`flex w-10/12`}
 `;
 
 const CustomDropdown = styled(Dropdown)`
+  ${tw`ml-auto`}
   .Dropdown-control {
-    ${tw`w-32 md:w-40 pr-8 border-none block relative rounded-md text-xs md:text-sm leading-5 shadow-none`}
+    ${tw`border-none rounded-md text-xs md:text-sm leading-5 shadow-none`}
   }
 
   .Dropdown-menu {
