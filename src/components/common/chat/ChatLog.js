@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
+import api from "@/src/api";
+
 import { Send } from "@material-ui/icons";
 
 import MessageBubble from "./MessageBubble";
 
-const ChatLog = () => {
-  const [message, setMessage] = useState("");
+const ChatLog = ({ cableWs, currentUser, selectedUserChannel }) => {
+  const { messages } = api();
+  const [channelMessages, setChannelMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   const messagesEndRef = useRef(null);
 
@@ -15,44 +19,96 @@ const ChatLog = () => {
     messagesEndRef.current.scrollIntoView();
   };
 
-  useEffect(scrollToBottom, []);
+  useEffect(() => {
+    messages.index(selectedUserChannel.id).then((res) => {
+      setChannelMessages(res.data);
+    });
+  }, [selectedUserChannel]);
+
+  useEffect(scrollToBottom, [channelMessages]);
+
+  useEffect(() => {
+    cableWs.onopen = () => {
+      cableWs.send(
+        JSON.stringify({
+          command: "subscribe",
+          identifier: JSON.stringify({
+            channel: "MessagesChannel",
+            channel_id: selectedUserChannel.id,
+          }),
+        })
+      );
+    };
+
+    cableWs.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (
+        data.identifier &&
+        data.identifier.includes("MessagesChannel") &&
+        data.message
+      ) {
+        if (data.message.channel_id == selectedUserChannel.id) {
+          setChannelMessages((oldState) => [...oldState, data.message]);
+        }
+      }
+    };
+
+    return () => {
+      cableWs.send(
+        JSON.stringify({
+          command: "unsubscribe",
+          identifier: JSON.stringify({
+            channel: "MessagesChannel",
+            channel_id: selectedUserChannel.id,
+          }),
+        })
+      );
+    };
+  }, [selectedUserChannel]);
+
+  const handleMessageCreation = async () => {
+    if (newMessage) {
+      messages.create(newMessage, selectedUserChannel.id);
+      setNewMessage("");
+    }
+  };
+
+  const handleKeyPress = async (event) => {
+    try {
+      if (event.key && event.key != "Enter") throw new Error();
+
+      handleMessageCreation();
+    } catch (error) {}
+  };
 
   return (
     <Log id="chatLog">
       <MessageContainer>
-        {/* <MessageBubble sender>
-          1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh1Lorem ipsum aosfnsa;lwbnrgh1Lorem ipsum
-          aosfnsa;lwbnrgh
-        </MessageBubble>
-        <MessageBubble>2Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
-        <MessageBubble>3Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
-        <MessageBubble sender>4Lorem ipsum aosfnsa;lwbnrgh</MessageBubble>
-        <MessageBubble sender>5Lorem ipsum aosfnsa;lwbnrgh</MessageBubble> */}
+        {channelMessages.map((channelMessage) => (
+          <MessageBubble
+            key={channelMessage.id}
+            sender={currentUser.id == channelMessage.user_id}
+          >
+            {channelMessage.content}
+          </MessageBubble>
+        ))}
       </MessageContainer>
-      <ChatMessage>
-        <ChatTextField
-          aria-label="TextMessage"
-          name="TextMessage"
-          type="TextMessage"
-          placeholder="Escribe un mensaje..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <SendMessageButton>
-          <SendIcon />
-        </SendMessageButton>
-      </ChatMessage>
+      {selectedUserChannel && (
+        <ChatMessage>
+          <ChatTextField
+            aria-label="TextMessage"
+            name="TextMessage"
+            type="TextMessage"
+            placeholder="Escribe un mensaje..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+          <SendMessageButton onClick={handleMessageCreation}>
+            <SendIcon />
+          </SendMessageButton>
+        </ChatMessage>
+      )}
       <div ref={messagesEndRef} />
     </Log>
   );

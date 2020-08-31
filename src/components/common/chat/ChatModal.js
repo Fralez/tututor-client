@@ -29,9 +29,20 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
 
     cableWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      if (data.type != "ping") {
+      }
       if (data.identifier == '{"channel":"ChannelsChannel"}' && data.message) {
         setUserChannels((oldState) => [...oldState, data.message]);
       }
+    };
+
+    return () => {
+      cableWs.send(
+        JSON.stringify({
+          command: "unsubscribe",
+          identifier: JSON.stringify({ channel: "ChannelsChannel" }),
+        })
+      );
     };
   }, []);
 
@@ -60,7 +71,6 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
     }
     // Set selected channel
     setSelectedUserChannel(selectedChannel);
-    console.log(selectedChannel);
   };
 
   return (
@@ -75,7 +85,13 @@ const ChatModal = ({ currentUser, showChatModal, toggleModal }) => {
                 selectedUserId={selectedUserId}
                 setSelectedUserId={handleSelectUser}
               />
-              <ChatLog />
+              {selectedUserChannel && (
+                <ChatLog
+                  cableWs={cableWs}
+                  currentUser={currentUser}
+                  selectedUserChannel={selectedUserChannel}
+                />
+              )}
             </ContentContainer>
             <CloseModal onClick={toggleModal} />
           </Modal>

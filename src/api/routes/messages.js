@@ -3,9 +3,9 @@ import axios from "axios";
 const BASE_URL = process.env.BACKEND_URL;
 
 export default () => ({
-  index: () => {
-    return axios.get(`${BASE_URL}/messages/`, {
-      withCredentials: true
+  index: (channelId) => {
+    return axios.get(`${BASE_URL}/messages/${channelId}`, {
+      withCredentials: true,
     });
   },
   show: (id) => {
@@ -19,7 +19,7 @@ export default () => ({
       {
         message: {
           content,
-          channel_id: channelId
+          channel_id: channelId,
         },
       },
       { withCredentials: true }
