@@ -7,15 +7,7 @@ import { useRouter } from "next/router";
 import { Star } from "@material-ui/icons";
 
 const QuestionPreview = ({
-  question: {
-    id,
-    title,
-    description,
-    votes,
-    created_at,
-    creator: { name },
-    category,
-  },
+  question: { id, title, description, votes, created_at, creator, category },
 }) => {
   const Router = useRouter();
 
@@ -26,8 +18,8 @@ const QuestionPreview = ({
   // };
 
   return (
-    <Preview onClick={() => Router.push(`/question/${id}`)}>
-      <User>
+    <QuestionPrevContainer>
+      <User onClick={() => Router.push(`/user/${creator.id}`)}>
         <PorfileImgCon>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -35,35 +27,41 @@ const QuestionPreview = ({
           ></img>
         </PorfileImgCon>
         <UserInfo>
-          <Name>{name}</Name>
+          <Name>{creator.name}</Name>
           {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
         </UserInfo>
-        <DateView to={created_at} />
       </User>
-      <InfoCon>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
-        <SaveVotesCon>
-          <VotesCon>
-            <StarIcon />
-            <Votes>{votes}</Votes>
-          </VotesCon>
-        </SaveVotesCon>
-        {category && (
-          <ContainerCategory>
-            <Category>{category.title}</Category>
-          </ContainerCategory>
-        )}
-      </InfoCon>
-    </Preview>
+      <Preview onClick={() => Router.push(`/question/${id}`)}>
+        <DateView to={created_at} />
+        <InfoCon>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+          <SaveVotesCon>
+            <VotesCon>
+              <StarIcon />
+              <Votes>{votes}</Votes>
+            </VotesCon>
+          </SaveVotesCon>
+          {category && (
+            <ContainerCategory>
+              <Category>{category.title}</Category>
+            </ContainerCategory>
+          )}
+        </InfoCon>
+      </Preview>
+    </QuestionPrevContainer>
   );
 };
 
 export default QuestionPreview;
 
-const Preview = styled.div`
-  ${tw`cursor-pointer w-4/5 rounded-md p-6 my-4 md:my-6 border-solid border border-gray-300 flex flex-col justify-center`}
+const QuestionPrevContainer = styled.div`
+  ${tw`w-4/5 flex flex-col items-center relative`}
   max-width: 80%;
+`;
+
+const Preview = styled.div`
+  ${tw`cursor-pointer w-full rounded-md p-6 my-4 md:my-6 border-solid border border-gray-300 flex flex-col justify-center`}
 `;
 
 const PorfileImgCon = styled.div`
@@ -71,11 +69,12 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full`}
+  ${tw`cursor-pointer flex absolute mt-8 md:mt-12 ml-8 left-0`}
 `;
-
+// top: 18%;
+//   left: 1.5%;
 const UserInfo = styled.div`
-  ${tw`ml-2 flex flex-col justify-center`}
+  ${tw`ml-2 flex flex-col justify-center mt-2`}
 `;
 
 const Name = styled.div`
@@ -92,6 +91,7 @@ const DateView = styled(Moment)`
 
 const InfoCon = styled.div`
   ${tw`flex flex-col`}
+  margin-top: 2%;
 `;
 
 const Title = styled.div`
