@@ -68,7 +68,7 @@ const Category = styled.div`
 `;
 
 const CategoriesContainer = styled.div`
-  ${tw`ml-8 md:ml-0 relative w-full md:w-11/12 md:h-16 h-12 flex mb-2 overflow-x-auto overflow-y-hidden lg:justify-center`}
+  ${tw`ml-8 md:ml-0 relative w-full md:w-11/12 md:h-16 h-12 flex mb-2 overflow-x-auto overflow-y-hidden xl:justify-center`}
 `;
 
 const NameCategory = styled.p`

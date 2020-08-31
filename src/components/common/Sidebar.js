@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 import {
   ExitToApp,
@@ -59,8 +59,8 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ReputationLight />
           <ReputationText>
             {`${currentUser.reputation} ${
-              currentUser.reputation > 1 ? "lights" : "light"
-              }`}
+              currentUser.reputation > 1 ? "luces" : "luz"
+            }`}
           </ReputationText>
         </ReputationZone>
       </SidebarItems>
@@ -125,6 +125,7 @@ const ReputationText = styled.span`
   ${tw`font-semibold text-xl`}
 `;
 
-const ReputationLight = styled.img`
-  ${tw`h-16 w-16`}
+const ReputationLight = styled(EmojiObjects)`
+  width: 4rem !important;
+  height: 4rem !important;
 `;
