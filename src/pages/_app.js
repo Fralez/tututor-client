@@ -1,7 +1,7 @@
 import React from "react";
 import App from "next/app";
 import { DefaultSeo } from "next-seo";
-import tw from "tailwind.macro"
+import tw from "tailwind.macro";
 import moment from "moment";
 import "moment/locale/es";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
