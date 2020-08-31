@@ -118,13 +118,13 @@ const InstitutionName = styled.div`
 `;
 
 const ReputationZone = styled.div`
-  ${tw`h-20 p-2 flex text-gray-300 items-center`}
+  ${tw`h-20 p-2 flex text-gray-300 items-center ml-6`}
 `;
 
 const ReputationText = styled.span`
   ${tw`font-semibold text-xl`}
 `;
 
-const ReputationLight = styled(EmojiObjects)`
-  font-size: 4rem !important;
+const ReputationLight = styled.img`
+  ${tw`h-16 w-16`}
 `;

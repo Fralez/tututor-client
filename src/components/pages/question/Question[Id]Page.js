@@ -304,7 +304,7 @@ const ErrorText = styled.span`
 `;
 
 const CreateButton = styled.button`
-  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 text-white rounded-md`}
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 

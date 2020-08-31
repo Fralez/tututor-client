@@ -63,11 +63,7 @@ const CreateQuestionModal = ({
       {currentUser && showCreateQuestionModal && (
         <ModalContainer>
           <ModalOverlay onClick={toggleModal} />
-          <Modal
-            showCreateQuestionModal={showCreateQuestionModal}
-            shouldCloseOnEsc={true}
-            shouldCloseOnOverlayClick={true}
-          >
+          <Modal>
             <ModalTitle>Crea una pregunta</ModalTitle>
             <TitleField
               type="text"
@@ -171,11 +167,11 @@ const ErrorText = styled.span`
 `;
 
 const Actions = styled.div`
-  ${tw`w-full flex justify-end`}
+  ${tw`w-full flex justify-end mt-8`}
 `;
 
 const CreateButton = styled.button`
-  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 text-white rounded-md`}
   background-color: ${(props) => props.theme.colors.violetBlue.normal};
 `;
 
@@ -199,7 +195,7 @@ const CustomDropdown = styled(Dropdown)`
     ${tw`relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 text-sm leading-5`}
   }
   .Dropdown-menu {
-    max-height: 3rem;
+    max-height: 7rem;
     ${tw`w-48 rounded-b-md border border-gray-300 text-sm`}
   }
 `;

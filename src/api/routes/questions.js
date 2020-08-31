@@ -4,7 +4,10 @@ const BASE_URL = process.env.BACKEND_URL;
 
 export default () => ({
   index: () => {
-    return axios.get(`${BASE_URL}/questions/`, { withCredentials: true });
+    return axios.get(`${BASE_URL}/questions`, { withCredentials: true });
+  },
+  indexLessRecent: () => {
+    return axios.get(`${BASE_URL}/questions?sort_order=asc`, { withCredentials: true });
   },
   show: (id, cookie = false) => {
     return axios.get(`${BASE_URL}/questions/${id}`, {
