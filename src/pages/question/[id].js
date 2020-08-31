@@ -6,7 +6,7 @@ import QuestionIdPage from "../../components/pages/question/Question[Id]Page";
 
 import api from "@/src/api";
 
-const Question = ({ currentUser, question, questionAnswers, errorCode }) => {
+const Question = ({ question, questionAnswers, errorCode }) => {
   if (errorCode) {
     return <Error statusCode={errorCode} />;
   }

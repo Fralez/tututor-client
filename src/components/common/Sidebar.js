@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router"
 
 import {
   ExitToApp,
@@ -12,6 +13,7 @@ import {
 import { slide as SidebarMenu } from "react-burger-menu";
 
 const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
+  const Router = useRouter();
   return (
     <CustomSidebar
       customBurgerIcon={false}
@@ -24,7 +26,7 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ExitToApp />
           <LeadingText>Cerrar sesión</LeadingText>
         </SidebarTitle>
-        <User>
+        <User onClick={() => Router.push(`/user/${currentUser.id}`)}>
           <ProfileImgContainer>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -58,7 +60,7 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ReputationText>
             {`${currentUser.reputation} ${
               currentUser.reputation > 1 ? "lights" : "light"
-            }`}
+              }`}
           </ReputationText>
         </ReputationZone>
       </SidebarItems>

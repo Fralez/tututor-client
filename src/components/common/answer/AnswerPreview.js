@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
@@ -14,19 +15,14 @@ import {
 
 const AnswerPreview = ({
   currentUser,
-  answer: {
-    id,
-    description,
-    votes,
-    created_at,
-    user_vote,
-    creator: { name },
-  },
+  answer: { id, description, votes, created_at, user_vote, creator },
   handleMarkCorrectAnswerButton,
   showMarkCorrectAnswerButton = false,
   isCorrectAnswer = false,
 }) => {
   const { answers } = api();
+
+  const Router = useRouter();
 
   const [votesCounter, setVotes] = useState(votes);
   const [currentVoteStatus, setCurrentVoteStatus] = useState(
@@ -50,8 +46,8 @@ const AnswerPreview = ({
   };
 
   return (
-    <Preview isCorrectAnswer={isCorrectAnswer}>
-      <User>
+    <AnswerPrevContainer>
+      <User onClick={() => Router.push(`/user/${creator.id}`)}>
         <PorfileImgCon>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -59,38 +55,44 @@ const AnswerPreview = ({
           ></img>
         </PorfileImgCon>
         <UserInfo>
-          <Name>{name}</Name>
+          <Name>{creator.name}</Name>
           {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
         </UserInfo>
-        <DatePreview to={created_at} />
       </User>
-      <InfoCon>
-        {showMarkCorrectAnswerButton &&
-          (isCorrectAnswer ? (
-            <CorrectAnswerOn onClick={handleMarkCorrectAnswerButton} />
-          ) : (
-            <CorrectAnswerOff onClick={handleMarkCorrectAnswerButton} />
-          ))}
-        <Description>{description}</Description>
-        <Punctuation>
-          {currentUser && currentVoteStatus >= 0 && (
-            <ArrowLeft onClick={handleDownvote} />
-          )}
-          <StarIcon />
-          <Score>{votesCounter}</Score>
-          {currentUser && currentVoteStatus <= 0 && (
-            <ArrowRight onClick={handleUpvote} />
-          )}
-        </Punctuation>
-      </InfoCon>
-    </Preview>
+      <Preview isCorrectAnswer={isCorrectAnswer}>
+        <DatePreview to={created_at} />
+        <InfoCon>
+          {showMarkCorrectAnswerButton &&
+            (isCorrectAnswer ? (
+              <CorrectAnswerOn onClick={handleMarkCorrectAnswerButton} />
+            ) : (
+              <CorrectAnswerOff onClick={handleMarkCorrectAnswerButton} />
+            ))}
+          <Description>{description}</Description>
+          <Punctuation>
+            {currentUser && currentVoteStatus >= 0 && (
+              <ArrowLeft onClick={handleDownvote} />
+            )}
+            <StarIcon />
+            <Score>{votesCounter}</Score>
+            {currentUser && currentVoteStatus <= 0 && (
+              <ArrowRight onClick={handleUpvote} />
+            )}
+          </Punctuation>
+        </InfoCon>
+      </Preview>
+    </AnswerPrevContainer>
   );
 };
 
 export default AnswerPreview;
 
+const AnswerPrevContainer = styled.div`
+  ${tw`w-4/5 relative`}
+`;
+
 const Preview = styled.div`
-  ${tw`w-4/5 rounded-md p-6 mb-6 flex flex-col justify-center`}
+  ${tw`w-full rounded-md p-6 mb-6 flex flex-col justify-center`}
   border-left: 0.5rem solid ${(props) =>
     props.isCorrectAnswer ? props.theme.colors.green.normal : "#A0AEC0"};
 `;
@@ -100,7 +102,7 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full items-center`}
+  ${tw`cursor-pointer flex absolute mt-4 ml-8 left-0`}
 `;
 
 const UserInfo = styled.div`
@@ -111,9 +113,9 @@ const Name = styled.div`
   ${tw`text-sm text-gray-700`}
 `;
 
-const Subtitle = styled.div`
-  ${tw`text-xs text-gray-500 mt-1`}
-`;
+// const Subtitle = styled.div`
+//   ${tw`text-xs text-gray-500 mt-1`}
+// `;
 
 const DatePreview = styled(Moment)`
   ${tw`text-xs w-auto ml-auto text-right text-gray-700`}
@@ -124,7 +126,7 @@ const InfoCon = styled.div`
 `;
 
 const Description = styled.div`
-  ${tw`mt-2 w-5/6 text-gray-800`}
+  ${tw`mt-4 w-5/6 text-gray-800`}
 `;
 
 const Punctuation = styled.div`
@@ -132,15 +134,15 @@ const Punctuation = styled.div`
 `;
 
 const CorrectAnswerOn = styled(CheckCircle)`
-  ${tw`text-2xl mb-2 mt-4 cursor-pointer ml-auto`}
+  ${tw`text-2xl mb-2 mt-6 cursor-pointer`}
   transform: scale(1.4);
   color: ${(props) => props.theme.colors.green.normal};
 `;
 
 const CorrectAnswerOff = styled(CheckCircle)`
-  ${tw`text-2xl mb-2 mt-4 cursor-pointer ml-auto`}
+  ${tw`text-2xl mb-2 mt-6 cursor-pointer`}
   transform: scale(1.4);
-  color: #A0AEC0;
+  color: #a0aec0;
 `;
 
 const Score = styled.div`
