@@ -71,7 +71,7 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full`}
+  ${tw`flex w-full items-center`}
 `;
 
 const UserInfo = styled.div`
@@ -119,7 +119,7 @@ const VotesCon = styled.div`
 `;
 
 const ContainerCategory = styled.div`
-  ${tw`inline-block mr-8 md:mr-12 ml-auto`}
+  ${tw`inline-block  ml-auto`}
   width: fit-content;
 `;
 

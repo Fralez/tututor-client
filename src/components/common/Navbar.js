@@ -201,7 +201,7 @@ const LoginButton = styled.button`
 `;
 
 const RegisterButton = styled.button`
-  ${tw`px-2 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${tw`px-2 py-2 text-sm font-semibold text-white rounded-md`}
   ${(props) => (props.isMobile ? tw`block w-full my-2` : tw`ml-4`)}
 
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
