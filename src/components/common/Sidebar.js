@@ -14,6 +14,7 @@ import { slide as SidebarMenu } from "react-burger-menu";
 
 const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
   const Router = useRouter();
+
   return (
     <CustomSidebar
       customBurgerIcon={false}
@@ -30,28 +31,37 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ProfileImgContainer>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-              alt="Profile img"
+              alt="Profile immg"
             ></img>
           </ProfileImgContainer>
           <UserInfo>
             <UserName>{currentUser.name}</UserName>
-            <InstitutionName>My Institution Name</InstitutionName>
+            {currentUser.institution && (
+              <InstitutionName
+                onClick={() =>
+                  Router.push(`/institution/${currentUser.institution.id}`)
+                }
+              >
+                {currentUser.institution.name}
+              </InstitutionName>
+            )}
           </UserInfo>
         </User>
       </div>
       <SidebarItems>
         <SidebarTitle>Personal</SidebarTitle>
+        <SidebarItem
+          onClick={() =>
+            currentUser.institution &&
+            Router.push(`/institution/${currentUser.institution.id}`)
+          }
+        >
+          <Domain />
+          <LeadingText>Mi institución</LeadingText>
+        </SidebarItem>
         <SidebarItem>
           <QuestionAnswer />
           <LeadingText>Preguntas</LeadingText>
-        </SidebarItem>
-        <SidebarItem>
-          <Textsms />
-          <LeadingText>Chats</LeadingText>
-        </SidebarItem>
-        <SidebarItem>
-          <Domain />
-          <LeadingText>Instituciones</LeadingText>
         </SidebarItem>
         {/* Reputation lights */}
         <SidebarTitle>Reputation</SidebarTitle>
