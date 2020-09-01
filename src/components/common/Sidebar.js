@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 import {
   ExitToApp,
@@ -14,6 +14,7 @@ import { slide as SidebarMenu } from "react-burger-menu";
 
 const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
   const Router = useRouter();
+  
   return (
     <CustomSidebar
       customBurgerIcon={false}
@@ -30,12 +31,20 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ProfileImgContainer>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-              alt="Profile img"
+              alt="Profile immg"
             ></img>
           </ProfileImgContainer>
           <UserInfo>
             <UserName>{currentUser.name}</UserName>
-            <InstitutionName onClick={() => Router.push(`/institution/${institution.id}`)}>My Institution Name</InstitutionName>
+            {currentUser.institution && (
+              <InstitutionName
+                onClick={() =>
+                  Router.push(`/institution/${currentUser.institution.id}`)
+                }
+              >
+                {currentUser.institution.name}
+              </InstitutionName>
+            )}
           </UserInfo>
         </User>
       </div>

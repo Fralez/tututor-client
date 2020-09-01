@@ -1,45 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
-import Layout from "../../layout/Layout";
+import api from "@/src/api";
 
-import { AlternateEmail, LocationOn, Info, Apartment } from "@material-ui/icons";
+import QuestionPreview from "@/src/components/common/question/QuestionPreview";
 
-const InstitutionIdPage = () => {
+import {
+  AlternateEmail,
+  LocationOn,
+  Info,
+  Apartment,
+} from "@material-ui/icons";
+
+const InstitutionIdPage = ({
+  institution: { id, name, email, description, address },
+}) => {
+  const { questions } = api();
+
+  const [questionFeed, setQuestionFeed] = useState([]);
+
+  const getQuestionFeed = async () => {
+    try {
+      const res = await questions.index(id);
+      if (res.status == 200) {
+        setQuestionFeed(res.data);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getQuestionFeed();
+  }, []);
+
   return (
-      <Layout>
-        <InstitutionContainer>
-          <InstitutionPerfil>
-            <ProfilePic />
-              <Name>ÁNIMA - Bachillerato tecnológico</Name>
-          </InstitutionPerfil>
-          <InstitutionInfo>
-            <EmailContainer>
-              <EmailIcon />
-              admin@anima.edu.uy
-            </EmailContainer>
-            <LocationContainer>
-              <LocationIcon />
-              Canelones 1162
-            </LocationContainer>
-            <DescriptionContainer>
-              <DescriptionIcon />
-              <Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum
-              </Description>
-            </DescriptionContainer>
-          </InstitutionInfo>
-        </InstitutionContainer>
-      </Layout>
+    <>
+      <InstitutionContainer>
+        <InstitutionPerfil>
+          <ProfilePic />
+          <Name>{name}</Name>
+        </InstitutionPerfil>
+        <InstitutionInfo>
+          <EmailContainer>
+            <EmailIcon />
+            {email}
+          </EmailContainer>
+          <LocationContainer>
+            <LocationIcon />
+            {address}
+          </LocationContainer>
+          <DescriptionContainer>
+            <DescriptionIcon />
+            <Description>
+              {description ? description : "Sin descripción"}
+            </Description>
+          </DescriptionContainer>
+        </InstitutionInfo>
+        <QuestionContainer>
+          {questionFeed.map((question) => (
+            <QuestionPreview key={question.id} question={question} />
+          ))}
+        </QuestionContainer>
+      </InstitutionContainer>
+    </>
   );
 };
 
@@ -80,7 +103,7 @@ const LocationIcon = styled(LocationOn)`
 `;
 
 const DescriptionContainer = styled.div`
-  ${tw`flex mt-2`}
+  ${tw`flex mt-2 italic`}
 `;
 
 const DescriptionIcon = styled(Info)`
@@ -99,3 +122,5 @@ const InstitutionInfo = styled.div`
 const EmailContainer = styled.div`
   ${tw`flex`}
 `;
+
+const QuestionContainer = styled.div``;
