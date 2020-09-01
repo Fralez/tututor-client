@@ -3,6 +3,15 @@ import axios from "axios";
 const BASE_URL = process.env.BACKEND_URL;
 
 export default () => ({
+  index: (institutionId = "") => {
+    return axios.get(
+      `${BASE_URL}/questions${
+        institutionId ? `?institution_id=${institutionId}` : ""
+      }`,
+      {
+        withCredentials: true,
+      }
+    );
   index: () => {
     return axios.get(`${BASE_URL}/questions`, { withCredentials: true });
   },
