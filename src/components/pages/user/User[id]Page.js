@@ -16,7 +16,9 @@ const UserIdPage = ({ user }) => {
         </ProfilePicContainer>
         <div>
           <Name>{user.name}</Name>
-          {/* <Institution>ÁNIMA - Bachillerato tecnológico</Institution> */}
+          {user.institution && (
+            <Institution>{user.institution.name}</Institution>
+          )}
         </div>
       </UserContainer>
       <UserInfo>
@@ -70,10 +72,10 @@ const Name = styled.h1`
   color: ${(props) => props.theme.colors.violetBlue.normal}
 `;
 
-/* const Institution = styled.h5`
+const Institution = styled.h5`
   ${tw`text-sm mt-2`}
   color: #718096
-`; */
+`;
 
 const UserInfo = styled.div`
   ${tw`w-3/4 ml-16 md:ml-32`}

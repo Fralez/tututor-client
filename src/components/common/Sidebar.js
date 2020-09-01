@@ -13,7 +13,7 @@ import {
 import { slide as SidebarMenu } from "react-burger-menu";
 
 const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
-  const Router = useRouter();  
+  const Router = useRouter();
 
   return (
     <CustomSidebar
@@ -50,17 +50,18 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
       </div>
       <SidebarItems>
         <SidebarTitle>Personal</SidebarTitle>
+        <SidebarItem
+          onClick={() =>
+            currentUser.institution &&
+            Router.push(`/institution/${currentUser.institution.id}`)
+          }
+        >
+          <Domain />
+          <LeadingText>Mi institución</LeadingText>
+        </SidebarItem>
         <SidebarItem>
           <QuestionAnswer />
           <LeadingText>Preguntas</LeadingText>
-        </SidebarItem>
-        <SidebarItem>
-          <Textsms />
-          <LeadingText>Chats</LeadingText>
-        </SidebarItem>
-        <SidebarItem>
-          <Domain />
-          <LeadingText>Instituciones</LeadingText>
         </SidebarItem>
         {/* Reputation lights */}
         <SidebarTitle>Reputation</SidebarTitle>
