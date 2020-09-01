@@ -13,8 +13,8 @@ import {
 import { slide as SidebarMenu } from "react-burger-menu";
 
 const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
-  const Router = useRouter();
-  
+  const Router = useRouter();  
+
   return (
     <CustomSidebar
       customBurgerIcon={false}
@@ -27,7 +27,7 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ExitToApp />
           <LeadingText>Cerrar sesión</LeadingText>
         </SidebarTitle>
-        <User>
+        <User onClick={() => Router.push(`/user/${currentUser.id}`)}>
           <ProfileImgContainer>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -68,7 +68,7 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ReputationLight />
           <ReputationText>
             {`${currentUser.reputation} ${
-              currentUser.reputation > 1 ? "lights" : "light"
+              currentUser.reputation > 1 ? "luces" : "luz"
             }`}
           </ReputationText>
         </ReputationZone>
@@ -127,7 +127,7 @@ const InstitutionName = styled.div`
 `;
 
 const ReputationZone = styled.div`
-  ${tw`h-20 p-2 flex text-gray-300 items-center`}
+  ${tw`h-20 p-2 flex text-gray-300 items-center ml-6`}
 `;
 
 const ReputationText = styled.span`
@@ -135,5 +135,6 @@ const ReputationText = styled.span`
 `;
 
 const ReputationLight = styled(EmojiObjects)`
-  font-size: 4rem !important;
+  width: 4rem !important;
+  height: 4rem !important;
 `;

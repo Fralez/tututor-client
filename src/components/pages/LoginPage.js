@@ -169,6 +169,5 @@ const ButtonIcon = styled.span`
 `;
 
 const LockSvg = styled(AccountCircle)`
-  ${tw`h-5 w-5`}
   color: ${(props) => props.theme.colors.violetBlue.light};
 `;

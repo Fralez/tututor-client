@@ -12,6 +12,11 @@ export default () => ({
         withCredentials: true,
       }
     );
+  index: () => {
+    return axios.get(`${BASE_URL}/questions`, { withCredentials: true });
+  },
+  indexLessRecent: () => {
+    return axios.get(`${BASE_URL}/questions?sort_order=asc`, { withCredentials: true });
   },
   show: (id, cookie = false) => {
     return axios.get(`${BASE_URL}/questions/${id}`, {

@@ -3,6 +3,8 @@ import sessions from "./routes/sessions";
 import questions from "./routes/questions";
 import answers from "./routes/answers";
 import institutions from "./routes/institutions"
+import channels from "./routes/channels";
+import messages from "./routes/messages";
 
 export default () => ({
   users: users(),
@@ -10,4 +12,6 @@ export default () => ({
   questions: questions(),
   answers: answers(),
   institutions: institutions(),
+  channels: channels(),
+  messages: messages(),
 });

@@ -102,23 +102,23 @@ const QuestionIdPage = ({
 
   return (
     <Container>
-      <Question>
-        <User>
-          <PorfileImgCon>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-              alt="Profile img"
-            ></img>
-          </PorfileImgCon>
-          <UserInfo>
-            <Name>{creator.name}</Name>
-            {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
-          </UserInfo>
-          <DateView to={created_at}></DateView>
-          {/* <DropdownButton>
+      <User onClick={() => Router.push(`/user/${creator.id}`)}>
+        <PorfileImgCon>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+            alt="Profile img"
+          ></img>
+        </PorfileImgCon>
+        <UserInfo>
+          <Name>{creator.name}</Name>
+          {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
+        </UserInfo>
+        {/* <DropdownButton>
             <DropdownIcon />
           </DropdownButton> */}
-        </User>
+      </User>
+      <Question>
+        <DateView to={created_at}></DateView>
         <Title>{title}</Title>
         <Description>{description}</Description>
         <IconsCon>
@@ -211,7 +211,7 @@ const QuestionIdPage = ({
 export default withCurrentUser(QuestionIdPage);
 
 const Container = styled.div`
-  ${tw`w-full`}
+  ${tw`w-full relative`}
 `;
 
 const Question = styled.div`
@@ -227,7 +227,7 @@ const PorfileImgCon = styled.div`
 `;
 
 const User = styled.div`
-  ${tw`flex w-full`}
+  ${tw`cursor-pointer flex absolute mt-6 md:mt-6 left-0 ml-12 md:ml-24`}
 `;
 
 const UserInfo = styled.div`
@@ -238,16 +238,16 @@ const Name = styled.div`
   ${tw`text-gray-700 text-sm`}
 `;
 
-const Subtitle = styled.div`
-  ${tw`text-xs text-gray-500 mt-1`}
-`;
+// const Subtitle = styled.div`
+//   ${tw`text-xs text-gray-500 mt-1`}
+// `;
 
 const DateView = styled(Moment)`
   ${tw`text-sm w-auto ml-auto text-right text-gray-700`}
 `;
 
 const Title = styled.div`
-  ${tw`text-2xl md:text-3xl mb-2 mt-2 md:mt-4 font-medium w-5/6`}
+  ${tw`text-2xl md:text-3xl font-medium w-5/6 mt-8 md:mt-10`}
   color: ${(props) => props.theme.colors.violetBlue.normal}
 `;
 
@@ -304,7 +304,7 @@ const ErrorText = styled.span`
 `;
 
 const CreateButton = styled.button`
-  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white rounded-md`}
+  ${tw`ml-4 px-4 py-2 text-sm font-semibold text-gray-300 text-white rounded-md`}
   background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
 `;
 

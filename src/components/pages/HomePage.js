@@ -5,7 +5,9 @@ import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
 
+import Filter from "../common/search/Filter";
 import CreateQuestionModal from "../common/CreateQuestionModal";
+import ChatModal from "../common/chat/ChatModal";
 import QuestionPreview from "../common/question/QuestionPreview";
 import SearchBar from "../common/search/SearchBar";
 import CategoryBar from "../common/categories/CategoryBar";
@@ -14,6 +16,7 @@ const HomePage = ({ currentUser }) => {
   const { questions } = api();
 
   const [showCreateQuestionModal, setShowCreateQuestionModal] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
   const [questionFeed, setQuestionFeed] = useState([]);
   const [selectedFilterCategory, setSelectedFilterCategory] = useState("");
 
@@ -30,6 +33,25 @@ const HomePage = ({ currentUser }) => {
     } catch (error) {}
   };
 
+  const getQuestionLessRecentFeed = async () => {
+    try {
+      const res = await questions.indexLessRecent();
+      if (res.status == 200) {
+        setQuestionFeed(res.data);
+      }
+    } catch (error) {}
+  };
+
+  const onFilterSelection = (selectedOption) => {
+    if (selectedOption.value == 0) {
+      getQuestionFeed()
+    } else if (selectedOption.value == 1){
+      getQuestionLessRecentFeed()
+    } else {
+      getQuestionFeed()
+    }
+  }
+
   return (
     <HomeContainer>
       <SearchBar />
@@ -41,6 +63,7 @@ const HomePage = ({ currentUser }) => {
           )
         }
       />
+      <Filter onFilterSelection={onFilterSelection}/>
       <QuestionContainer>
         {questionFeed.map((question) =>
           selectedFilterCategory ? (
@@ -60,6 +83,13 @@ const HomePage = ({ currentUser }) => {
           toggleModal={() =>
             setShowCreateQuestionModal(!showCreateQuestionModal)
           }
+        />
+      )}
+      {currentUser && (
+        <ChatModal
+          currentUser={currentUser}
+          showChatModal={showChatModal}
+          toggleModal={() => setShowChatModal(!showChatModal)}
         />
       )}
     </HomeContainer>
