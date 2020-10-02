@@ -27,7 +27,7 @@ const UserIdPage = ({ user }) => {
           <Lightbulb fill="currentColor" />
           <Reputation>{user.reputation}</Reputation>
         </ReputationContainer>
-        <MoreInfoTitle>Más información</MoreInfoTitle>
+        <HeadingTitle>Más información</HeadingTitle>
         <EmailContainer>
           <EmailIcon />
           <h3>{user.email}</h3>
@@ -42,6 +42,7 @@ const UserIdPage = ({ user }) => {
             {user.description ? user.description : "Sin descripción"}
           </DescriptionText>
         </DescriptionContainer>
+        <HeadingTitle>Preguntas guardadas</HeadingTitle>
       </UserInfo>
     </>
   );
@@ -129,6 +130,6 @@ const Reputation = styled.div`
 const ReputationTitle = styled.h2`
   ${tw`text-2xl mt-8 mb-4`}
 `;
-const MoreInfoTitle = styled.h2`
+const HeadingTitle = styled.h2`
   ${tw`text-2xl mt-8 mb-4`}
 `;

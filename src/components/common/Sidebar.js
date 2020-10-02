@@ -59,10 +59,6 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <Domain />
           <LeadingText>Mi institución</LeadingText>
         </SidebarItem>
-        <SidebarItem>
-          <QuestionAnswer />
-          <LeadingText>Preguntas</LeadingText>
-        </SidebarItem>
         {/* Reputation lights */}
         <SidebarTitle>Reputation</SidebarTitle>
         <ReputationZone>

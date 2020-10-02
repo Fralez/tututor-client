@@ -91,6 +91,7 @@ const CloseIcon = styled(Close)`
 
 const ResultsDropdown = styled.div`
   ${tw`absolute shadow-md w-full bg-white flex flex-col items-center rounded-b-md border-solid border border-gray-300`};
+  z-index: 10;
   min-height: 5rem;
   top: 47px;
   right: 0;

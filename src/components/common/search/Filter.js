@@ -7,11 +7,10 @@ const Filter = ({onFilterSelection}) => {
 
   const ops = [{ value: 0, label: "Más Reciente" }, { value: 1, label: "Menos Reciente" } ];
 
-  const [showMe, setShowMe] = useState(false);
   const [selected, setSelected] = useState(ops[0]);
 
   const handleChange = (selectedOption) => {
-    setSelected(selected);
+    setSelected(selectedOption);
     onFilterSelection(selectedOption);
   }
 
