@@ -71,11 +71,8 @@ const Navbar = ({ currentUser, logout }) => {
                   <Link href="/">
                     <NavItem>Inicio</NavItem>
                   </Link>
-                  <Link href="/">
-                    <NavItem>Explorar</NavItem>
-                  </Link>
-                  <Link href="/">
-                    <NavItem>Ranking</NavItem>
+                  <Link href="/institution">
+                    <NavItem>Instituciones</NavItem>
                   </Link>
                 </div>
               </NavItems>
