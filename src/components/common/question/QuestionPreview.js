@@ -3,6 +3,7 @@ import styled from "styled-components";
 import tw from "tailwind.macro";
 import Moment from "react-moment";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { Star } from "@material-ui/icons";
 
@@ -19,36 +20,44 @@ const QuestionPreview = ({
 
   return (
     <QuestionPrevContainer>
-      <User onClick={() => Router.push(`/user/${creator.id}`)}>
-        <PorfileImgCon>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-            alt="Profile img"
-          ></img>
-        </PorfileImgCon>
-        <UserInfo>
-          <Name>{creator.name}</Name>
-          {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
-        </UserInfo>
-      </User>
-      <Preview onClick={() => Router.push(`/question/${id}`)}>
-        <DateView to={created_at} />
-        <InfoCon>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
-          <SaveVotesCon>
-            <VotesCon>
-              <StarIcon />
-              <Votes>{votes}</Votes>
-            </VotesCon>
-          </SaveVotesCon>
-          {category && (
-            <ContainerCategory>
-              <Category>{category.title}</Category>
-            </ContainerCategory>
-          )}
-        </InfoCon>
-      </Preview>
+      <Link passHref href={`/user/${creator.id}`}>
+        <a>
+          <User>
+            <PorfileImgCon>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                alt="Profile img"
+              ></img>
+            </PorfileImgCon>
+            <UserInfo>
+              <Name>{creator.name}</Name>
+              {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
+            </UserInfo>
+          </User>
+        </a>
+      </Link>
+      <Link passHref href={`/question/${id}`}>
+        <a>
+          <Preview>
+            <DateView to={created_at} />
+            <InfoCon>
+              <Title>{title}</Title>
+              <Description>{description}</Description>
+              <SaveVotesCon>
+                <VotesCon>
+                  <StarIcon />
+                  <Votes>{votes}</Votes>
+                </VotesCon>
+              </SaveVotesCon>
+              {category && (
+                <ContainerCategory>
+                  <Category>{category.title}</Category>
+                </ContainerCategory>
+              )}
+            </InfoCon>
+          </Preview>
+        </a>
+      </Link>
     </QuestionPrevContainer>
   );
 };

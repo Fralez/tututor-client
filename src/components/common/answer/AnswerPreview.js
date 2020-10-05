@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import api from "@/src/api";
 
@@ -47,18 +48,22 @@ const AnswerPreview = ({
 
   return (
     <AnswerPrevContainer>
-      <User onClick={() => Router.push(`/user/${creator.id}`)}>
-        <PorfileImgCon>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-            alt="Profile img"
-          ></img>
-        </PorfileImgCon>
-        <UserInfo>
-          <Name>{creator.name}</Name>
-          {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
-        </UserInfo>
-      </User>
+      <Link passHref href={`/user/${creator.id}`}>
+        <a>
+          <User>
+            <PorfileImgCon>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                alt="Profile img"
+              ></img>
+            </PorfileImgCon>
+            <UserInfo>
+              <Name>{creator.name}</Name>
+              {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
+            </UserInfo>
+          </User>
+        </a>
+      </Link>
       <Preview isCorrectAnswer={isCorrectAnswer}>
         <DatePreview to={created_at} />
         <InfoCon>

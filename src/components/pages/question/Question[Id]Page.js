@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import withCurrentUser from "@/lib/withCurrentUser";
 
 import api from "@/src/api";
@@ -102,21 +103,25 @@ const QuestionIdPage = ({
 
   return (
     <Container>
-      <User onClick={() => Router.push(`/user/${creator.id}`)}>
-        <PorfileImgCon>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-            alt="Profile img"
-          ></img>
-        </PorfileImgCon>
-        <UserInfo>
-          <Name>{creator.name}</Name>
-          {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
-        </UserInfo>
-        {/* <DropdownButton>
+      <Link passHref href={`/user/${creator.id}`}>
+        <a>
+          <User>
+            <PorfileImgCon>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                alt="Profile img"
+              ></img>
+            </PorfileImgCon>
+            <UserInfo>
+              <Name>{creator.name}</Name>
+              {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
+            </UserInfo>
+            {/* <DropdownButton>
             <DropdownIcon />
           </DropdownButton> */}
-      </User>
+          </User>
+        </a>
+      </Link>
       <Question>
         <DateView to={created_at}></DateView>
         <Title>{title}</Title>

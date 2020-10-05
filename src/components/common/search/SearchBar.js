@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import api from "@/src/api";
 import { Search, Close } from "@material-ui/icons";
@@ -30,10 +31,6 @@ const SearchBar = () => {
     } catch (error) {}
   };
 
-  const handleResultClick = (result) => {
-    Router.push(`/question/${result.id}`);
-  };
-
   return (
     <Container>
       <SearchIcon onClick={(e) => handleSearch(e)} />
@@ -51,9 +48,11 @@ const SearchBar = () => {
           <CloseIcon onClick={() => setShowResults(false)} />
           {results.map((result) => {
             return (
-              <Result key={result.id} onClick={() => handleResultClick(result)}>
-                {result.title}
-              </Result>
+              <Link passHref href={`/question/${result.id}`}>
+                <a>
+                  <Result key={result.id}>{result.title}</Result>
+                </a>
+              </Link>
             );
           })}
         </ResultsDropdown>
