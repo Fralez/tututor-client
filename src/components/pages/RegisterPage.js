@@ -79,7 +79,7 @@ const RegisterPage = () => {
             <InfoHeader>Registrate</InfoHeader>
             <SuggestionText>
               ¿Ya estás registrado? &nbsp;
-              <Link href="/login">
+              <Link passHref href="/login">
                 <SuggestionTextLink>Inicia sesión</SuggestionTextLink>
               </Link>
             </SuggestionText>

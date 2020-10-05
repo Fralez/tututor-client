@@ -58,7 +58,7 @@ const Navbar = ({ currentUser, logout }) => {
               </HamburguerButton>
             </HamburguerButtonContainer>
             <NavContent>
-              <Link href="/">
+              <Link passHref href="/">
                 <LogoContainer>
                   <Logo src="/img/logos/tututor.svg" alt="TuTutor logo" />
                   <LogoText className="transition duration-150 ease-in-out">
@@ -68,10 +68,10 @@ const Navbar = ({ currentUser, logout }) => {
               </Link>
               <NavItems>
                 <div className="flex">
-                  <Link href="/">
+                  <Link passHref href="/">
                     <NavItem>Inicio</NavItem>
                   </Link>
-                  <Link href="/institution">
+                  <Link passHref href="/institution">
                     <NavItem>Instituciones</NavItem>
                   </Link>
                 </div>
@@ -89,12 +89,12 @@ const Navbar = ({ currentUser, logout }) => {
                 </>
               ) : (
                 <UserButtonsContainer>
-                  <Link href="/login">
+                  <Link passHref href="/login">
                     <a>
                       <LoginButton>Ingresar</LoginButton>
                     </a>
                   </Link>
-                  <Link href="/register">
+                  <Link passHref href="/register">
                     <a>
                       <RegisterButton>Registrarse</RegisterButton>
                     </a>
@@ -110,12 +110,12 @@ const Navbar = ({ currentUser, logout }) => {
             <MobileMenuArea>
               {!currentUser && (
                 <>
-                  <Link href="/login">
+                  <Link passHref href="/login">
                     <a>
                       <LoginButton isMobile>Ingresar</LoginButton>
                     </a>
                   </Link>
-                  <Link href="/register">
+                  <Link passHref href="/register">
                     <a>
                       <RegisterButton isMobile>Registrarse</RegisterButton>
                     </a>
@@ -123,13 +123,13 @@ const Navbar = ({ currentUser, logout }) => {
                 </>
               )}
 
-              <Link href="/">
+              <Link passHref href="/">
                 <MobileNavItem>Inicio</MobileNavItem>
               </Link>
-              <Link href="/">
+              <Link passHref href="/">
                 <MobileNavItem>Explorar</MobileNavItem>
               </Link>
-              <Link href="/">
+              <Link passHref href="/">
                 <MobileNavItem>Ranking</MobileNavItem>
               </Link>
             </MobileMenuArea>

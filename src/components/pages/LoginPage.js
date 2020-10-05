@@ -45,7 +45,7 @@ const LoginPage = ({ setCurrentUser }) => {
             <InfoHeader>Iniciar sesión</InfoHeader>
             <SuggestionText>
               ¿No estás registrado? &nbsp;
-              <Link href="register">
+              <Link passHref href="register">
                 <SuggestionTextLink>Registrate</SuggestionTextLink>
               </Link>
             </SuggestionText>

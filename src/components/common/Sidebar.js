@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import {
   ExitToApp,
@@ -27,38 +28,44 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
           <ExitToApp />
           <LeadingText>Cerrar sesión</LeadingText>
         </SidebarTitle>
-        <User onClick={() => Router.push(`/user/${currentUser.id}`)}>
-          <ProfileImgContainer>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-              alt="Profile immg"
-            ></img>
-          </ProfileImgContainer>
-          <UserInfo>
-            <UserName>{currentUser.name}</UserName>
-            {currentUser.institution && (
-              <InstitutionName
-                onClick={() =>
-                  Router.push(`/institution/${currentUser.institution.id}`)
-                }
-              >
-                {currentUser.institution.name}
-              </InstitutionName>
-            )}
-          </UserInfo>
-        </User>
+        <Link passHref href={`/user/${currentUser.id}`}>
+          <a>
+            <User>
+              <ProfileImgContainer>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                  alt="Profile immg"
+                ></img>
+              </ProfileImgContainer>
+              <UserInfo>
+                <UserName>{currentUser.name}</UserName>
+                {currentUser.institution && (
+                  <Link
+                    passHref
+                    href={`/institution/${currentUser.institution.id}`}
+                  >
+                    <a>
+                      <InstitutionName>
+                        {currentUser.institution.name}
+                      </InstitutionName>
+                    </a>
+                  </Link>
+                )}
+              </UserInfo>
+            </User>
+          </a>
+        </Link>
       </div>
       <SidebarItems>
         <SidebarTitle>Personal</SidebarTitle>
-        <SidebarItem
-          onClick={() =>
-            currentUser.institution &&
-            Router.push(`/institution/${currentUser.institution.id}`)
-          }
-        >
-          <Domain />
-          <LeadingText>Mi institución</LeadingText>
-        </SidebarItem>
+        <Link passHref href={`/institution/${currentUser.institution.id}`}>
+          <a>
+            <SidebarItem>
+              <Domain />
+              <LeadingText>Mi institución</LeadingText>
+            </SidebarItem>
+          </a>
+        </Link>
         {/* Reputation lights */}
         <SidebarTitle>Reputation</SidebarTitle>
         <ReputationZone>
