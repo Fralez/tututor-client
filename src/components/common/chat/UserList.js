@@ -47,6 +47,6 @@ const UserList = ({ currentUser, selectedUserId, setSelectedUserId }) => {
 export default UserList;
 
 const List = styled.div`
-  ${tw`w-10/12 md:w-1/4`}
+  ${tw`w-10/12 md:w-1/4 overflow-y-scroll`}
   background: ${(props) => props.theme.colors.whiteLavander.normal};
 `;
