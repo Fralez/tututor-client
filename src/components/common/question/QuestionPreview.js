@@ -56,8 +56,8 @@ const QuestionPreview = ({
 export default QuestionPreview;
 
 const QuestionPrevContainer = styled.div`
-  ${tw`w-4/5 flex flex-col items-center relative`}
-  max-width: 80%;
+  ${tw`w-full flex flex-col items-center relative`}
+  max-width: 100%;
 `;
 
 const Preview = styled.div`
