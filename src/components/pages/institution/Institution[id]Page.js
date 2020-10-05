@@ -5,6 +5,7 @@ import tw from "tailwind.macro";
 import api from "@/src/api";
 
 import QuestionPreview from "@/src/components/common/question/QuestionPreview";
+import SearchBar from "../../common/search/SearchBar";
 
 import {
   AlternateEmail,
@@ -35,41 +36,50 @@ const InstitutionIdPage = ({
 
   return (
     <>
-      <InstitutionContainer>
-        <InstitutionPerfil>
-          <ProfilePic />
-          <Name>{name}</Name>
-        </InstitutionPerfil>
-        <InstitutionInfo>
-          <EmailContainer>
-            <EmailIcon />
-            {email}
-          </EmailContainer>
-          <LocationContainer>
-            <LocationIcon />
-            {address}
-          </LocationContainer>
-          <DescriptionContainer>
-            <DescriptionIcon />
-            <Description>
-              {description ? description : "Sin descripción"}
-            </Description>
-          </DescriptionContainer>
-        </InstitutionInfo>
-        <QuestionContainer>
-          {questionFeed.map((question) => (
-            <QuestionPreview key={question.id} question={question} />
-          ))}
-        </QuestionContainer>
-      </InstitutionContainer>
+      <Container>
+        <InstitutionContainer>
+          <InstitutionPerfil>
+            <ProfilePic />
+            <Name>{name}</Name>
+          </InstitutionPerfil>
+          <InstitutionInfo>
+            <EmailContainer>
+              <EmailIcon />
+              {email}
+            </EmailContainer>
+            <LocationContainer>
+              <LocationIcon />
+              {address}
+            </LocationContainer>
+            <DescriptionContainer>
+              <DescriptionIcon />
+              <Description>
+                {description ? description : "Sin descripción"}
+              </Description>
+            </DescriptionContainer>
+          </InstitutionInfo>
+        </InstitutionContainer>
+        <SearchBarQuestionsContainer>
+          <SearchBar />
+          <QuestionContainer>
+            {questionFeed.map((question) => (
+              <QuestionPreview key={question.id} question={question} />
+            ))}
+          </QuestionContainer>
+        </SearchBarQuestionsContainer>
+      </Container>
     </>
   );
 };
 
 export default InstitutionIdPage;
 
+const Container = styled.div`
+${tw`flex md:flex-row flex-col md:items-center md:h-full`}
+`;
+
 const InstitutionContainer = styled.div`
-  ${tw`flex flex-col px-4 w-full md:w-2/6 border-r border-solid border-gray-300 overflow-scroll h-screen shadow-lg`}
+  ${tw`flex flex-col px-4 w-full border-r border-solid border-gray-300 overflow-scroll pb-4 md:w-2/6 md:h-full`}
 `;
 
 const InstitutionPerfil = styled.div`
@@ -123,4 +133,10 @@ const EmailContainer = styled.div`
   ${tw`flex`}
 `;
 
-const QuestionContainer = styled.div``;
+const QuestionContainer = styled.div`
+  ${tw`flex items-center w-4/5 flex-col`}
+`;
+
+const SearchBarQuestionsContainer = styled.div`
+  ${tw`flex flex-col items-center w-full md:h-full`}
+`;
