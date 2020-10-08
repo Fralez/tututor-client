@@ -10,6 +10,7 @@ import {
   Textsms,
   Domain,
   EmojiObjects,
+  PermIdentity
 } from "@material-ui/icons";
 import { slide as SidebarMenu } from "react-burger-menu";
 
@@ -58,6 +59,14 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
       </div>
       <SidebarItems>
         <SidebarTitle>Personal</SidebarTitle>
+        <Link passHref href={`/user/${currentUser.id}`}>
+          <a>
+            <SidebarItem>
+              <PermIdentity />
+              <LeadingText>Mi perfil</LeadingText>
+            </SidebarItem>
+          </a>
+        </Link>
         {currentUser.institution && (
           <Link passHref href={`/institution/${currentUser.institution.id}`}>
             <a>
