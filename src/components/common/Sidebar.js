@@ -58,14 +58,16 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
       </div>
       <SidebarItems>
         <SidebarTitle>Personal</SidebarTitle>
-        <Link passHref href={`/institution/${currentUser.institution.id}`}>
-          <a>
-            <SidebarItem>
-              <Domain />
-              <LeadingText>Mi institución</LeadingText>
-            </SidebarItem>
-          </a>
-        </Link>
+        {currentUser.institution && (
+          <Link passHref href={`/institution/${currentUser.institution.id}`}>
+            <a>
+              <SidebarItem>
+                <Domain />
+                <LeadingText>Mi institución</LeadingText>
+              </SidebarItem>
+            </a>
+          </Link>
+        )}
         {/* Reputation lights */}
         <SidebarTitle>Reputation</SidebarTitle>
         <ReputationZone>

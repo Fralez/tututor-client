@@ -21,42 +21,38 @@ const QuestionPreview = ({
   return (
     <QuestionPrevContainer>
       <Link passHref href={`/user/${creator.id}`}>
-        <a>
-          <User>
-            <PorfileImgCon>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-                alt="Profile img"
-              ></img>
-            </PorfileImgCon>
-            <UserInfo>
-              <Name>{creator.name}</Name>
-              {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
-            </UserInfo>
-          </User>
-        </a>
+        <User>
+          <PorfileImgCon>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+              alt="Profile img"
+            ></img>
+          </PorfileImgCon>
+          <UserInfo>
+            <Name>{creator.name}</Name>
+            {/* <Subtitle>ÁNIMA - Bachillerato tecnológico</Subtitle> */}
+          </UserInfo>
+        </User>
       </Link>
       <Link passHref href={`/question/${id}`}>
-        <a>
-          <Preview>
-            <DateView to={created_at} />
-            <InfoCon>
-              <Title>{title}</Title>
-              <Description>{description}</Description>
-              <SaveVotesCon>
-                <VotesCon>
-                  <StarIcon />
-                  <Votes>{votes}</Votes>
-                </VotesCon>
-              </SaveVotesCon>
-              {category && (
-                <ContainerCategory>
-                  <Category>{category.title}</Category>
-                </ContainerCategory>
-              )}
-            </InfoCon>
-          </Preview>
-        </a>
+        <Preview>
+          <DateView to={created_at} />
+          <InfoCon>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+            <SaveVotesCon>
+              <VotesCon>
+                <StarIcon />
+                <Votes>{votes}</Votes>
+              </VotesCon>
+            </SaveVotesCon>
+            {category && (
+              <ContainerCategory>
+                <Category>{category.title}</Category>
+              </ContainerCategory>
+            )}
+          </InfoCon>
+        </Preview>
       </Link>
     </QuestionPrevContainer>
   );
@@ -69,7 +65,7 @@ const QuestionPrevContainer = styled.div`
   max-width: 100%;
 `;
 
-const Preview = styled.div`
+const Preview = styled.a`
   ${tw`cursor-pointer w-full rounded-md p-6 my-4 md:my-6 border-solid border border-gray-300 flex flex-col justify-center`}
 `;
 
@@ -77,7 +73,7 @@ const PorfileImgCon = styled.div`
   ${tw`h-8 w-8 md:w-10 md:h-10`}
 `;
 
-const User = styled.div`
+const User = styled.a`
   ${tw`cursor-pointer flex absolute mt-8 md:mt-12 ml-8 left-0`}
 `;
 
