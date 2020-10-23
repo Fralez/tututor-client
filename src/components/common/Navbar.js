@@ -126,11 +126,8 @@ const Navbar = ({ currentUser, logout }) => {
               <Link passHref href="/">
                 <MobileNavItem>Inicio</MobileNavItem>
               </Link>
-              <Link passHref href="/">
-                <MobileNavItem>Explorar</MobileNavItem>
-              </Link>
-              <Link passHref href="/">
-                <MobileNavItem>Ranking</MobileNavItem>
+              <Link passHref href="/institution">
+                <MobileNavItem>Instituciones</MobileNavItem>
               </Link>
             </MobileMenuArea>
           </NavMobileMenu>
@@ -143,7 +140,7 @@ const Navbar = ({ currentUser, logout }) => {
 export default withCurrentUser(Navbar);
 
 const CustomNav = styled.nav`
-${tw`w-full fixed z-10 inset-x-0.top-0`}
+  ${tw`w-full fixed z-10 inset-x-0.top-0`}
   background-color: ${(props) => props.theme.colors.violetBlue.normal};
   grid-area: navbar / navbar / navbar / navbar;
 `;
@@ -225,5 +222,5 @@ const MobileMenuArea = styled.div`
 `;
 
 const MobileNavItem = styled.a`
-  ${tw`mt-1 block px-3 py-2 text-base font-medium text-gray-300 hover:text-white focus:text-white`}
+  ${tw`mt-1 block px-3 py-2 text-base font-medium text-gray-300 hover:text-white focus:text-white flex justify-center`}
 `;
