@@ -10,7 +10,7 @@ import {
   Textsms,
   Domain,
   EmojiObjects,
-  PermIdentity
+  PermIdentity,
 } from "@material-ui/icons";
 import { slide as SidebarMenu } from "react-burger-menu";
 
@@ -35,7 +35,7 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
               <ProfileImgContainer>
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-                  alt="Profile immg"
+                  alt="Profile img"
                 ></img>
               </ProfileImgContainer>
               <UserInfo>
@@ -45,11 +45,9 @@ const Sidebar = ({ currentUser, logout, showSidebar, toggleSidebar }) => {
                     passHref
                     href={`/institution/${currentUser.institution.id}`}
                   >
-                    <a>
-                      <InstitutionName>
-                        {currentUser.institution.name}
-                      </InstitutionName>
-                    </a>
+                    <InstitutionName>
+                      {currentUser.institution.name}
+                    </InstitutionName>
                   </Link>
                 )}
               </UserInfo>

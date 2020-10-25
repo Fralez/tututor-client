@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
+import withCurrentUser from "../../../../lib/withCurrentUser";
 import styled from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
 import QuestionPreview from "@/src/components/common/question/QuestionPreview";
 import SearchBar from "../../common/search/SearchBar";
+import UserTile from "./UserTile";
 
 import {
   AlternateEmail,
   LocationOn,
   Info,
   Apartment,
+  Group,
 } from "@material-ui/icons";
 
 const InstitutionIdPage = ({
-  institution: { id, name, email, description, address },
+  currentUser,
+  institution: { id, name, email, description, address, creator, users },
 }) => {
-  const { questions } = api();
+  const Router = useRouter();
+
+  const { questions, institutions } = api();
 
   const [questionFeed, setQuestionFeed] = useState([]);
 
@@ -34,12 +41,29 @@ const InstitutionIdPage = ({
     getQuestionFeed();
   }, []);
 
+  const leaveInstitution = async () => {
+    try {
+      const leavingUserId = currentUser.id;
+      const res = await institutions.clearUserInstitution(id, leavingUserId);
+      if (res.status == 201) {
+        Router.reload();
+      }
+    } catch (error) {}
+  };
+
   return (
     <>
       <Container>
         <InstitutionContainer>
           <InstitutionPerfil>
             <ProfilePic />
+            {currentUser &&
+              currentUser.institution_id == id &&
+              currentUser.id != creator.id && (
+                <LeaveInstitutionButton onClick={leaveInstitution}>
+                  Abandonar institución
+                </LeaveInstitutionButton>
+              )}
             <Name>{name}</Name>
           </InstitutionPerfil>
           <InstitutionInfo>
@@ -57,6 +81,21 @@ const InstitutionIdPage = ({
                 {description ? description : "Sin descripción"}
               </Description>
             </DescriptionContainer>
+            <UsersContainer>
+              <GroupIcon />
+              <Title>Usuarios</Title>
+            </UsersContainer>
+            {/* Render creator */}
+            <UserTile user={creator} isCreator />
+            {/* Render other members */}
+            {users.map((user) => (
+              <UserTile
+                key={user.id}
+                user={user}
+                showMakeCreator={currentUser && currentUser.id == creator.id}
+                institutionId={id}
+              />
+            ))}
           </InstitutionInfo>
         </InstitutionContainer>
         <SearchBarQuestionsContainer>
@@ -72,10 +111,10 @@ const InstitutionIdPage = ({
   );
 };
 
-export default InstitutionIdPage;
+export default withCurrentUser(InstitutionIdPage);
 
 const Container = styled.div`
-${tw`flex md:flex-row flex-col md:items-center md:h-full`}
+  ${tw`flex md:flex-row flex-col md:items-center md:h-full`}
 `;
 
 const InstitutionContainer = styled.div`
@@ -95,6 +134,16 @@ const ProfilePic = styled(Apartment)`
 
 const Name = styled.h5`
   ${tw`text-xl mt-2 font-semibold text-center`}
+  color: ${(props) => props.theme.colors.violetBlue.light};
+`;
+
+const Title = styled.h5`
+  ${tw`text-xl font-semibold`}
+  color: ${(props) => props.theme.colors.violetBlue.light};
+`;
+
+const GroupIcon = styled(Group)`
+  ${tw`mr-2`}
   color: ${(props) => props.theme.colors.violetBlue.light};
 `;
 
@@ -139,4 +188,12 @@ const QuestionContainer = styled.div`
 
 const SearchBarQuestionsContainer = styled.div`
   ${tw`flex flex-col items-center w-full md:h-full`}
+`;
+
+const UsersContainer = styled.div`
+  ${tw`mt-4 flex`}
+`;
+
+const LeaveInstitutionButton = styled.button`
+  ${tw`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full my-2`}
 `;

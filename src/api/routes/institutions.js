@@ -21,4 +21,25 @@ export default () => ({
       { withCredentials: true }
     );
   },
+  clearUserInstitution: (institutionId, userId) => {
+    return axios.post(
+      `${BASE_URL}/institutions/clear_user_institution`,
+      {
+        institution_id: institutionId,
+        user_id: userId
+      },
+      { withCredentials: true }
+    );
+  },
+  updateCreator: (institutionId, newCreatorUserId) => {
+    return axios.post(
+      `${BASE_URL}/institutions/update_creator`,
+      {
+        institution_id: institutionId,
+        new_creator_user_id: newCreatorUserId
+      },
+      { withCredentials: true }
+    );
+  },
+
 });

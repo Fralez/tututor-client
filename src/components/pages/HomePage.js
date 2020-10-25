@@ -19,7 +19,6 @@ const HomePage = ({ currentUser }) => {
   const [showChatModal, setShowChatModal] = useState(false);
   const [questionFeed, setQuestionFeed] = useState([]);
   const [selectedFilterCategory, setSelectedFilterCategory] = useState("");
-
   useEffect(() => {
     getQuestionFeed();
   }, []);
@@ -44,13 +43,13 @@ const HomePage = ({ currentUser }) => {
 
   const onFilterSelection = (selectedOption) => {
     if (selectedOption.value == 0) {
-      getQuestionFeed()
-    } else if (selectedOption.value == 1){
-      getQuestionLessRecentFeed()
+      getQuestionFeed();
+    } else if (selectedOption.value == 1) {
+      getQuestionLessRecentFeed();
     } else {
-      getQuestionFeed()
+      getQuestionFeed();
     }
-  }
+  };
 
   return (
     <HomeContainer>
@@ -63,7 +62,7 @@ const HomePage = ({ currentUser }) => {
           )
         }
       />
-      <Filter onFilterSelection={onFilterSelection}/>
+      <Filter onFilterSelection={onFilterSelection} />
       <QuestionContainer>
         {questionFeed.map((question) =>
           selectedFilterCategory ? (
