@@ -19,4 +19,9 @@ export default () => ({
       withCredentials: true,
     });
   },
+  usersWithoutInstitution: () => {
+    return axios.get(`${BASE_URL}/users/filter/without_institution`, {
+      withCredentials: true,
+    });
+  },
 });

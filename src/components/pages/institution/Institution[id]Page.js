@@ -9,6 +9,7 @@ import api from "@/src/api";
 import QuestionPreview from "@/src/components/common/question/QuestionPreview";
 import SearchBar from "../../common/search/SearchBar";
 import UserTile from "./UserTile";
+import InviteUserModal from "./InviteUserModal";
 
 import {
   AlternateEmail,
@@ -16,6 +17,7 @@ import {
   Info,
   Apartment,
   Group,
+  Add,
 } from "@material-ui/icons";
 
 const InstitutionIdPage = ({
@@ -27,6 +29,7 @@ const InstitutionIdPage = ({
   const { questions, institutions } = api();
 
   const [questionFeed, setQuestionFeed] = useState([]);
+  const [showInviteUserModal, setShowInviteUserModal] = useState(false);
 
   const getQuestionFeed = async () => {
     try {
@@ -51,63 +54,78 @@ const InstitutionIdPage = ({
     } catch (error) {}
   };
 
+  const inviteUserToInstitution = async () => {};
+
   return (
-    <>
-      <Container>
-        <InstitutionContainer>
-          <InstitutionPerfil>
-            <ProfilePic />
-            {currentUser &&
-              currentUser.institution_id == id &&
-              currentUser.id != creator.id && (
-                <LeaveInstitutionButton onClick={leaveInstitution}>
-                  Abandonar institución
-                </LeaveInstitutionButton>
-              )}
-            <Name>{name}</Name>
-          </InstitutionPerfil>
-          <InstitutionInfo>
-            <EmailContainer>
-              <EmailIcon />
-              {email}
-            </EmailContainer>
-            <LocationContainer>
-              <LocationIcon />
-              {address}
-            </LocationContainer>
-            <DescriptionContainer>
-              <DescriptionIcon />
-              <Description>
-                {description ? description : "Sin descripción"}
-              </Description>
-            </DescriptionContainer>
-            <UsersContainer>
-              <GroupIcon />
-              <Title>Usuarios</Title>
-            </UsersContainer>
-            {/* Render creator */}
-            <UserTile user={creator} isCreator />
-            {/* Render other members */}
-            {users.map((user) => (
-              <UserTile
-                key={user.id}
-                user={user}
-                showMakeCreator={currentUser && currentUser.id == creator.id}
-                institutionId={id}
-              />
-            ))}
-          </InstitutionInfo>
-        </InstitutionContainer>
-        <SearchBarQuestionsContainer>
-          <SearchBar />
-          <QuestionContainer>
-            {questionFeed.map((question) => (
-              <QuestionPreview key={question.id} question={question} />
-            ))}
-          </QuestionContainer>
-        </SearchBarQuestionsContainer>
-      </Container>
-    </>
+    <Container>
+      <InstitutionContainer>
+        <InstitutionPerfil>
+          <ProfilePic />
+          {currentUser &&
+            currentUser.institution_id == id &&
+            currentUser.id != creator.id && (
+              <LeaveInstitutionButton onClick={leaveInstitution}>
+                Abandonar institución
+              </LeaveInstitutionButton>
+            )}
+          <Name>{name}</Name>
+        </InstitutionPerfil>
+        <InstitutionInfo>
+          <EmailContainer>
+            <EmailIcon />
+            {email}
+          </EmailContainer>
+          <LocationContainer>
+            <LocationIcon />
+            {address}
+          </LocationContainer>
+          <DescriptionContainer>
+            <DescriptionIcon />
+            <Description>
+              {description ? description : "Sin descripción"}
+            </Description>
+          </DescriptionContainer>
+          <UsersContainer>
+            <GroupIcon />
+            <Title>Usuarios</Title>
+          </UsersContainer>
+          {/* Render creator */}
+          <UserTile user={creator} isCreator />
+          {/* Render other members */}
+          {users.map((user) => (
+            <UserTile
+              key={user.id}
+              user={user}
+              showMakeCreator={currentUser && currentUser.id == creator.id}
+              institutionId={id}
+            />
+          ))}
+          {currentUser && currentUser.id == creator.id && (
+            <AddNewUserButton onClick={() => setShowInviteUserModal(true)}>
+              <ContainerFlat>
+                <AddIcon />
+                Invitar usuario
+              </ContainerFlat>
+            </AddNewUserButton>
+          )}
+        </InstitutionInfo>
+      </InstitutionContainer>
+      <SearchBarQuestionsContainer>
+        <SearchBar />
+        <QuestionContainer>
+          {questionFeed.map((question) => (
+            <QuestionPreview key={question.id} question={question} />
+          ))}
+        </QuestionContainer>
+      </SearchBarQuestionsContainer>
+      {currentUser && currentUser.id == creator.id && (
+        <InviteUserModal
+          currentUser={currentUser}
+          showInviteUserModal={showInviteUserModal}
+          toggleModal={() => setShowInviteUserModal(!showInviteUserModal)}
+        />
+      )}
+    </Container>
   );
 };
 
@@ -196,4 +214,16 @@ const UsersContainer = styled.div`
 
 const LeaveInstitutionButton = styled.button`
   ${tw`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full my-2`}
+`;
+
+const AddIcon = styled(Add)`
+  color: white;
+`;
+
+const ContainerFlat = styled.div`
+  ${tw`flex items-center justify-center`}
+`;
+
+const AddNewUserButton = styled.button`
+  ${tw`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full my-2`}
 `;
