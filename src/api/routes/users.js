@@ -29,8 +29,26 @@ export default () => ({
       { withCredentials: true }
     );
   },
+  acceptInvitation: (invitationId) => {
+    return axios.post(
+      `${BASE_URL}/users/invitations/accept`,
+      {
+        invitation_id: invitationId,
+      },
+      { withCredentials: true }
+    );
+  },
+  rejectInvitation: (invitationId) => {
+    return axios.post(
+      `${BASE_URL}/users/invitations/reject`,
+      {
+        invitation_id: invitationId,
+      },
+      { withCredentials: true }
+    );
+  },
   showUserInvitations: (userId) => {
-    return axios.get(`${BASE_URL}/users/invitations`, {
+    return axios.get(`${BASE_URL}/users/show/invitations`, {
       withCredentials: true,
     });
   },

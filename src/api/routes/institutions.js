@@ -31,5 +31,14 @@ export default () => ({
       { withCredentials: true }
     );
   },
-
+  createInvitation: (institutionId, userId) => {
+    return axios.post(
+      `${BASE_URL}/institutions/invitations/create`,
+      {
+        institution_id: institutionId,
+        user_id: userId
+      },
+      { withCredentials: true }
+    );
+  }
 });

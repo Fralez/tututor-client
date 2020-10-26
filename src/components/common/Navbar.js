@@ -23,19 +23,21 @@ const Navbar = ({ currentUser, logout }) => {
     showInstitutionInvitationModal,
     setShowInstitutionInvitationModal,
   ] = useState(false);
-  const [invitations, setInvitations] = useState();
+  const [invitations, setInvitations] = useState([]);
 
   const { users } = api();
 
   const populateList = async () => {
-    // TODO: Populate with invitations including institution.name
-    // const res = await users.showUserInvitations(currentUser.id);
-    // setInvitations(res.data);
+    if (currentUser) {
+      const res = await users.showUserInvitations(currentUser.id);
+      console.log(res);
+      setInvitations(res.data);
+    }
   };
 
   useEffect(() => {
     populateList();
-  }, []);
+  }, [currentUser])
 
   const toggleSidebar = (state) => {
     /**
@@ -105,17 +107,12 @@ const Navbar = ({ currentUser, logout }) => {
             <UserZone>
               {currentUser ? (
                 <>
-                  {/* TODO: Do logic to show new notifications icon */}
-                  {false ? (
-                    <NotificationsActiveIcon
-                      onClick={() => setShowInstitutionInvitationModal(true)}
-                    />
-                  ) : (
-                    <NotificationsIcon
-                      onClick={() => setShowInstitutionInvitationModal(true)}
-                    />
-                  )}
-
+                  <NotificationsIcon
+                    onClick={() => {
+                      populateList();
+                      setShowInstitutionInvitationModal(true);
+                    }}
+                  />
                   <UserImageButton onClick={toggleSidebar}>
                     <UserImage
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -272,11 +269,6 @@ const MobileNavItem = styled.a`
 `;
 
 const NotificationsIcon = styled(Notifications)`
-  ${tw`mr-4 cursor-pointer`}
-  color: white;
-`;
-
-const NotificationsActiveIcon = styled(NotificationsActive)`
   ${tw`mr-4 cursor-pointer`}
   color: white;
 `;

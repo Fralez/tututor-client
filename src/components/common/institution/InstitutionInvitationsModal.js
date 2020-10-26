@@ -9,7 +9,7 @@ import { Close, CheckCircle, Cancel } from "@material-ui/icons";
 const InstitutionInvitationModal = ({
   currentUser,
   showInstitutionInvitationModal,
-  invitations,
+  invitations = [],
   toggleModal,
 }) => {
   const { users } = api();
