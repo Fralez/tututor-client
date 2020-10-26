@@ -26,7 +26,7 @@ const InstitutionIdPage = ({
 }) => {
   const Router = useRouter();
 
-  const { questions, institutions } = api();
+  const { questions, institutions, users } = api();
 
   const [questionFeed, setQuestionFeed] = useState([]);
   const [showInviteUserModal, setShowInviteUserModal] = useState(false);
@@ -47,7 +47,8 @@ const InstitutionIdPage = ({
   const leaveInstitution = async () => {
     try {
       const leavingUserId = currentUser.id;
-      const res = await institutions.clearUserInstitution(id, leavingUserId);
+      const res = await users.clearInstitution(id, leavingUserId);
+      
       if (res.status == 201) {
         Router.reload();
       }

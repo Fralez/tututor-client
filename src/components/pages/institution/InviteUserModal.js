@@ -4,7 +4,6 @@ import tw from "tailwind.macro";
 
 import api from "@/src/api";
 
-import UserTile from "./UserTile";
 import { Close } from "@material-ui/icons";
 
 const InviteUserModal = ({ currentUser, showInviteUserModal, toggleModal }) => {
