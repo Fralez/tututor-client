@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
@@ -12,17 +13,35 @@ const InstitutionInvitationModal = ({
   invitations = [],
   toggleModal,
 }) => {
+  const Router = useRouter();
+
   const { users } = api();
 
   const [invitationsList, setInvitationsList] = useState([]);
 
   useEffect(() => {
     setInvitationsList(invitations);
-  }, []);
+  }, [invitations]);
 
-  const handleAcceptInvitation = async (invitation) => {};
+  const handleAcceptInvitation = async (invitation) => {
+    try {
+      const res = await users.acceptInvitation(invitation.id);
+      console.log(res);
+      if (res.status == 201) {
+        Router.reload();
+      }
+    } catch (error) {}
+  };
 
-  const handleRejectInvitation = async (invitation) => {};
+  const handleRejectInvitation = async (invitation) => {
+    try {
+      const res = await users.rejectInvitation(invitation.id);
+      console.log(res);
+      if (res.status == 201) {
+        Router.reload();
+      }
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -33,9 +52,9 @@ const InstitutionInvitationModal = ({
             <ModalTitle>Notificaciones</ModalTitle>
             <ModalContent className="divide-y">
               {invitationsList.map((invitation) => (
-                <InvitationContainer>
+                <InvitationContainer key={invitation.id}>
                   <TextContainer>
-                    <Name>{`¿Deseas unirta a <institution_name>?`}</Name>
+                    <Name>{`¿Deseas unirte a ${invitation.institution_name}?`}</Name>
                   </TextContainer>
                   <CheckCircleIcon
                     onClick={() => handleAcceptInvitation(invitation)}

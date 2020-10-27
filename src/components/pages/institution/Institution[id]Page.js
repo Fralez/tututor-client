@@ -26,11 +26,12 @@ const InstitutionIdPage = ({
 }) => {
   const Router = useRouter();
 
-  const { questions, institutions } = api();
+  const { questions } = api();
   const usersApi = api().users;
 
   const [questionFeed, setQuestionFeed] = useState([]);
   const [showInviteUserModal, setShowInviteUserModal] = useState(false);
+  const [userList, setUserList] = useState([]);
 
   const getQuestionFeed = async () => {
     try {
@@ -49,14 +50,19 @@ const InstitutionIdPage = ({
     try {
       const leavingUserId = currentUser.id;
       const res = await usersApi.clearInstitution(id, leavingUserId);
-      
+
       if (res.status == 201) {
         Router.reload();
       }
     } catch (error) {}
   };
 
-  const inviteUserToInstitution = async () => {};
+  const populateUserList = async () => {
+    try {
+      const res = await usersApi.usersWithoutInstitution();
+      setUserList(res.data);
+    } catch (error) {}
+  };
 
   return (
     <Container>
@@ -103,7 +109,12 @@ const InstitutionIdPage = ({
             />
           ))}
           {currentUser && currentUser.id == creator.id && (
-            <AddNewUserButton onClick={() => setShowInviteUserModal(true)}>
+            <AddNewUserButton
+              onClick={() => {
+                populateUserList();
+                setShowInviteUserModal(true);
+              }}
+            >
               <ContainerFlat>
                 <AddIcon />
                 Invitar usuario
@@ -122,6 +133,8 @@ const InstitutionIdPage = ({
       </SearchBarQuestionsContainer>
       {currentUser && currentUser.id == creator.id && (
         <InviteUserModal
+          userList={userList}
+          institutionId={id}
           currentUser={currentUser}
           showInviteUserModal={showInviteUserModal}
           toggleModal={() => setShowInviteUserModal(!showInviteUserModal)}

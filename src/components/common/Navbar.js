@@ -30,7 +30,6 @@ const Navbar = ({ currentUser, logout }) => {
   const populateList = async () => {
     if (currentUser) {
       const res = await users.showUserInvitations(currentUser.id);
-      console.log(res);
       setInvitations(res.data);
     }
   };

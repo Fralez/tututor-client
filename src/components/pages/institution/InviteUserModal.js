@@ -1,28 +1,39 @@
 import React, { useState, useEffect } from "react";
-import styled, { css  } from "styled-components";
+import styled, { css } from "styled-components";
 import tw from "tailwind.macro";
+import { useRouter } from "next/router";
 
 import api from "@/src/api";
 
 import { Close } from "@material-ui/icons";
 
-const InviteUserModal = ({ currentUser, showInviteUserModal, toggleModal }) => {
-  const { users } = api();
+const InviteUserModal = ({
+  institutionId,
+  currentUser,
+  showInviteUserModal,
+  toggleModal,
+  userList = [],
+}) => {
+  const Router = useRouter();
 
-  const [userList, setUserList] = useState([]);
+  const { institutions } = api();
 
   const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const populateList = async () => {
-    const res = await users.usersWithoutInstitution();
-    setUserList(res.data);
+  const handleInvite = async () => {
+    try {
+      if (selectedUserId) {
+        const res = await institutions.createInvitation(
+          institutionId,
+          selectedUserId
+        );
+
+        if (res.status == 201) {
+          Router.reload();
+        }
+      }
+    } catch (error) {}
   };
-
-  useEffect(() => {
-    populateList();
-  }, []);
-
-  const handleInvite = async () => {};
 
   return (
     <>
@@ -32,22 +43,23 @@ const InviteUserModal = ({ currentUser, showInviteUserModal, toggleModal }) => {
           <Modal>
             <ModalTitle>Invitar usuario</ModalTitle>
             <ModalContent>
-              {userList.map((user) => (
-                <UserContainer>
-                  <Overlay
-                    onClick={() => setSelectedUserId(user.id)}
-                    selected={selectedUserId == user.id}
-                  />
-                  <img
-                    className="h-8"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
-                    alt="Profile img"
-                  />
-                  <TextContainer>
-                    <Name>{user.name}</Name>
-                  </TextContainer>
-                </UserContainer>
-              ))}
+              {userList.length > 0 &&
+                userList.map((user) => (
+                  <UserContainer key={user.id}>
+                    <Overlay
+                      onClick={() => setSelectedUserId(user.id)}
+                      selected={selectedUserId == user.id}
+                    />
+                    <img
+                      className="h-8"
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+                      alt="Profile img"
+                    />
+                    <TextContainer>
+                      <Name>{user.name}</Name>
+                    </TextContainer>
+                  </UserContainer>
+                ))}
             </ModalContent>
             <Actions>
               <CancelButton
