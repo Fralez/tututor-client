@@ -7,7 +7,7 @@ import api from "@/src/api";
 
 import SimpleReactValidator from "simple-react-validator";
 import Dropdown from "react-dropdown";
-import { Close, Add } from "@material-ui/icons";
+import { Close, Create } from "@material-ui/icons";
 
 const CreateInstitutionModal = ({
   currentUser,
@@ -111,9 +111,9 @@ const CreateInstitutionModal = ({
           </Modal>
         </ModalContainer>
       )}
-      {currentUser && (
+      {currentUser && !currentUser.institution_id && (
         <CreateInstitutionButton onClick={toggleModal}>
-          <Add />
+          <Create />
         </CreateInstitutionButton>
       )}
     </>
@@ -124,7 +124,7 @@ export default CreateInstitutionModal;
 
 const CreateInstitutionButton = styled.button`
   ${tw`fixed p-3 rounded-full text-white`}
-  background-color: ${(props) => props.theme.colors.pinkCyclamen.normal};
+  background-color: ${(props) => props.theme.colors.violetBlue.normal};
   right: 2rem;
   bottom: 2rem;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
@@ -197,12 +197,3 @@ const CloseModal = styled(Close)`
   color: ${(props) => props.theme.colors.violetBlue.normal};
 `;
 
-const CustomDropdown = styled(Dropdown)`
-  .Dropdown-control {
-    ${tw`relative block w-48 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 text-sm leading-5`}
-  }
-  .Dropdown-menu {
-    max-height: 7rem;
-    ${tw`w-48 rounded-b-md border border-gray-300 text-sm`}
-  }
-`;
