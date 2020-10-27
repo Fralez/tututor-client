@@ -1,16 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import withCurrentUser from "@/lib/withCurrentUser";
 import styled from "styled-components";
 import tw from "tailwind.macro";
 
-import { Menu, Close } from "@material-ui/icons";
+import api from "@/src/api";
+
+import {
+  Menu,
+  Close,
+  Notifications,
+  NotificationsActive,
+} from "@material-ui/icons";
 
 import Sidebar from "./Sidebar";
+import InstitutionInvitationModal from "./institution/InstitutionInvitationsModal";
 
 const Navbar = ({ currentUser, logout }) => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [
+    showInstitutionInvitationModal,
+    setShowInstitutionInvitationModal,
+  ] = useState(false);
+  const [invitations, setInvitations] = useState([]);
+
+  const { users } = api();
+
+  const populateList = async () => {
+    if (currentUser) {
+      const res = await users.showUserInvitations(currentUser.id);
+      setInvitations(res.data);
+    }
+  };
+
+  useEffect(() => {
+    populateList();
+  }, [currentUser])
 
   const toggleSidebar = (state) => {
     /**
@@ -80,6 +106,12 @@ const Navbar = ({ currentUser, logout }) => {
             <UserZone>
               {currentUser ? (
                 <>
+                  <NotificationsIcon
+                    onClick={() => {
+                      populateList();
+                      setShowInstitutionInvitationModal(true);
+                    }}
+                  />
                   <UserImageButton onClick={toggleSidebar}>
                     <UserImage
                       src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
@@ -133,6 +165,16 @@ const Navbar = ({ currentUser, logout }) => {
           </NavMobileMenu>
         )}
       </CustomNav>
+      {currentUser && (
+        <InstitutionInvitationModal
+          currentUser={currentUser}
+          showInstitutionInvitationModal={showInstitutionInvitationModal}
+          toggleModal={() =>
+            setShowInstitutionInvitationModal(!showInstitutionInvitationModal)
+          }
+          invitations={invitations}
+        />
+      )}
     </>
   );
 };
@@ -223,4 +265,9 @@ const MobileMenuArea = styled.div`
 
 const MobileNavItem = styled.a`
   ${tw`mt-1 block px-3 py-2 text-base font-medium text-gray-300 hover:text-white focus:text-white flex justify-center`}
+`;
+
+const NotificationsIcon = styled(Notifications)`
+  ${tw`mr-4 cursor-pointer`}
+  color: white;
 `;
