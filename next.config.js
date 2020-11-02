@@ -14,7 +14,8 @@ module.exports = (phase, { defaultConfig }) => {
 
   return {
     env: {
-      BACKEND_URL: "",
+      BACKEND_URL: "https://tututor-backend.herokuapp.com/",
+      WS_URL: "ws://tututor-backend.herokuapp.com/cable"
     },
     /* config options for all phases except development here */
   };
