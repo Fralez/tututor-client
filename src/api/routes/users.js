@@ -57,4 +57,9 @@ export default () => ({
       withCredentials: true,
     });
   },
+  usersByRanking: () => {
+    return axios.get(`${BASE_URL}/users/filter/ranking`, {
+      withCredentials: true,
+    });
+  },
 });

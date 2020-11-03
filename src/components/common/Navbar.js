@@ -100,6 +100,9 @@ const Navbar = ({ currentUser, logout }) => {
                   <Link passHref href="/institution">
                     <NavItem>Instituciones</NavItem>
                   </Link>
+                  <Link passHref href="/ranking">
+                    <NavItem>Ranking</NavItem>
+                  </Link>
                 </div>
               </NavItems>
             </NavContent>
