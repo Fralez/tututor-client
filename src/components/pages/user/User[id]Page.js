@@ -4,8 +4,10 @@ import tw from "tailwind.macro";
 import Moment from "react-moment";
 
 import { AlternateEmail, Cake, Info, EmojiObjects } from "@material-ui/icons";
+import QuestionPreview from "../../common/question/QuestionPreview"
 
 const UserIdPage = ({ user }) => {
+  console.log(user);
   return (
     <>
       <Background />
@@ -43,6 +45,11 @@ const UserIdPage = ({ user }) => {
           </DescriptionText>
         </DescriptionContainer>
         <HeadingTitle>Preguntas guardadas</HeadingTitle>
+        <QuestionContainer>
+          {user.saved_questions.map((question) => (
+            <QuestionPreview key={question.id} question={question} />
+          ))}
+        </QuestionContainer>
       </UserInfo>
     </>
   );
@@ -133,3 +140,6 @@ const ReputationTitle = styled.h2`
 const HeadingTitle = styled.h2`
   ${tw`text-2xl mt-8 mb-4`}
 `;
+
+const QuestionContainer = styled.div`
+`
